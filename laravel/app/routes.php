@@ -15,3 +15,16 @@ Route::get('/', function()
 {
 	return View::make('hello');
 });
+
+Route::get('/test', function()
+{
+	return "Test";
+});
+
+Route::get(
+            'debugbar/assets/stylesheets',
+            array(
+                'uses' => 'Barryvdh\Debugbar\Controllers\AssetController@css',
+                'as' => 'debugbar2.assets.css',
+            )
+        );
