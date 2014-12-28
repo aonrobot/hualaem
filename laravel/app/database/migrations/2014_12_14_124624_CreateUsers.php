@@ -16,6 +16,7 @@ class CreateUsers extends Migration {
             $table->string('username', 60);
             $table->string('password', 60);
             $table->enum('role', ['UNVERIFY', 'VERIFIED', 'ADMIN']);
+            $table->integer('student_id')->unsigned()->nullable();
 
             $table->string('prefix_th', 10)->nullable();
             $table->string('firstname_th', 50)->nullable();

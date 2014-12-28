@@ -18,77 +18,93 @@
         <div class="content div block register">
             <div>
                 <div class="w-form">
+                    @if($errors->any())
+                    <div class="w-form-fail" style="display:block">
+                        <ul>
+                            @foreach ($errors->all('<li>:message</li>') as $message)
+                            {{ $message }}
+                            @endforeach
+                        </ul>
+                    </div>
+                    <br>
+                    @endif
                     <!-- Form for Register -->
-                    <form class="w-clearfix" id="email-form-2" name="form-register" data-name="Register Form">
+                    <form class="w-clearfix" id="email-form-2" name="form-register" method="POST">
                         <div class="w-row">
                             <div class="w-col w-col-6">
                                 <div class="text regis_col_name">ข้อมูลพื้อฐาน</div>
                                 <div class="div register_block">
-                                    <label class="label register" for="user">ชื่อผู้ใช้</label>
-                                    <input class="w-input" id="user" type="text" placeholder="Username" name="user" required="required" autofocus="autofocus" data-name="user">
+                                    <label class="label register" for="username">ชื่อผู้ใช้</label>
+                                    {{ Form::myInput('username','Username','text',null,['autofocus'=>'autofocus']) }}
                                 </div>
                                 <div class="div register_block">
-                                    <label class="label register" for="password-2">รหัสผ่าน</label>
-                                    <input class="w-input" id="password-2" type="password" placeholder="Password" name="password" required="required" data-name="password">
+                                    <label class="label register" for="password">รหัสผ่าน</label>
+                                    {{ Form::myInput('password','Password','password') }}
                                 </div>
                                 <div class="div register_block">
-                                    <label class="label register" for="re_password">ยืนยันรหัสผ่าน</label>
-                                    <input class="w-input" id="re_password" type="text" placeholder="Retype-Password" name="re_password" required="required" data-name="re_password">
+                                    <label class="label register" for="password_confirmation">ยืนยันรหัสผ่าน</label>
+                                    {{ Form::myInput('password_confirmation','Retype-Password','password') }}
                                 </div>
                                 <div class="div register_block">
                                     <label class="label register" for="email">อีเมลล์</label>
-                                    <input class="w-input" id="email" type="email" placeholder="Email" name="email" required="required" data-name="email">
+                                    {{ Form::myInput('email','Email','email') }}
                                 </div>
                                 <div class="div register_block">
-                                    <label class="label register" for="name">ชื่อ</label>
-                                    <input class="w-input" id="name" type="text" placeholder="Name" name="name" required="required" data-name="name">
+                                    <label class="label register" for="firstname_th">ชื่อ</label>
+                                    {{ Form::myInput('firstname_th','Name') }}
                                 </div>
                                 <div class="div register_block">
-                                    <label class="label register" for="surname">นามสกุล</label>
-                                    <input class="w-input" id="surname" type="text" placeholder="Surname" name="surname" required="required" data-name="surname">
+                                    <label class="label register" for="lastname_th">นามสกุล</label>
+                                    {{ Form::myInput('lastname_th','Surname') }}
                                 </div>
                                 <div class="div register_block">
-                                    <label class="label register" for="nick">ชื่อเล่น</label>
-                                    <input class="w-input" id="nick" type="text" placeholder="Nickname" name="nick" required="required" data-name="nick">
+                                    <label class="label register" for="nickname">ชื่อเล่น</label>
+                                    {{ Form::myInput('nickname','Nickname') }}
                                 </div>
                                 <div class="div register_block">
-                                    <label class="label register" for="school">ปัจจุบันศึกษาที่</label>
-                                    <input class="w-input" id="school" type="text" placeholder="Current Education" name="school" required="required" data-name="school">
+                                    <label class="label register" for="mobile_no">เบอร์มือถือ</label>
+                                    {{ Form::myInput('mobile_no','Mobile No') }}
                                 </div>
                                 <div class="div register_block">
-                                    <label class="label register" for="level">ชั้น</label>
-                                    <input class="w-input" id="level" type="text" placeholder="Level" name="level" required="required" data-name="level">
+                                    <label class="label register">
+                                        {{ HTML::image(Captcha::img(), 'Captcha image') }}
+                                    </label>
+                                    <input class="w-input" id="capcha" type="text" placeholder="Capcha" name="capcha" required="required">
                                 </div>
                             </div>
                             <div class="w-col w-col-6">
                                 <div class="text regis_col_name">ที่อยู่</div>
                                 <div class="div register_block">
                                     <label class="label register" for="house_no">บ้านเลขที่</label>
-                                    <input class="w-input" id="house_no" type="text" placeholder="House No." name="house_no" required="required" data-name="house_no">
+                                    {{ Form::myInput('house_no','House No.') }}
                                 </div>
                                 <div class="div register_block">
                                     <label class="label register" for="road">ถนน</label>
-                                    <input class="w-input" id="road" type="text" placeholder="Road" name="road" required="required" data-name="road">
+                                    {{ Form::myInput('road','Road') }}
                                 </div>
                                 <div class="div register_block">
-                                    <label class="label register" for="village">หมู่</label>
-                                    <input class="w-input" id="village" type="text" placeholder="Village No." name="village" required="required" data-name="village">
+                                    <label class="label register" for="village_no">หมู่</label>
+                                    {{ Form::myInput('village_no','Village No.') }}
                                 </div>
                                 <div class="div register_block">
-                                    <label class="label register" for="sub_district">ตำบล</label>
-                                    <input class="w-input" id="sub_district" type="text" placeholder="Sub-District" name="sub_district" required="required" data-name="sub_district">
+                                    <label class="label register" for="sub_district_id">ตำบล</label>
+                                    {{ Form::select('sub_district_id', $subDistricts, null, [ 'class'=> "w-input"]) }}
                                 </div>
                                 <div class="div register_block">
-                                    <label class="label register" for="district">อำเภอ</label>
-                                    <input class="w-input" id="district" type="text" placeholder="District" name="district" required="required" data-name="district">
+                                    <label class="label register" for="district_id">อำเภอ</label>
+                                    {{ Form::select('district_id', $districts, null, [ 'class'=> "w-input"]) }}
                                 </div>
                                 <div class="div register_block">
-                                    <label class="label register" for="province">จังหวัด</label>
-                                    <input class="w-input" id="province" type="text" placeholder="Province" name="province" required="required" data-name="province">
+                                    <label class="label register" for="province_id">จังหวัด</label>
+                                    {{ Form::select('province_id', $provinces, null, [ 'class'=> "w-input"]) }}
                                 </div>
                                 <div class="div register_block">
-                                    <label class="label register" for="phone">เบอร์โทรศัพท์</label>
-                                    <input class="w-input" id="phone" type="text" placeholder="Phone" name="phone" required="required" data-name="phone">
+                                    <label class="label register" for="postcode">รหัสไปรษณีย์</label>
+                                    {{ Form::myInput('postcode','Postcode') }}
+                                </div>
+                                <div class="div register_block">
+                                    <label class="label register" for="phone_no">เบอร์โทรศัพท์</label>
+                                    {{ Form::myInput('phone_no','Phone') }}
                                 </div>
                             </div>
                         </div>
@@ -100,9 +116,7 @@
                     <div class="w-form-done">
                         <p>Thank you!</p>
                     </div>
-                    <div class="w-form-fail">
-                        <p>Oops! Something went wrong while submitting the form :(</p>
-                    </div>
+
 
                 </div>
             </div>
