@@ -110,6 +110,7 @@ return array(
         'Barryvdh\Debugbar\ServiceProvider',
         'Barryvdh\LaravelIdeHelper\IdeHelperServiceProvider',
         'Mews\Captcha\CaptchaServiceProvider',
+        'Maatwebsite\Excel\ExcelServiceProvider',
     ),
     /*
       |--------------------------------------------------------------------------
@@ -173,5 +174,6 @@ return array(
         'View' => 'Illuminate\Support\Facades\View',
         'Debugbar' => 'Barryvdh\Debugbar\Facade',
         'Captcha' => 'Mews\Captcha\Facades\Captcha',
+        'Excel' => 'Maatwebsite\Excel\Facades\Excel',
     ),
 );

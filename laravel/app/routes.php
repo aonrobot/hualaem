@@ -18,3 +18,4 @@ Route::get('/', function() {
 
 
 Route::controller('register', 'mix5003\Hualaem\Frontend\RegisterController');
+Route::controller('import/user','mix5003\Hualaem\Backend\ImportUserController');
