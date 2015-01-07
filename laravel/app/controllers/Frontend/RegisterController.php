@@ -10,21 +10,21 @@ class RegisterController extends FrontendController {
     public function getIndex() {
         $allProvinces = \Province::orderBy('name')->get();
         $provinces = [];
-        foreach($allProvinces as $province){
+        foreach ($allProvinces as $province) {
             $provinces[$province->id] = $province->name;
         }
         $allDistricts = \District::orderBy('name')->get();
         $districts = [];
-        foreach($allDistricts as $district){
+        foreach ($allDistricts as $district) {
             $districts[$district->id] = $district->name;
         }
-        
+
         $allSubDistricts = \SubDistrict::orderBy('name')->get();
         $subDistricts = [];
-        foreach($allSubDistricts as $subDistrict){
+        foreach ($allSubDistricts as $subDistrict) {
             $subDistricts[$subDistrict->id] = $subDistrict->name;
         }
-        
+
         return $this->view('register', compact('provinces', 'districts', 'subDistricts'));
     }
 
@@ -41,19 +41,19 @@ class RegisterController extends FrontendController {
             'house_no' => 'required',
             'road' => 'required',
             'village_no' => 'required|integer|min:1',
-            'sub_district_id' => 'required', //TODO: Check Exists
-            'district_id' => 'required', //TODO: Check Exists
-            'province_id' => 'required', //TODO: Check Exists
+            'sub_district_id' => 'required|exists:sub_districts,id', //TODO: Check Exists
+            'district_id' => 'required|exists:districts,id', //TODO: Check Exists
+            'province_id' => 'required|exists:provinces,id', //TODO: Check Exists
             'postcode' => 'required|integer|min:10000|max:99999',
             'phone_no' => 'required', //TODO: Check Format
         ];
 
-        $inp = Input::only(array_keys($rules));
+        $inp = Input::only(array_merge(array_keys($rules), array('password_confirmation')));
         $v = \Validator::make($inp, $rules);
 
         if ($v->passes()) {
             $user = new \User();
-            $user->username = Input::get('Username');
+            $user->username = Input::get('username');
             $user->password = \Hash::make(Input::get('password'));
             $user->email = Input::get('email');
             $user->firstname_th = Input::get('firstname_th');
@@ -72,6 +72,8 @@ class RegisterController extends FrontendController {
             $address->postcode = Input::get('postcode');
             $address->phone_no = Input::get('phone_no');
             $user->addresses()->save($address);
+            
+            return \Redirect::to('/');
         } else {
             return \Redirect::back()->withErrors($v)->withInput();
         }

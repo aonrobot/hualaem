@@ -87,6 +87,9 @@ Form::macro('myInput', function($name, $placeholder, $type = 'text', $value = nu
     if ($value == null) {
         $value = Input::get($name);
     }
+    if ($value == null) {
+        $value = Input::old($name);
+    }
 
     return sprintf($format, $name, $name, $type, $placeholder, $value, $txtOption);
 });
