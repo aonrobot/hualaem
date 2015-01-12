@@ -16,6 +16,12 @@ Route::get('/', function() {
     return "hello";
 });
 
+Route::group(array(), function() {
+    Route::controller('register', 'mix5003\Hualaem\Frontend\RegisterController');
+});
 
-Route::controller('register', 'mix5003\Hualaem\Frontend\RegisterController');
-Route::controller('import/user','mix5003\Hualaem\Backend\ImportUserController');
+
+Route::group(array('prefix' => 'admin'), function() {
+    Route::controller('import', 'mix5003\Hualaem\Backend\ImportUserController');
+});
+
