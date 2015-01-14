@@ -13,9 +13,9 @@ class CreateUsers extends Migration {
     public function up() {
         Schema::create('users', function(Blueprint $table) {
             $table->increments('id');
-            $table->string('username', 60);
-            $table->string('password', 60);
-            $table->enum('role', ['UNVERIFY', 'VERIFIED', 'ADMIN']);
+            $table->string('username', 60)->nullable();
+            $table->string('password', 60)->nullable();
+            $table->enum('role', ['UNVERIFY', 'VERIFIED', 'ADMIN'])->default('UNVERIFY');
             $table->integer('student_id')->unsigned()->nullable();
 
             $table->string('prefix_th', 10)->nullable();

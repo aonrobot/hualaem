@@ -16,51 +16,88 @@ class ImportUserController extends BackendController {
     }
 
     public function postStep1() {
-        if(Input::hasFile('file_person')){
+        if (Input::hasFile('file_person')) {
             $filePerson = \Input::file('file_person');
-            
-            if(!$filePerson->getClientOriginalExtension() == 'xlsx'){
-                return "Error ".$filePerson->getClientOriginalExtension();
+
+            if (!$this->isRightExtension($filePerson->getClientOriginalExtension())) {
+                return "Error " . $filePerson->getClientOriginalExtension();
                 //TODO: Error
             }
-        }else{
+        } else {
             //TODO: Error
             return "ERROR";
         }
-        
-        if(Input::hasFile('file_school')){
+
+        if (Input::hasFile('file_school')) {
             $fileSchool = \Input::file('file_school');
-            
-            if(!$fileSchool->getClientOriginalExtension() == 'xlsx'){
-                return "Error ".$fileSchool->getClientOriginalExtension();
+
+            if (!$this->isRightExtension($fileSchool->getClientOriginalExtension())) {
+                return "Error " . $fileSchool->getClientOriginalExtension();
                 //TODO: Error
             }
-        }else{
+        } else {
             //TODO: Error
             return "ERROR";
         }
-        
-        if(Input::hasFile('file_camp')){
+
+        if (Input::hasFile('file_camp')) {
             $fileCamp = \Input::file('file_camp');
-            
-            if(!$fileCamp->getClientOriginalExtension() == 'xlsx'){
-                return "Error ".$fileCamp->getClientOriginalExtension();
+
+            if (!$this->isRightExtension($fileCamp->getClientOriginalExtension())) {
+                return "Error " . $fileCamp->getClientOriginalExtension();
                 //TODO: Error
             }
-        }else{
+        } else {
             //TODO: Error
             return "ERROR";
         }
-        var_dump($filePerson,$fileSchool,$fileCamp);
-        $filePerson->move(storage_path('tmp'),'person.xlsx');
-        $fileSchool->move(storage_path('tmp'),'school.xlsx');
-        $fileCamp->move(storage_path('tmp'),'camp.xlsx');
-        
+
+        $filePerson->move(storage_path('tmp'), 'person.csv');
+        $fileSchool->move(storage_path('tmp'), 'school.csv');
+        $fileCamp->move(storage_path('tmp'), 'camp.csv');
+
+
         return \Redirect::action('mix5003\Hualaem\Backend\ImportUserController@getStep2');
     }
-    
-    public function getStep2(){
-        return $this->view('import.user.step2');
+
+    private function isRightExtension($ext) {
+        return strtolower($ext) === 'csv';
+    }
+
+    public function getStep2() {
+        if (!file_exists(storage_path('tmp/person.csv')) || !file_exists(storage_path('tmp/school.csv')) || !file_exists(storage_path('tmp/camp.csv'))) {
+            return \Redirect::action('mix5003\Hualaem\Backend\ImportUserController@getStep1');
+        }
+
+        //Fix Thai in csv 
+        setlocale(LC_ALL, 'en_US.UTF-8');
+        // setlocale ( LC_ALL, 'th_TH.TIS-620' );
+
+        $personCols = $this->getColumnList(storage_path('tmp/person.csv'));
+        $schoolCols = $this->getColumnList(storage_path('tmp/school.csv'));
+        $campCols = $this->getColumnList(storage_path('tmp/camp.csv'));
+        
+        $importable = \Config::get('importable.admin_user_import');
+        
+        $cols = [
+            'person'=>$personCols,
+            'school'=>$schoolCols,
+            'camp'=>$campCols,
+        ];
+        
+        return $this->view('import.user.step2',compact('cols','importable'));
+    }
+
+    private function getColumnList($filepath) {
+        $fp = fopen($filepath, 'r');
+        $cols = fgetcsv($fp, 0, "\t", '"');
+        fclose($fp);
+        $cols = array_filter($cols);
+        return $cols;
+    }
+
+    public function postStep2() {
+        
     }
 
 }

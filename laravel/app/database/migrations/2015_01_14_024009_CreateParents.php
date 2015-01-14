@@ -11,7 +11,7 @@ class CreateParents extends Migration {
      * @return void
      */
     public function up() {
-        Schema::create('parents', function(Blueprint $table) {
+        Schema::create('user_parents', function(Blueprint $table) {
             $table->increments('id');
             $table->integer('user_id')->unsigned();
             $table->string('prefix_th', 10)->default('');
@@ -34,7 +34,7 @@ class CreateParents extends Migration {
      * @return void
      */
     public function down() {
-        Schema::drop('parents');
+        Schema::drop('user_parents');
     }
 
 }

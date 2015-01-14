@@ -3,7 +3,7 @@
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
 
-class CreateCampUser extends Migration {
+class CreateEnroll extends Migration {
 
     /**
      * Run the migrations.
@@ -11,10 +11,11 @@ class CreateCampUser extends Migration {
      * @return void
      */
     public function up() {
-        Schema::create('camp_user', function(Blueprint $table) {
+        Schema::create('enrolls', function(Blueprint $table) {
             $table->increments('id');
             $table->integer('user_id')->unsigned();
             $table->integer('camp_id')->unsigned();
+            $table->enum('role', ['STUDENT', 'STAFF']);
             $table->timestamps();
         });
     }
@@ -25,7 +26,7 @@ class CreateCampUser extends Migration {
      * @return void
      */
     public function down() {
-        Schema::drop('camp_user');
+        Schema::drop('enrolls');
     }
 
 }
