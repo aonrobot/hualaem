@@ -158,7 +158,7 @@ class ImportUserController extends BackendController {
 
             $originData = \Session::get('import_data');
             $importable = \Config::get('importable.admin_user_import');
-            
+
             $provinces = [];
             foreach (\Province::all() as $province) {
                 $provinces[$province->name] = $province->id;
@@ -185,6 +185,9 @@ class ImportUserController extends BackendController {
                             $obj = new \User();
                             $obj->student_id = $csvRow[0];
                             $obj->role = 'VERIFIED';
+                            $csvRow[$data[$type]['citizen_id']] = str_replace(array('-',' '), '', $csvRow[$data[$type]['citizen_id']]);
+                            $csvRow[$data[$type]['mobile_no']] = str_replace(array('-',' '), '', $csvRow[$data[$type]['mobile_no']]);
+                            $csvRow[$data[$type]['birthdate']] = $this->reformatDate(trim($csvRow[$data[$type]['birthdate']]));
                         } elseif ($type == 'addresses') {
                             $obj = new \Address();
                             $obj->user_id = \Cache::get('user_' . $csvRow[0]);
@@ -207,6 +210,7 @@ class ImportUserController extends BackendController {
                             if (empty($csvRow[$originData[$type]['firstname_th']])) {
                                 continue;
                             }
+                            $csvRow[$data[$type]['mobile_no']] = str_replace(array('-',' '), '', $csvRow[$data[$type]['mobile_no']]);
                             $obj = new \UserParent();
                             $obj->user_id = \Cache::get('user_' . $csvRow[0]);
                             if ($type == 'father') {
@@ -246,16 +250,15 @@ class ImportUserController extends BackendController {
                                 continue;
                             }
                             $obj = new \Camp();
-                            //TODO: Camp start
-                            $startDate =$csvRow[$data[$type]['camp_start']];
-                            if(strpos($startDate, '-') !== false){
-                                $arr = explode('-',$startDate);
+                            $startDate = $csvRow[$data[$type]['camp_start']];
+                            if (strpos($startDate, '-') !== false) {
+                                $arr = explode('-', $startDate);
                                 $csvRow[$data[$type]['camp_start']] = $this->reformatDate(trim($arr[0]));
-                                $obj->camp_end  = $this->reformatDate(trim($arr[1])); 
-                            }else{
+                                $obj->camp_end = $this->reformatDate(trim($arr[1]));
+                            } else {
                                 $csvRow[$data[$type]['camp_start']] = $this->reformatDate(trim($startDate));
                             }
-                            
+
                             unset($data[$type]['role']);
 
                             if (!empty($provinces[$csvRow[$data[$type]['province']]])) {
@@ -300,12 +303,15 @@ class ImportUserController extends BackendController {
         return $this->view('import.user.step1');
     }
 
-    private function reformatDate($str){
-        $arr = explode('/',$str);
+    private function reformatDate($str) {
+        $arr = explode('/', $str);
+        if (count($arr) != 3) {
+            $arr = explode('-', $str);
+        }
         if (count($arr) != 3) {
             return null;
         }
-        return ($arr[0]-543).'-'.$arr[1].'-'.$arr[0];
+        return (intval($arr[0]) - 543) . '-' . $arr[1] . '-' . $arr[2];
     }
-    
+
 }
