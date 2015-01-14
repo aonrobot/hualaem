@@ -12,6 +12,7 @@
         {{ HTML::style('css/webflow.css') }}
         {{ HTML::style('css/tgt-admin.webflow.css') }}
         @show
+        {{ HTML::style('css/custom.css') }}
 
         @section('js_head')
         <script src="https://ajax.googleapis.com/ajax/libs/webfont/1.4.7/webfont.js"></script>

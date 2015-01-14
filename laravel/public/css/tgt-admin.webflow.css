@@ -55,7 +55,7 @@ p {
   margin-bottom: 5px;
   padding-right: 60px;
   padding-left: 60px;
-  color: rgba(0, 0, 0, 0.40);
+  color: rgba(0, 0, 0, 0.4);
   font-size: 23px;
   line-height: 30px;
   font-weight: 300;
@@ -516,6 +516,14 @@ p {
 .right.wait_validate {
   text-shadow: none;
 }
+.right.error {
+  color: #9e6767;
+  text-shadow: none;
+}
+.right.success {
+  color: #67839e;
+  text-shadow: none;
+}
 .calendar {
   text-shadow: none;
 }
@@ -641,8 +649,12 @@ p {
 }
 .image.news_pic {
   width: 100%;
-  height: 500px;
+  height: auto;
   background-color: #e0e0e0;
+  text-shadow: none;
+}
+.image.news_pic.big {
+  height: 500px;
   text-shadow: none;
 }
 .text {

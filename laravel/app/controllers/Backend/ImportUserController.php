@@ -76,28 +76,80 @@ class ImportUserController extends BackendController {
         $personCols = $this->getColumnList(storage_path('tmp/person.csv'));
         $schoolCols = $this->getColumnList(storage_path('tmp/school.csv'));
         $campCols = $this->getColumnList(storage_path('tmp/camp.csv'));
-        
+
         $importable = \Config::get('importable.admin_user_import');
-        
+
         $cols = [
-            'person'=>$personCols,
-            'school'=>$schoolCols,
-            'camp'=>$campCols,
+            'person' => $personCols,
+            'school' => $schoolCols,
+            'camp' => $campCols,
         ];
-        
-        return $this->view('import.user.step2',compact('cols','importable'));
+
+        return $this->view('import.user.step2', compact('cols', 'importable'));
+    }
+
+    private function getCSVRow($fp) {
+        $cols = fgetcsv($fp, 0, "\t", '"');
+        return $cols;
     }
 
     private function getColumnList($filepath) {
         $fp = fopen($filepath, 'r');
-        $cols = fgetcsv($fp, 0, "\t", '"');
+        $cols = $this->getCSVRow($fp);
         fclose($fp);
-        $cols = array_filter($cols);
-        return $cols;
+        return array_filter($cols);
     }
 
     public function postStep2() {
+        \Session::set('import_data', Input::all());
+        return $this->getStep3();
+        //return \Redirect::action('mix5003\Hualaem\Backend\ImportUserController@getStep3');
+    }
+
+    public function getStep3() {
+        //Not Import 
+        //Camp: Level, Search & Writing,Ed.Yr.,ข้อเขียน
+        //TODO: Import Level
+        //TODO: Import ข้อเขียน
+
+        $limitRow = 10;
+        $data = \Session::get('import_data');
+        $importable = \Config::get('importable.admin_user_import');
+
+        $previewData = [];
+        $headerData = [];
+        foreach ($importable as $keyType => $types) {
+            //Cache 10 Rows
+            $cacheTable = [];
+            $fp = fopen(storage_path('tmp/' . $keyType . '.csv'),'r');
+            $this->getCSVRow($fp);
+            for ($i = 0; $i < $limitRow; $i++) {
+                $cacheTable[] = $this->getCSVRow($fp);
+            }
+            fclose($fp);
+            
+            foreach ($types as $type => $fields) {
+                $table = [];
+                for ($i = 0; $i < $limitRow; $i++) {
+                    $row = [];
+                    
+                    foreach ($fields as $field => $label) {
+                        if(!empty($data[$type][$field])){
+                            $row[$field] = $cacheTable[$i][$data[$type][$field]];
+                        }else{
+                            $row[$field] = null;
+                        }
+                        
+                    }
+                    $table[] = $row;
+                }
+                $headerData[$type] = $fields;
+                $previewData[$type] = $table;
+            }
+            
+        }
         
+        return $this->view('import.user.step3',compact('previewData','importable'));
     }
 
 }
