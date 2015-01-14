@@ -63,17 +63,17 @@ class CreateAddresses extends Migration {
         Schema::create('addresses', function(Blueprint $table) {
             $table->increments('id');
             $table->integer('user_id')->unsigned();
-            $table->string('house_no', 10);
-            $table->string('road', 30);
-            $table->string('village_no', 5)->nullable();
-            $table->string('village', 30)->nullable();
+            $table->string('house_no', 10)->default('');
+            $table->string('road', 30)->default('');
+            $table->string('village_no', 5)->default('');
+            $table->string('village', 30)->default('');
 
             $table->integer('sub_district_id')->unsigned()->nullable();
             $table->integer('district_id')->unsigned()->nullable();
             $table->integer('province_id')->unsigned()->nullable();
-
-            $table->string('postcode', 5);
-            $table->string('phone_no', 20)->nullable();
+            
+            $table->string('postcode', 5)->default('');
+            $table->string('phone_no', 20)->default('');
 
             $table->timestamps();
         });
