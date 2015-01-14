@@ -17,7 +17,7 @@ class CreateParents extends Migration {
             $table->string('prefix_th', 10)->default('');
             $table->string('firstname_th', 50)->default('');
             $table->string('lastname_th', 50)->default('');
-            $table->string('mobile', 10)->default('');
+            $table->string('mobile_no', 10)->default('');
             $table->string('email', 25)->default('');
             $table->string('job', 50)->default('');
             $table->string('job_title', 50)->default('');

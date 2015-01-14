@@ -9,6 +9,7 @@ return [
                 //FieldName => Label
                 'username' => 'Username',
                 //'student_id' => 'Student ID',
+                'citizen_id' => 'เลขประจำตัวประชาชน',
                 'prefix_th' => 'คำนำหน้า',
                 'firstname_th' => 'ชื่อ',
                 'lastname_th' => 'สกุล',
@@ -58,6 +59,7 @@ return [
                 'name' => 'ชื่อสถานศึกษา'
             ],
             'semester' => [
+                'name' => 'ชื่อสถานศึกษา',
                 'year' => 'ปีการศึกษา',
                 'level' => 'ระดับชั้น',
                 'semester' => 'เทอมที่'
@@ -68,6 +70,7 @@ return [
             'camp' => [
                 'name' => 'หลักสูตร',
                 'type' => 'ประเภท',
+                'level' => 'ช่วงชั้น',
                 'camp_start' => 'วันที่เริ่ม',
                 //'camp_end'=>'',
                 'place' => 'สถานที่',

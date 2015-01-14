@@ -1,6 +1,6 @@
 <?php
 
-class Semester extends Eloquent {
+class Camp extends Eloquent {
 
     public function province() {
         return $this->belongsTo('Province');

@@ -15,7 +15,8 @@ class CreateCamps extends Migration {
             $table->increments('id');
             $table->string('name',200);
             $table->string('type',200);
-            $table->date('camp_start');
+            $table->string('level',50);
+            $table->date('camp_start')->nullable();
             $table->date('camp_end')->nullable();
             $table->string('place',200);
             $table->integer('province_id')->unsigned();
