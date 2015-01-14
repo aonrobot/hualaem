@@ -28,4 +28,20 @@ class User extends Eloquent implements UserInterface, RemindableInterface {
         return $this->hasMany('Address');
     }
 
+    public function parents() {
+        return $this->hasMany('UserParent');
+    }
+
+    public function semesters() {
+        return $this->hasMany('Semester');
+    }
+
+    public function enrolls() {
+        return $this->hasMany('Enroll');
+    }
+
+    public function camps() {
+        return $this->hasManyThrough('Camp', 'Enroll');
+    }
+
 }

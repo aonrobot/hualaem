@@ -1,7 +1,7 @@
 <?php
 
 class District extends Eloquent {
-    
+
     public $timestamps = false;
 
     public function sub_districts() {
