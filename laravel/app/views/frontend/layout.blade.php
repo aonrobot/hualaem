@@ -80,27 +80,7 @@
                 </ul>
             </div>
         </div>
-        <div class="div slide" style="display: none">
-            <div class="w-slider slider" data-animation="slide" data-duration="500" data-infinite="1">
-                <div class="w-slider-mask">
-                    <div class="w-slide"></div>
-                    <div class="w-slide"></div>
-                </div>
-                <div class="w-slider-arrow-left">
-                    <div class="w-icon-slider-left"></div>
-                </div>
-                <div class="w-slider-arrow-right">
-                    <div class="w-icon-slider-right"></div>
-                </div>
-                <div class="w-slider-nav w-round"></div>
-            </div>
-        </div>
-        <div class="section blue" data-anchor="slide1" style="display: none">
-            <div class="container">
-                <h1 class="heading index _1">มูลนิธิหัวแหลมเพื่อสังคม<br>The Gifted and Talented Foundation</h1>
-                <h1 class="heading index _2">“ เป็นคนดี มีปัญญา สร้างคุณประโยชน์ “</h1>
-            </div>
-        </div>
+
         <div class="section">
             @yield('content')
         </div>

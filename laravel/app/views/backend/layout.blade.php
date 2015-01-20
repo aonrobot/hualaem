@@ -8,65 +8,85 @@
         <meta name="generator" content="Webflow">
 
         @section('css')
-        {{ HTML::style('css/normalize.css') }}
-        {{ HTML::style('css/webflow.css') }}
-        {{ HTML::style('css/tgt-admin.webflow.css') }}
+        {{ HTML::style('css/bootstrap.min.css') }}
         @show
         {{ HTML::style('css/custom.css') }}
 
         @section('js_head')
-        <script src="https://ajax.googleapis.com/ajax/libs/webfont/1.4.7/webfont.js"></script>
-        <script>
-WebFont.load({
-    google: {
-        families: ["Ubuntu:300,300italic,400,400italic,500,500italic,700,700italic", "PT Sans:400,400italic,700,700italic", "Roboto:300,regular", "Roboto Condensed:regular"]
-    }
-});
-        </script>
-        {{ HTML::script('js/modernizr.js'); }}
+        {{ HTML::script('js/modernizr.js') }}
         @show
     </head>
     <body>
         <div class="navbar">
-            <div class="w-container">
-                <div class="w-row">
-                    <div class="w-col w-col-6 w-col-small-6 w-col-tiny-6 left-nav">
-                        <a class="w-inline-block" href="index.html"><img class="logo" src="{{ URL::asset('images/1415577731_handdrawn-lightbulb-48.png') }}" alt="545faced7848976b2dd62a5e_1415577731_handdrawn-lightbulb-48.png">
-                            <div class="brand"><em class="head text logo">TGT<br></em>
-                            </div>
+            <div class="container">
+                <div class="row">
+                    <div class="col-md-6 text-left">
+                        <a  href="index.html">
+                            <img src="{{ URL::asset('images/1415577731_handdrawn-lightbulb-48.png') }}" alt="545faced7848976b2dd62a5e_1415577731_handdrawn-lightbulb-48.png">
+                            <em>TGT |<br></em>
                         </a>
                     </div>
-                    <div class="w-col w-col-6 w-col-small-6 w-col-tiny-6 right-nav">
-                        <div class="w-row">
-                            <div class="w-col w-col-3 w-col-small-3 w-col-tiny-6"><img class="head col noti" src="{{ URL::asset('https://d3e54v103j8qbb.cloudfront.net/img/image-placeholder.svg') }}" alt="image-placeholder.svg">
-                            </div>
-                            <div class="w-col w-col-3 w-col-small-3 w-col-tiny-6"><img class="head col noti" src="{{ URL::asset('https://d3e54v103j8qbb.cloudfront.net/img/image-placeholder.svg') }}" alt="image-placeholder.svg">
-                            </div>
-                            <div class="w-col w-col-3 w-col-small-3 w-col-tiny-6 w-hidden-tiny"><img class="head col noti" src="{{ URL::asset('https://d3e54v103j8qbb.cloudfront.net/img/image-placeholder.svg') }}" alt="image-placeholder.svg">
-                            </div>
-                            <div class="w-col w-col-3 w-col-small-3 w-col-tiny-6 w-hidden-tiny"><img class="head col noti" src="{{ URL::asset('https://d3e54v103j8qbb.cloudfront.net/img/image-placeholder.svg') }}" alt="image-placeholder.svg">
-                            </div>
+                    <div class="col-md-6 text-right">
+                        <br>
+                        <div class="form">
+
+                            <!-- Form for login-->
+                            
+                            <form id="email-form" name="login-form" class="form-horizontal">
+                                <div class="row">
+                                    <div class="col-md-4">
+                                        <img class="icon _48" src="{{ URL::asset('images/1415840683_user-32.png') }}" alt="5463af9714d72b9b0fb5a9c1_1415840683_user-32.png">
+                                    </div>
+                                    <div class="col-md-4">
+                                        <input class="form-control input-sm" id="username" type="text" placeholder="Username" name="username" required="required" autofocus="autofocus" data-name="username">
+                                    </div>
+                                    <div class="col-md-4">
+                                        <input class="btn btn-default btn-sm col-md-12"  value="Sign Up">
+                                    </div>
+                                </div>
+                                
+                                <div class="row">
+                                    <div class="col-md-4">
+                                        <img class="icon _48" src="{{ URL::asset('images/1415840688_lock-open-32.png') }}" alt="5463afee895960d5616d9d09_1415840688_lock-open-32.png">
+                                    </div>
+                                    <div class="col-md-4">
+                                        <input class="form-control input-sm" id="password" type="password" placeholder="Password" name="password" required="required" data-name="password">
+                                    </div>
+                                    <div class="col-md-4">
+                                        <input class="btn btn-default btn-sm col-md-12"  value="Sign In">
+                                    </div>
+                                </div>
+                               
+                            </form>
+
+                            <!-- Form for login-->
+
                         </div>
                     </div>
                 </div>
             </div>
         </div>
-        <div class="w-nav menubar" data-collapse="medium" data-animation="default" data-duration="400" data-contain="1">
-            <div class="w-container head col noti">
-                <nav class="w-nav-menu w-clearfix left" role="navigation"><a class="w-nav-link navlink" href="#">Dashboard</a><a class="w-nav-link navlink" href="#">Import/Export</a><a class="w-nav-link navlink" href="#">Report</a><a class="w-nav-link navlink" href="#">EntryData</a><a class="w-nav-link navlink" href="#">Search</a><a class="w-nav-link navlink" href="#">Validation</a><a class="w-nav-link navlink" href="#">Camp</a><a class="w-nav-link navlink" href="#">Setting</a>
-                </nav>
-                <div class="w-nav-button menu_button">
-                    <div class="w-icon-nav-menu"></div>
-                </div>
+        <div class="navbar navbar-default" data-collapse="medium" data-animation="default" data-duration="400" data-contain="1">
+            <div class="container">
+                <ul class="nav navbar-nav">
+                    <li><a class="w-nav-link navlink" href="#">Dashboard</a></li>
+                    <li><a class="w-nav-link navlink" href="#">Import/Export</a></li>
+                    <li><a class="w-nav-link navlink" href="#">Report</a></li>
+                    <li><a class="w-nav-link navlink" href="#">EntryData</a></li>
+                    <li><a class="w-nav-link navlink" href="#">Search</a></li>
+                    <li><a class="w-nav-link navlink" href="#">Validation</a></li>
+                    <li><a class="w-nav-link navlink" href="#">Camp</a></li>
+                    <li><a class="w-nav-link navlink" href="#">Setting</a></li>
+                    
+                </ul>
             </div>
         </div>
-        
-        @yield('content')
-        
-        <div class="social-section">
-            <div class="w-container">
-                <div class="footer text">© 2014&nbsp;The Gifted and Talented Foundation. All Rights Reserved.</div>
-            </div>
+
+        <div class="section">
+            @yield('content')
+        </div>
+        <div class="navbar navbar-default" style="margin:0">
+            <div class=" text-center" style="color:#FFF;padding:40px 0;" >© 2014&nbsp;The Gifted and Talented Foundation. All Rights Reserved.</div>
         </div>
         @section('js_foot')
         {{ HTML::script('js/jquery.min.js') }}
