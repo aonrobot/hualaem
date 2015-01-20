@@ -14,7 +14,7 @@
     </div>
     <div class="w-container content">
         <div class="content div block">
-            <h1 class="menu_name">Excel / CSV (Left colum must be student id)</h1>
+            <h1 class="menu_name">CSV Unicode Text (First colum must be student id)</h1>
             <div class="content camp_detail">
                 <div class="w-form form register_camp">
                     <form method="POST" action="{{ URL::action('mix5003\Hualaem\Backend\ImportUserController@getStep1') }}" enctype="multipart/form-data">
