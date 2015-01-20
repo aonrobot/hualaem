@@ -2,3 +2,17 @@
     max-width: initial;
     height:auto;
 }
+.icon._48 {
+margin-right: 8px;
+margin-bottom: 18px;
+text-shadow: none;
+}
+
+.well label {
+    color:#000;
+}
+
+label.register{
+    padding:0;
+    font-size:14px;
+}
