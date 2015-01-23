@@ -19,16 +19,6 @@
         <div class="well">
             <div>
                 <div class="w-form">
-                    @if($errors->any())
-                    <div class="w-form-fail" style="display:block">
-                        <ul>
-                            @foreach ($errors->all('<li>:message</li>') as $message)
-                            {{ $message }}
-                            @endforeach
-                        </ul>
-                    </div>
-                    <br>
-                    @endif
                     <!-- Form for Register -->
                     <form  id="email-form-2" name="form-register" method="POST">
                         <div class="row">

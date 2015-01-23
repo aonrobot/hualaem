@@ -7,7 +7,7 @@
         <link rel="shortcut icon" type="image/x-icon" href="https://y7v4p6k4.ssl.hwcdn.net/placeholder/favicon.ico">
         <meta name="generator" content="Webflow">
 
-        
+
         @section('css')
         {{ HTML::style('css/bootstrap.min.css') }}
         @show
@@ -32,7 +32,7 @@
                         <div class="form">
 
                             <!-- Form for login-->
-                            
+
                             <form id="email-form" name="login-form" class="form-horizontal">
                                 <div class="row">
                                     <div class="col-md-4">
@@ -45,7 +45,7 @@
                                         <input class="btn btn-default btn-sm col-md-12"  value="Sign Up">
                                     </div>
                                 </div>
-                                
+
                                 <div class="row">
                                     <div class="col-md-4">
                                         <img class="icon _48" src="{{ URL::asset('images/1415840688_lock-open-32.png') }}" alt="5463afee895960d5616d9d09_1415840688_lock-open-32.png">
@@ -57,7 +57,7 @@
                                         <input class="btn btn-default btn-sm col-md-12"  value="Sign In">
                                     </div>
                                 </div>
-                               
+
                             </form>
 
                             <!-- Form for login-->
@@ -74,12 +74,24 @@
                     <li><a class="w-nav-link navlink" href="#">Calendar</a></li>
                     <li><a class="w-nav-link navlink" href="#">Profile</a></li>
                 </ul>
-            
+
                 <ul class="nav navbar-nav navbar-right">
                     <li><a class="w-nav-link navlink" href="#">Register Camp</a></li>
                 </ul>
             </div>
         </div>
+        @if($errors->any())
+        <div class="container">
+            <div class="alert alert-warning alert-dismissible" role="alert">
+                <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                <ul>
+                    @foreach ($errors->all('<li>:message</li>') as $message)
+                    {{ $message }}
+                    @endforeach
+                </ul>
+            </div>
+        </div>
+        @endif
 
         <div class="section">
             @yield('content')
@@ -89,6 +101,7 @@
         </div>
         @section('js_foot')
         {{ HTML::script('js/jquery.min.js') }}
+        {{ HTML::script('js/bootstrap.min.js') }}
         <!--[if lte IE 9]><script src="https://cdnjs.cloudflare.com/ajax/libs/placeholders/3.0.2/placeholders.min.js"></script><![endif]-->
         @show
     </body>
