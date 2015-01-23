@@ -28,21 +28,22 @@
                         </a>
                     </div>
                     <div class="col-md-6 text-right">
+                        @if(!Auth::check())
                         <br>
                         <div class="form">
 
                             <!-- Form for login-->
 
-                            <form id="email-form" name="login-form" class="form-horizontal">
+                            <form method="POST" action="{{ URL::route('guest.login') }}" class="form-horizontal">
                                 <div class="row">
                                     <div class="col-md-4">
                                         <img class="icon _48" src="{{ URL::asset('images/1415840683_user-32.png') }}" alt="5463af9714d72b9b0fb5a9c1_1415840683_user-32.png">
                                     </div>
                                     <div class="col-md-4">
-                                        <input class="form-control input-sm" id="username" type="text" placeholder="Username" name="username" required="required" autofocus="autofocus" data-name="username">
+                                        <input class="form-control input-sm" id="username" type="text" placeholder="Username" name="username" required="required" tabindex="1">
                                     </div>
                                     <div class="col-md-4">
-                                        <a href="{{ URL::route('guest.register') }}" class="btn btn-default btn-sm col-md-12">Sign Up</a>
+                                        <a href="{{ URL::route('guest.register') }}" class="btn btn-default btn-sm col-md-12" tabindex="4">Sign Up</a>
                                     </div>
                                 </div>
 
@@ -51,18 +52,19 @@
                                         <img class="icon _48" src="{{ URL::asset('images/1415840688_lock-open-32.png') }}" alt="5463afee895960d5616d9d09_1415840688_lock-open-32.png">
                                     </div>
                                     <div class="col-md-4">
-                                        <input class="form-control input-sm" id="password" type="password" placeholder="Password" name="password" required="required" data-name="password">
+                                        <input class="form-control input-sm" id="password" type="password" placeholder="Password" name="password" required="required" tabindex="2">
                                     </div>
                                     <div class="col-md-4">
-                                        <input class="btn btn-default btn-sm col-md-12"  value="Sign In">
+                                        <input class="btn btn-default btn-sm col-md-12" type="submit" value="Sign In" tabindex="3">
                                     </div>
                                 </div>
 
                             </form>
-
+                            
                             <!-- Form for login-->
 
                         </div>
+                        @endif
                     </div>
                 </div>
             </div>

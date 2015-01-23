@@ -20,6 +20,9 @@ Route::group(array(), function() {
     Route::controller('register', 'mix5003\Hualaem\Frontend\RegisterController',[
         'getIndex' => 'guest.register'
     ]);
+    Route::controller('login', 'mix5003\Hualaem\Frontend\LoginController',[
+        'getIndex' => 'guest.login'
+    ]);
 });
 
 

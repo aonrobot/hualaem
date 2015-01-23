@@ -31,7 +31,7 @@ class RegisterController extends FrontendController {
     public function postIndex() {
         $rules = [
             'username' => 'required|unique:users',
-            'password' => 'required|confirmed|min:8',
+            'password' => 'required|confirmed|min:6',
             'email' => 'required|email|unique:users',
             'firstname_th' => 'required',
             'lastname_th' => 'required',
