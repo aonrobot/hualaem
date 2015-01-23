@@ -18,7 +18,7 @@
             <h1 class="menu_name">Select Field</h1>
             <div class="content camp_detail">
                 <div class=" form register_camp">
-                    <form class="" action="{{ URL::action('mix5003\Hualaem\Backend\ImportUserController@getStep2') }}" method="POST">
+                    <form class="" action="{{ URL::route('admin.import.step2') }}" method="POST">
                         @foreach($importable as $keyType => $types)
                         <div>
                             @foreach($types as $type => $fields)

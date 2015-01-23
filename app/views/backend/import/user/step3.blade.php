@@ -56,7 +56,7 @@
             <div class="content table"></div>
             <div class="content camp_detail">
                 <div class="w-form form register_camp">
-                    <form id="email-form" name="email-form" data-name="Email Form" method="POST" action="{{ URL::action('mix5003\Hualaem\Backend\ImportUserController@getStep3') }}">
+                    <form id="email-form" name="email-form" data-name="Email Form" method="POST" action="{{ URL::route('admin.import.step3') }}">
                         <div class="w-clearfix content register">
                             <input class="btn btn-info finish" type="submit" value="Confirm" data-wait="Please wait...">
                         </div>

@@ -17,7 +17,7 @@
             <h1 class="menu_name">CSV Unicode Text (First colum must be student id)</h1>
             <div class="content camp_detail">
                 <div class="form form register_camp">
-                    <form method="POST" action="{{ URL::action('mix5003\Hualaem\Backend\ImportUserController@getStep1') }}" enctype="multipart/form-data">
+                    <form method="POST" action="{{ URL::route('admin.import.step1') }}" enctype="multipart/form-data">
 
                         <div class="row">
                             <div class="col-md-2"><label for="file_person">Personal Info</label></div>

@@ -17,11 +17,18 @@ Route::get('/', function() {
 });
 
 Route::group(array(), function() {
-    Route::controller('register', 'mix5003\Hualaem\Frontend\RegisterController');
+    Route::controller('register', 'mix5003\Hualaem\Frontend\RegisterController',[
+        'getIndex' => 'guest.register'
+    ]);
 });
 
 
 Route::group(array('prefix' => 'admin'), function() {
-    Route::controller('import', 'mix5003\Hualaem\Backend\ImportUserController');
+    Route::controller('import', 'mix5003\Hualaem\Backend\ImportUserController',[
+        'getIndex'=>'admin.import.index',
+        'getStep1'=>'admin.import.step1',
+        'getStep2'=>'admin.import.step2',
+        'getStep3'=>'admin.import.step3',
+    ]);
 });
 

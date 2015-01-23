@@ -42,7 +42,7 @@
                                         <input class="form-control input-sm" id="username" type="text" placeholder="Username" name="username" required="required" autofocus="autofocus" data-name="username">
                                     </div>
                                     <div class="col-md-4">
-                                        <input class="btn btn-default btn-sm col-md-12"  value="Sign Up">
+                                        <a href="{{ URL::route('guest.register') }}" class="btn btn-default btn-sm col-md-12">Sign Up</a>
                                     </div>
                                 </div>
 

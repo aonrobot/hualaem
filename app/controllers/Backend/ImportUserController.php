@@ -58,7 +58,7 @@ class ImportUserController extends BackendController {
         $fileCamp->move(storage_path('tmp'), 'camp.csv');
 
 
-        return \Redirect::action('mix5003\Hualaem\Backend\ImportUserController@getStep2');
+        return \Redirect::route('admin.import.step2');
     }
 
     private function isRightExtension($ext) {
@@ -104,7 +104,7 @@ class ImportUserController extends BackendController {
     public function postStep2() {
         \Session::set('import_data', Input::all());
 
-        return \Redirect::action('mix5003\Hualaem\Backend\ImportUserController@getStep3');
+        return \Redirect::route('admin.import.step3');
     }
 
     public function getStep3() {
