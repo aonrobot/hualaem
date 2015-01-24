@@ -16,10 +16,14 @@ class CreateCamps extends Migration {
             $table->string('name',200);
             $table->string('type',200);
             $table->string('level',50);
+            $table->date('register_start');
+            $table->date('register_end')->nullable();
             $table->date('camp_start')->nullable();
             $table->date('camp_end')->nullable();
+            $table->string('image_path');
             $table->string('place',200);
             $table->integer('province_id')->unsigned();
+            $table->text('description');
             $table->timestamps();
         });
     }

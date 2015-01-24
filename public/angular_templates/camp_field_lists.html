@@ -1,0 +1,29 @@
+<div class="container well">
+    <div class="row">
+        <div class="col-md-12">
+            <h2>Secton 2 | Register Page</h2>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-md-12" id="field_lists">
+            <div class="row" ng-repeat="field in fields">
+                <div class="col-xs-9">
+                    <input class="form-control input-sm" name="fields[{{ $index}}][name]" ng-model="field.name" placeholder="Field Name">
+                </div>
+                <div class="col-xs-3">
+                    <select name="fields[{{ $index}}][type]" class="form-control input-sm" ng-model="field.type">
+                        <option value="text">Single Line</option>
+                        <option value="textarea">Multi Line</option>
+                        <option value="file">File</option>
+                    </select>
+                    <br>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-md-12">
+            <button type="button" class="btn btn-success" ng-click="addField()">Add Field +</button>
+        </div>
+    </div>
+</div>

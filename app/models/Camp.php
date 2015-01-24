@@ -2,6 +2,14 @@
 
 class Camp extends Eloquent {
 
+    public function fields(){
+        return $this->hasMany('CampField');
+    }
+    
+    public function subjects(){
+        return $this->hasMany('CampSubject');
+    }
+    
     public function province() {
         return $this->belongsTo('Province');
     }

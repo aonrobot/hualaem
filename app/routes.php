@@ -33,5 +33,14 @@ Route::group(array('prefix' => 'admin'), function() {
         'getStep2'=>'admin.import.step2',
         'getStep3'=>'admin.import.step3',
     ]);
+    
+    Route::controller('upload', 'mix5003\Hualaem\Backend\UploadController',[
+        'postImage'=>'admin.upload.image',
+        'postFile'=>'admin.upload.file'
+    ]);
+    
+    Route::controller('camp', 'mix5003\Hualaem\Backend\CampController',[
+        'getAdd'=>'admin.camp.add',
+    ]);
 });
 

@@ -75,21 +75,4 @@ App::down(function() {
  */
 
 require app_path() . '/filters.php';
-
-Form::macro('myInput', function($name, $placeholder, $type = 'text', $value = null, $options = []) {
-    $format = '<input class="form-control input-sm" id="%s" name="%s" type="%s" placeholder="%s" value="%s" required="required" %s>';
-
-    $txtOption = '';
-    foreach ($options as $key => $val) {
-        $txtOption .= sprintf(' %s="%s"', $key, $val);
-    }
-
-    if ($value == null) {
-        $value = Input::get($name);
-    }
-    if ($value == null) {
-        $value = Input::old($name);
-    }
-
-    return sprintf($format, $name, $name, $type, $placeholder, $value, $txtOption);
-});
+require app_path() . '/helpers.php';

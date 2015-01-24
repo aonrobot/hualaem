@@ -4,7 +4,6 @@ namespace mix5003\Hualaem\Backend;
 
 use BackendController;
 use Input;
-use Cache;
 
 class ImportUserController extends BackendController {
 
