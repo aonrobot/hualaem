@@ -4,7 +4,7 @@ var app = angular.module('CampForm', []);
 
 app.controller('SubjectController', ['$scope',
     function ($scope) {
-        $scope.subjects = [];
+        $scope.subjects = savedData.subjects;
 
         $scope.addSubject = function () {
             $scope.subjects.push({
@@ -28,7 +28,7 @@ app.directive('subjectList', function () {
 
 app.controller('FieldController', ['$scope',
     function ($scope) {
-        $scope.fields = [];
+        $scope.fields = savedData.fields;
 
         $scope.addField = function () {
             $scope.fields.push({});

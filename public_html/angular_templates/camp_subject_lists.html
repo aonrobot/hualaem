@@ -15,14 +15,14 @@
                             <a data-toggle="collapse" data-parent="#subject_list" href="#collapseSubject{{ subjectIndex }}" aria-expanded="true" aria-controls="collapseSubject{{ subjectIndex}}">
                                 {{ subjectIndex + 1 }} Subject 
                             </a>
-                            <input name="subjects[{{ subjectIndex }}][name]" class="form-control input-sm" placeholder="Subject">
+                            <input name="subjects[{{ subjectIndex }}][name]" ng-model="subject.name" class="form-control input-sm" placeholder="Subject">
                         </h4>
                     </div>
                     <div id="collapseSubject{{ subjectIndex }}" class="panel-collapse collapse" role="tabpanel" aria-labelledby="subject{{ subjectIndex }}">
                         <div class="panel-body">
                             <ul class="list-group">
                                 <li class="list-group-item" ng-repeat="test in subject.tests" ng-init="testIndex = $index">
-                                    <input name="subjects[{{ subjectIndex }}][tests][{{ testIndex }}][name]" class="form-control input-sm">
+                                    <input name="subjects[{{ subjectIndex }}][tests][{{ testIndex }}][name]" ng-model="test.name" class="form-control input-sm">
                                 </li>
                             </ul>
                             <button type="button" class="btn btn-success" ng-click="addTest(subject)">Add Score +</button>

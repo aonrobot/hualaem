@@ -14,7 +14,7 @@ class CampController extends BackendController {
             $provinces[$province->id] = $province->name;
         }
 
-        return $this->view('camp.add', compact('provinces'));
+        return $this->view('camp.form', compact('provinces'));
     }
 
     public function postAdd() {
@@ -73,6 +73,19 @@ class CampController extends BackendController {
             //TODO: Create Subject and field by my input
             return \Redirect::back()->withInput()->withErrors($v);
         }
+    }
+    
+    public function getEdit($campID){
+        $allProvinces = \Province::orderBy('name')->get();
+        $provinces = [];
+        foreach ($allProvinces as $province) {
+            $provinces[$province->id] = $province->name;
+        }
+
+        $camp = \Camp::find($campID);
+        $camp->load(['fields','subjects','subjects.tests']);
+        
+        return $this->view('camp.form', compact('provinces','camp'));
     }
 
 }

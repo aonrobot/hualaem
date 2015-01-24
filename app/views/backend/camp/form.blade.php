@@ -78,9 +78,12 @@
 {{ HTML::script('js/bootstrap-datetimepicker.min.js') }}
 {{ HTML::script('ckeditor/ckeditor.js') }}
 
-{{ HTML::script('js/angular.min.js') }}
-{{ HTML::script('js/angular_modules/camp_form.js') }}
 <script>
+    var savedData = {
+        subjects: {{ empty($camp) ? json_encode(Input::old('subjects',[])) : json_encode($camp->subjects) }},
+        fields: {{ empty($camp) ? json_encode(Input::old('fields',[])) : json_encode($camp->fields) }}
+    };
+    
     $(function () {
         $('#register_start').datetimepicker({
             format: 'YYYY-MM-DD'
@@ -117,4 +120,7 @@
     });
 
 </script>
+{{ HTML::script('js/angular.min.js') }}
+{{ HTML::script('js/angular_modules/camp_form.js') }}
+
 @stop
