@@ -18,7 +18,7 @@ Form::macro('myInput', function($name, $placeholder, $type = 'text', $value = nu
     return sprintf($format, $name, $name, $type, $placeholder, $value, $txtOption);
 });
 
-Form::macro('bsInlineGroup', function($label, $name, $placeholder=null, $type = 'text', $value = null, $options = []) {
+Form::macro('bsInlineGroup', function($label, $name, $value = null, $placeholder = null, $type = 'text', $options = []) {
     $format = <<<HTML
     <div class="form-group">
         <label for=":name" class="col-sm-2 control-label">:label</label>
@@ -33,10 +33,10 @@ HTML;
         $txtOption .= sprintf(' %s="%s"', $key, $val);
     }
 
-    if($placeholder == null){
+    if ($placeholder == null) {
         $placeholder = $label;
     }
-    
+
     if ($value == null) {
         $value = Input::get($name);
     }
@@ -45,13 +45,13 @@ HTML;
     }
 
     $map = [
-        ':label'=>$label,
-        ':name'=>$name,
-        ':placeholder'=>$placeholder,
-        ':type'=>$type,
-        ':value'=>$value,
-        ':options'=>$txtOption,
+        ':label' => $label,
+        ':name' => $name,
+        ':placeholder' => $placeholder,
+        ':type' => $type,
+        ':value' => $value,
+        ':options' => $txtOption,
     ];
-    
+
     return str_replace(array_keys($map), array_values($map), $format);
 });

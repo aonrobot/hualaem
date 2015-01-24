@@ -13,11 +13,11 @@ class CampController extends BackendController {
         foreach ($allProvinces as $province) {
             $provinces[$province->id] = $province->name;
         }
-
-        return $this->view('camp.form', compact('provinces'));
+        $camp = new \Camp();
+        return $this->view('camp.form', compact('provinces','camp'));
     }
 
-    public function postAdd() {
+    public function postSave($campID = 0) {
         $campRule = [
             'name' => 'required',
             'type' => 'required',
@@ -27,55 +27,78 @@ class CampController extends BackendController {
             'camp_start' => 'date',
             'camp_end' => 'date',
             'province_id' => 'required|exists:provinces,id',
-            'image' => 'required|image',
+            'image' => 'image',
         ];
         $campData = Input::only(['name', 'type', 'level', 'register_start', 'register_end', 'camp_start', 'camp_end', 'place', 'province_id', 'image', 'description']);
 
         $v = \Validator::make($campData, $campRule);
         if ($v->passes()) {
-            $camp = new \Camp();
+            if (empty($campID)) {
+                $camp = new \Camp();
+            } else {
+                $camp = \Camp::find($campID);
+            }
             unset($campData['image']);
+
             foreach ($campData as $key => $val) {
                 $camp->$key = $val;
             }
             $camp->save();
 
             //Save Image
-            $file = Input::file('image');
-            $filename = $camp->id . '.' . $file->getClientOriginalExtension();
-            $file->move(public_path('uploads/camps'), $filename);
-            $camp->image_path = \URL::to('uploads/camps/' . $filename);
-            $camp->save();
+            if (Input::has('image')) {
+                $file = Input::file('image');
+                $filename = $camp->id . '.' . $file->getClientOriginalExtension();
+                $file->move(public_path('uploads/camps'), $filename);
+                $camp->image_path = \URL::to('uploads/camps/' . $filename);
+                $camp->save();
+            }
 
             $fields = Input::get('fields');
             foreach ($fields as $fieldData) {
-                $field = new \CampField();
+                if (empty($fieldData['id'])) {
+                    $field = new \CampField();
+                } else {
+                    $field = \CampField::find($fieldData['id']);
+                }
+                $field->camp_id = $camp->id;
                 $field->name = $fieldData['name'];
                 $field->type = $fieldData['type'];
-                $camp->fields()->save($field);
+                $field->save();
             }
-            
+
             $subjects = Input::get('subjects');
-            foreach($subjects as $subjectData){
-                $subject = new \CampSubject();
+            foreach ($subjects as $subjectData) {
+                if (empty($subjectData['id'])) {
+                    $subject = new \CampSubject();
+                } else {
+                    $subject = \CampSubject::find($subjectData['id']);
+                }
+                $subject->camp_id = $camp->id;
                 $subject->name = $subjectData['name'];
-                $camp->subjects()->save($subject);
+                $subject->save();
+
+                if(empty($subjectData['tests'])) continue;
                 
-                foreach($subjectData['tests'] as $testData){
-                    $test = new \CampTest();
+                foreach ($subjectData['tests'] as $testData) {
+                    if (empty($testData['id'])) {
+                        $test = new \CampTest();
+                    } else {
+                        $test = \CampTest::find($testData['id']);
+                    }
+                    $test->camp_subject_id = $subject->id;
                     $test->name = $testData['name'];
-                    $subject->tests()->save($test);
+                    $test->save();
                 }
             }
             //TODO: Return
-            
         } else {
             //TODO: Create Subject and field by my input
             return \Redirect::back()->withInput()->withErrors($v);
         }
     }
-    
-    public function getEdit($campID){
+
+    public function getEdit($campID) {
         $allProvinces = \Province::orderBy('name')->get();
         $provinces = [];
         foreach ($allProvinces as $province) {
@@ -83,9 +106,9 @@ class CampController extends BackendController {
         }
 
         $camp = \Camp::find($campID);
-        $camp->load(['fields','subjects','subjects.tests']);
-        
-        return $this->view('camp.form', compact('provinces','camp'));
+        $camp->load(['fields', 'subjects', 'subjects.tests']);
+
+        return $this->view('camp.form', compact('provinces', 'camp'));
     }
 
 }
