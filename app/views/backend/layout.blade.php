@@ -6,7 +6,8 @@
         <meta name="viewport" content="width=device-width, initial-scale=1">
         <link rel="shortcut icon" type="image/x-icon" href="https://y7v4p6k4.ssl.hwcdn.net/placeholder/favicon.ico">
         <meta name="generator" content="Webflow">
-
+        <base href="{{ URL::to('/') }}/">
+        
         @section('css')
         {{ HTML::style('css/bootstrap.min.css') }}
         @show

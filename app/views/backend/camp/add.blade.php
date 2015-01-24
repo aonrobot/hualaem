@@ -8,7 +8,7 @@
 @stop
 
 @section('content')
-<form class="form-horizontal">
+<form class="form-horizontal" ng-app="CampForm">
     <div class="container">
         <div class="row">
             <div class="col-md-12">
@@ -46,35 +46,21 @@
                         {{ Form::file('image') }}
                     </div>
                 </div>
-                
+
                 <div class="form-group">
                     <label class="col-sm-2 control-label" for="province_id">รูปภาพ</label>
                     <div class="col-sm-10">
                         {{ Form::textarea('description',null,['class'=>"form-control"]) }}
                     </div>
                 </div>
-               
+
             </div>
         </div>
     </div>
-    
-    <div class="container well">
-        <div class="row">
-            <div class="col-md-12">
-                <h2>Secton 2 | Register Page</h2>
-            </div>
-        </div>
-        <div class="row">
-            <div class="col-md-12" id="field_lists">
-               
-            </div>
-        </div>
-        <div class="row">
-            <div class="col-md-12">
-                <button type="button" class="btn btn-success" id="btnAddField">Add Field +</button>
-            </div>
-        </div>
-    </div>
+
+    <field-list></field-list>
+
+    <subject-list></subject-list>
 </form>
 @stop
 
@@ -83,6 +69,9 @@
 {{ HTML::script('js/moment.min.js') }}
 {{ HTML::script('js/bootstrap-datetimepicker.min.js') }}
 {{ HTML::script('ckeditor/ckeditor.js') }}
+
+{{ HTML::script('js/angular.min.js') }}
+{{ HTML::script('js/angular_modules/camp_form.js') }}
 <script>
     $(function () {
         $('#register_start').datetimepicker({
@@ -113,29 +102,10 @@
             $('#camp_start').data("DateTimePicker").maxDate(e.date);
         });
 
-        CKEDITOR.replace( 'description', {
+        CKEDITOR.replace('description', {
             //TODO: change url
             filebrowserUploadUrl: '/uploader/upload.php',
             filebrowserImageUploadUrl: '/uploader/upload.php?type=Images'
-        });
-        
-        
-        var field_lists = $('#field_lists');
-        var field_count = 0;
-        $('#btnAddField').click(function(){
-            field_lists.append('\
-<div class="row">\n\
-    <div class="col-xs-9"><input class="form-control input-sm" name="fields['+field_count+'][name]" placeholder="Field Name"></div>\n\
-    <div class="col-xs-3">\n\
-        <select name="fields['+field_count+'][type]" class="form-control input-sm">\n\
-            <option value="text">Single Line</option>\n\
-            <option value="textarea">Multi Line</option>\n\
-            <option value="file">File</option>\n\
-        </select>\n\
-        <br>\n\
-    </div>\n\
-</div>');
-            field_count++;
         });
     });
 
