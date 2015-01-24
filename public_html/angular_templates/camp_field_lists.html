@@ -9,6 +9,7 @@
             <div class="row" ng-repeat="field in fields">
                 <div class="col-xs-9">
                     <input class="form-control input-sm" name="fields[{{ $index}}][name]" ng-model="field.name" placeholder="Field Name">
+                    <input type="hidden" name="fields[{{ $index}}][id]" ng-value="field.id">
                 </div>
                 <div class="col-xs-3">
                     <select name="fields[{{ $index}}][type]" class="form-control input-sm" ng-model="field.type">
