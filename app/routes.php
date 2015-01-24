@@ -33,5 +33,9 @@ Route::group(array('prefix' => 'admin'), function() {
         'getStep2'=>'admin.import.step2',
         'getStep3'=>'admin.import.step3',
     ]);
+    
+    Route::controller('camp', 'mix5003\Hualaem\Backend\CampController',[
+        'getAdd'=>'admin.camp.add',
+    ]);
 });
 
