@@ -103,9 +103,8 @@
         });
 
         CKEDITOR.replace('description', {
-            //TODO: change url
-            filebrowserUploadUrl: '/uploader/upload.php',
-            filebrowserImageUploadUrl: '/uploader/upload.php?type=Images'
+            filebrowserUploadUrl: "{{ URL::route('admin.upload.file') }}",
+            filebrowserImageUploadUrl: "{{ URL::route('admin.upload.image') }}"
         });
     });
 
