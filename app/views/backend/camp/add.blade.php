@@ -53,9 +53,25 @@
                         {{ Form::textarea('description',null,['class'=>"form-control"]) }}
                     </div>
                 </div>
-                
-                
-                
+               
+            </div>
+        </div>
+    </div>
+    
+    <div class="container well">
+        <div class="row">
+            <div class="col-md-12">
+                <h2>Secton 2 | Register Page</h2>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-md-12" id="field_lists">
+               
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-md-12">
+                <button type="button" class="btn btn-success" id="btnAddField">Add Field +</button>
             </div>
         </div>
     </div>
@@ -101,6 +117,25 @@
             //TODO: change url
             filebrowserUploadUrl: '/uploader/upload.php',
             filebrowserImageUploadUrl: '/uploader/upload.php?type=Images'
+        });
+        
+        
+        var field_lists = $('#field_lists');
+        var field_count = 0;
+        $('#btnAddField').click(function(){
+            field_lists.append('\
+<div class="row">\n\
+    <div class="col-xs-9"><input class="form-control input-sm" name="fields['+field_count+'][name]" placeholder="Field Name"></div>\n\
+    <div class="col-xs-3">\n\
+        <select name="fields['+field_count+'][type]" class="form-control input-sm">\n\
+            <option value="text">Single Line</option>\n\
+            <option value="textarea">Multi Line</option>\n\
+            <option value="file">File</option>\n\
+        </select>\n\
+        <br>\n\
+    </div>\n\
+</div>');
+            field_count++;
         });
     });
 
