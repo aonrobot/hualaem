@@ -84,11 +84,23 @@
                 </ul>
             </div>
         </div>
+        @if($errors->any())
+        <div class="container">
+            <div class="alert alert-warning alert-dismissible" role="alert">
+                <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                <ul>
+                    @foreach ($errors->all('<li>:message</li>') as $message)
+                    {{ $message }}
+                    @endforeach
+                </ul>
+            </div>
+        </div>
+        @endif
 
         <div class="section">
             @yield('content')
         </div>
-        <div class="navbar navbar-default" style="margin:0">
+        <div class="navbar navbar-default" style="margin:0;margin-top:15px;">
             <div class=" text-center" style="color:#FFF;padding:40px 0;" >© 2014&nbsp;The Gifted and Talented Foundation. All Rights Reserved.</div>
         </div>
         @section('js_foot')

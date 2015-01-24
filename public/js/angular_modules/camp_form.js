@@ -13,7 +13,6 @@ app.controller('SubjectController', ['$scope',
         };
         
         $scope.addTest = function(subject){
-            console.log(subject);
             subject.tests.push({});
         };
     }
