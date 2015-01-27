@@ -23,6 +23,9 @@ Route::group(array(), function() {
     Route::controller('login', 'mix5003\Hualaem\Frontend\LoginController',[
         'getIndex' => 'guest.login'
     ]);
+    Route::controller('camp','mix5003\Hualaem\Frontend\CampController',[
+        'getRegister' => 'student.camp.register'
+    ]);
 });
 
 
