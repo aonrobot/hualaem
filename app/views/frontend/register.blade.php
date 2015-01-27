@@ -78,16 +78,31 @@
                                     {{ Form::myInput('village_no','Village No.') }}
                                 </div>
                                 <div class="form-group">
-                                    <label class="label register" for="sub_district_id">ตำบล</label>
-                                    {{ Form::select('sub_district_id', $subDistricts, null, [ 'class'=> "form-control input-sm"]) }}
+                                    <label class="label register" for="province_id">จังหวัด</label>
+                                    <select name="province_id" id="province_id" class="form-control input-sm">
+                                        <option value=""></option>
+                                        @foreach($provinces as $key => $val)
+                                        <option value="{{ $key }}">{{ $val }}</option>
+                                        @endforeach
+                                    </select>
                                 </div>
                                 <div class="form-group">
                                     <label class="label register" for="district_id">อำเภอ</label>
-                                    {{ Form::select('district_id', $districts, null, [ 'class'=> "form-control input-sm"]) }}
+                                    <select name="district_id" id="district_id" class="form-control input-sm">
+                                        <option value=""></option>
+                                        @foreach($districts as $key => $val)
+                                        <option value="{{ $key }}" data-parent="{{ $val['parent_id'] }}">{{ $val['name'] }}</option>
+                                        @endforeach
+                                    </select>
                                 </div>
                                 <div class="form-group">
-                                    <label class="label register" for="province_id">จังหวัด</label>
-                                    {{ Form::select('province_id', $provinces, null, [ 'class'=> "form-control input-sm"]) }}
+                                    <label class="label register" for="sub_district_id">ตำบล</label>
+                                    <select name="sub_district_id" id="sub_district_id" class="form-control input-sm">
+                                        <option value=""></option>
+                                        @foreach($subDistricts as $key => $val)
+                                        <option value="{{ $key }}" data-parent="{{ $val['parent_id'] }}">{{ $val['name'] }}</option>
+                                        @endforeach
+                                    </select>
                                 </div>
                                 <div class="form-group">
                                     <label class="label register" for="postcode">รหัสไปรษณีย์</label>
@@ -110,4 +125,51 @@
     </div>
 </div>
 
+@stop
+
+@section('js_foot')
+@parent
+<script>
+    $(document).ready(function () {
+        function setDisable(obj, val) {
+            if (val) {
+                obj.attr('disabled', 'disabled');
+            } else {
+                obj.removeAttr('disabled');
+            }
+        }
+
+        function makeHideable(parentObj, childObj) {
+            var myMap = {};
+            childObj.find('option').each(function () {
+                var my_parent = $(this).data('parent');
+                if (!myMap[my_parent]) {
+                    myMap[my_parent] = [];
+                }
+                myMap[my_parent].push($(this));
+            });
+            setDisable(childObj, true);
+
+            parentObj.change(function () {
+                var my_id = parentObj.val();
+                if (!my_id) {
+                    setDisable(childObj, true);
+                    return;
+                }
+
+                childObj.find('option').hide();
+                var childMap = myMap[my_id];
+                for (var i = 0, l = childMap.length; i < l; i++) {
+                    childMap[i].show();
+                }
+                childObj.find('option:first').show();
+                childObj.val('');
+                setDisable(childObj, false);
+            });
+        }
+
+        makeHideable($('#province_id'), $('#district_id'));
+        makeHideable($('#district_id'), $('#sub_district_id'));
+    });
+</script>
 @stop
