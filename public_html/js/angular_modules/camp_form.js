@@ -31,7 +31,7 @@ app.controller('FieldController', ['$scope',
         $scope.fields = savedData.fields;
 
         $scope.addField = function () {
-            $scope.fields.push({});
+            $scope.fields.push({is_required:true});
         };
     }
 ]);
