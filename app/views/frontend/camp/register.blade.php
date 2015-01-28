@@ -10,7 +10,7 @@
         </div>
     </div>
 </div>
-<form class="form-horizontal" method="POST">
+<form class="form-horizontal" method="POST" enctype="multipart/form-data">
     <div class="container well">
         <div class="row">
             <div class="col-md-12">

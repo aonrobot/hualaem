@@ -9,5 +9,9 @@ class Enroll extends Eloquent {
     public function user() {
         return $this->belongsTo('User');
     }
+    
+    public function fields(){
+        return $this->hasMany('EnrollField');
+    }
 
 }

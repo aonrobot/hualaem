@@ -61,7 +61,25 @@ class CampController extends FrontendController {
 
         $v = \Validator::make(Input::all(), $rules, $messages);
         if ($v->passes()) {
+            $enroll = new \Enroll();
+            $enroll->user_id = \Auth::user()->id;
+            $camp->enrolls()->save($enroll);
+
+            foreach ($camp->fields as $field) {
+                $enrollField = new \EnrollField();
+                $enrollField->camp_field_id = $field->id;
+                if ($field->type == 'text' || $field->type == 'textarea') {
+                    $enrollField->value = Input::get('field_' . $field->id);
+                } else {
+                    $file = Input::file('field_' . $field->id);
+                    $newName = $enroll->id.'_'.$field->id.'.'.$file->getClientOriginalExtension();
+                    $file->move(storage_path('enroll_fields'),$newName);
+                    $enrollField->value = $file->getClientOriginalName();
+                }
+                $enroll->fields()->save($enrollField);
+            }
             
+            //TODO: Redirect To somewhere
         } else {
             return \Redirect::route('student.camp.register', [$campID])->withInput()->withErrors($v);
         }
