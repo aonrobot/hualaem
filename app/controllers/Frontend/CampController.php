@@ -86,11 +86,11 @@ class CampController extends FrontendController {
                 } else {
                     $file = Input::file('field_' . $field->id);
                     $newName = $enroll->id . '_' . $field->id . '.' . $file->getClientOriginalExtension();
-                    $file->move(storage_path('enroll_fields'), $newName);
                     $enrollField->value = json_encode([
                         'file_name' => $file->getClientOriginalName(),
                         'mime_type' => $file->getMimeType()
                     ]);
+                    $file->move(storage_path('enroll_fields'), $newName);
                 }
                 $enroll->fields()->save($enrollField);
             }
