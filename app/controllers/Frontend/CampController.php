@@ -38,6 +38,13 @@ class CampController extends FrontendController {
             return \Redirect::route('guest.register')->withErrors(['camp-register' => 'Camp not open for register.']);
             //throw $e;
         }
+
+        $existsEnroll = \Enroll::where('user_id', \Auth::user()->id)->where('camp_id', $campID);
+        if ($existsEnroll->exists()) {
+            //TODO: Create soft error and redirect
+            dd("Exists");
+        }
+
         return $this->view('camp.register', compact('camp'));
     }
 
@@ -48,6 +55,12 @@ class CampController extends FrontendController {
             //TODO: Redirect to camp list with error
             return \Redirect::route('guest.register')->withErrors(['camp-register' => 'Camp not open for register.']);
             //throw $e;
+        }
+
+        $existsEnroll = \Enroll::where('user_id', \Auth::user()->id)->where('camp_id', $campID);
+        if ($existsEnroll->exists()) {
+            //TODO: Create soft error and redirect
+            dd("Exists");
         }
 
         $rules = [];
@@ -72,13 +85,16 @@ class CampController extends FrontendController {
                     $enrollField->value = Input::get('field_' . $field->id);
                 } else {
                     $file = Input::file('field_' . $field->id);
-                    $newName = $enroll->id.'_'.$field->id.'.'.$file->getClientOriginalExtension();
-                    $file->move(storage_path('enroll_fields'),$newName);
-                    $enrollField->value = $file->getClientOriginalName();
+                    $newName = $enroll->id . '_' . $field->id . '.' . $file->getClientOriginalExtension();
+                    $file->move(storage_path('enroll_fields'), $newName);
+                    $enrollField->value = json_encode([
+                        'file_name' => $file->getClientOriginalName(),
+                        'mime_type' => $file->getMimeType()
+                    ]);
                 }
                 $enroll->fields()->save($enrollField);
             }
-            
+
             //TODO: Redirect To somewhere
         } else {
             return \Redirect::route('student.camp.register', [$campID])->withInput()->withErrors($v);
