@@ -16,7 +16,8 @@ class LoginController extends FrontendController {
         if(\Auth::attempt($inp)){
             return \Redirect::to('/');
         }else{
-            return \Redirect::to('/')->withErrors(['login_incorrect'=>'Login error. Please check your username or password']);
+            //TODO:: Change redirect
+            return \Redirect::to('/register')->withErrors(['login_incorrect'=>'Login error. Please check your username or password']);
         }
     }
 }

@@ -16,13 +16,15 @@ class RegisterController extends FrontendController {
         $allDistricts = \District::orderBy('name')->get();
         $districts = [];
         foreach ($allDistricts as $district) {
-            $districts[$district->id] = $district->name;
+            $districts[$district->id]['name'] = $district->name;
+            $districts[$district->id]['parent_id'] = $district->province_id;
         }
 
         $allSubDistricts = \SubDistrict::orderBy('name')->get();
         $subDistricts = [];
         foreach ($allSubDistricts as $subDistrict) {
-            $subDistricts[$subDistrict->id] = $subDistrict->name;
+            $subDistricts[$subDistrict->id]['name'] = $subDistrict->name;
+            $subDistricts[$subDistrict->id]['parent_id'] = $subDistrict->district_id;
         }
 
         return $this->view('register', compact('provinces', 'districts', 'subDistricts'));

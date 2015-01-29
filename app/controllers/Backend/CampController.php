@@ -64,6 +64,7 @@ class CampController extends BackendController {
                 $field->camp_id = $camp->id;
                 $field->name = $fieldData['name'];
                 $field->type = $fieldData['type'];
+                $field->is_required = isset($fieldData['is_required']);
                 $field->save();
             }
 
