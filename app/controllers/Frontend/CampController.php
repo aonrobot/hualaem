@@ -6,6 +6,16 @@ use FrontendController;
 use Input;
 
 class CampController extends FrontendController {
+    
+    public function getIndex(){
+        $camps = \Camp::openForRegisterCamp()->orderBy('camp_end')->get();
+        
+        return $this->view('camp.list',compact('camps'));
+    }
+    
+    public function getView($campId){
+        
+    }
 
     public function getRegister($campID) {
         try {

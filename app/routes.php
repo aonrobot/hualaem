@@ -24,6 +24,8 @@ Route::group(array(), function() {
         'getIndex' => 'guest.login'
     ]);
     Route::controller('camp','mix5003\Hualaem\Frontend\CampController',[
+        'getIndex' => 'guest.camp.list',
+        'getView' => 'guest.camp.view',
         'getRegister' => 'student.camp.register'
     ]);
 });
