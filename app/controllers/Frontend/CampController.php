@@ -14,7 +14,9 @@ class CampController extends FrontendController {
     }
     
     public function getView($campId){
+        $camp = \Camp::findOrFail($campId);
         
+        return $this->view('camp.view',compact('camp'));
     }
 
     public function getRegister($campID) {
