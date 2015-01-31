@@ -37,6 +37,11 @@
             @endforeach
         </div>
     </div>
+    <div class="container">
+        <div class="row">
+            {{ $camps->links() }}
+        </div>
+    </div>
 </form>
 @stop
 

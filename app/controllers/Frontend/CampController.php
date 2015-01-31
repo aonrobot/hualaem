@@ -8,7 +8,7 @@ use Input;
 class CampController extends FrontendController {
     
     public function getIndex(){
-        $camps = \Camp::openForRegisterCamp()->orderBy('camp_end')->get();
+        $camps = \Camp::openForRegisterCamp()->orderBy('camp_end')->paginate(2);
         
         return $this->view('camp.list',compact('camps'));
     }
