@@ -21,5 +21,15 @@ class Camp extends Eloquent {
     public function users() {
         return $this->hasManyThrough('User', 'Enroll');
     }
+    
+    public function scopeOpenForRegisterCamp($query){
+        $now = date('Y-m-d');
+        $query->where('register_start','<=',$now);
+        $query->where(function($query) use ($now){
+            $query->where('register_end','>=',$now);
+            $query->orWhere('register_end',null);
+            $query->orWhere('register_end','0000-00-00');
+        });
+    }
 
 }

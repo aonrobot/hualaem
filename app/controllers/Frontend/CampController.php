@@ -4,35 +4,12 @@ namespace mix5003\Hualaem\Frontend;
 
 use FrontendController;
 use Input;
-use Carbon\Carbon;
 
 class CampController extends FrontendController {
 
-    private function getOpenForRegisterCamp($campID) {
-        $camp = \Camp::findOrFail($campID);
-
-
-        if ($camp->register_start == null || $camp->register_start == '0000-00-00') {
-            $startDate = Carbon::yesterday();
-        } else {
-            $startDate = Carbon::parse($camp->register_start);
-        }
-
-        if ($camp->register_end == null || $camp->register_end == '0000-00-00') {
-            $endDate = Carbon::tomorrow();
-        } else {
-            $endDate = Carbon::parse($camp->register_end)->tomorrow();
-        }
-
-        if (!Carbon::now()->between($startDate, $endDate)) {
-            throw new \Exception();
-        }
-        return $camp;
-    }
-
     public function getRegister($campID) {
         try {
-            $camp = $this->getOpenForRegisterCamp($campID);
+            $camp = \Camp::openForRegisterCamp()->where('id', $campID)->firstOrFail();
         } catch (\Exception $e) {
             //TODO: Redirect to camp list with error
             return \Redirect::route('guest.register')->withErrors(['camp-register' => 'Camp not open for register.']);
@@ -50,7 +27,7 @@ class CampController extends FrontendController {
 
     public function postRegister($campID) {
         try {
-            $camp = $this->getOpenForRegisterCamp($campID);
+            $camp = \Camp::openForRegisterCamp()->where('id', $campID)->firstOrFail();
         } catch (\Exception $e) {
             //TODO: Redirect to camp list with error
             return \Redirect::route('guest.register')->withErrors(['camp-register' => 'Camp not open for register.']);
