@@ -46,50 +46,55 @@ class CampController extends BackendController {
             $camp->save();
 
             //Save Image
-            if (Input::has('image')) {
+            if (Input::hasFile('image')) {
                 $file = Input::file('image');
                 $filename = $camp->id . '.' . $file->getClientOriginalExtension();
                 $file->move(public_path('uploads/camps'), $filename);
                 $camp->image_path = \URL::to('uploads/camps/' . $filename);
                 $camp->save();
             }
+            
 
             $fields = Input::get('fields');
-            foreach ($fields as $fieldData) {
-                if (empty($fieldData['id'])) {
-                    $field = new \CampField();
-                } else {
-                    $field = \CampField::find($fieldData['id']);
-                }
-                $field->camp_id = $camp->id;
-                $field->name = $fieldData['name'];
-                $field->type = $fieldData['type'];
-                $field->is_required = isset($fieldData['is_required']);
-                $field->save();
-            }
-
-            $subjects = Input::get('subjects');
-            foreach ($subjects as $subjectData) {
-                if (empty($subjectData['id'])) {
-                    $subject = new \CampSubject();
-                } else {
-                    $subject = \CampSubject::find($subjectData['id']);
-                }
-                $subject->camp_id = $camp->id;
-                $subject->name = $subjectData['name'];
-                $subject->save();
-
-                if(empty($subjectData['tests'])) continue;
-                
-                foreach ($subjectData['tests'] as $testData) {
-                    if (empty($testData['id'])) {
-                        $test = new \CampTest();
+            if(!empty($fields)){
+                foreach ($fields as $fieldData) {
+                    if (empty($fieldData['id'])) {
+                        $field = new \CampField();
                     } else {
-                        $test = \CampTest::find($testData['id']);
+                        $field = \CampField::find($fieldData['id']);
                     }
-                    $test->camp_subject_id = $subject->id;
-                    $test->name = $testData['name'];
-                    $test->save();
+                    $field->camp_id = $camp->id;
+                    $field->name = $fieldData['name'];
+                    $field->type = $fieldData['type'];
+                    $field->is_required = isset($fieldData['is_required']);
+                    $field->save();
+                }
+            }
+            
+            $subjects = Input::get('subjects');
+            if(!empty($subjects)){
+                foreach ($subjects as $subjectData) {
+                    if (empty($subjectData['id'])) {
+                        $subject = new \CampSubject();
+                    } else {
+                        $subject = \CampSubject::find($subjectData['id']);
+                    }
+                    $subject->camp_id = $camp->id;
+                    $subject->name = $subjectData['name'];
+                    $subject->save();
+
+                    if(empty($subjectData['tests'])) continue;
+
+                    foreach ($subjectData['tests'] as $testData) {
+                        if (empty($testData['id'])) {
+                            $test = new \CampTest();
+                        } else {
+                            $test = \CampTest::find($testData['id']);
+                        }
+                        $test->camp_subject_id = $subject->id;
+                        $test->name = $testData['name'];
+                        $test->save();
+                    }
                 }
             }
             //TODO: Return
