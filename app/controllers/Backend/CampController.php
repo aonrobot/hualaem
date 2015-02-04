@@ -124,4 +124,27 @@ class CampController extends BackendController {
         return $this->view('camp.form', compact('provinces', 'camp'));
     }
 
+    public function getApplication($campID){
+        $camp = \Camp::find($campID);
+        $camp->load('enrolls','enrolls.user');
+        
+        return $this->view('camp.application',compact('camp'));
+    }
+    
+    public function postApplication($campID){
+        //TODO:: Add Notification
+        if(Input::has('action')){
+            $setTo = Input::get('action') =='Approved' ? \Enroll::STATUS_APPROVED : \Enroll::STATUS_PENDING;
+            \DB::table((new \Enroll())->getTable())->whereIn('id', Input::get('selected',[0]))->update(['status'=>$setTo]);
+        }elseif(Input::has('approve')){
+            $enroll = \Enroll::findOrFail(Input::get('approve'));
+            $enroll->status = \Enroll::STATUS_APPROVED;
+            $enroll->save();
+        }elseif(Input::has('unapprove')){
+            $enroll = \Enroll::findOrFail(Input::get('unapprove'));
+            $enroll->status = \Enroll::STATUS_PENDING;
+            $enroll->save();
+        }
+        return \Redirect::back();
+    }
 }
