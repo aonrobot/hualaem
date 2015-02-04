@@ -15,7 +15,7 @@ class CreateCampFields extends Migration {
             $table->increments('id');
             $table->integer('camp_id')->unsigned();
             $table->string('name', 250);
-            $table->enum('type', ['text', 'textarea', 'file']);
+            $table->enum('type', ['TEXT', 'TEXTAREA', 'FILE']);
         });
     }
 

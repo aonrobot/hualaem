@@ -102,6 +102,7 @@ class CampController extends BackendController {
             //TODO: Create Subject and field by my input
             return \Redirect::back()->withInput()->withErrors($v);
         }
+
     }
 
     public function getEdit($campID) {

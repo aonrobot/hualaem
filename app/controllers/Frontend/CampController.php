@@ -70,7 +70,7 @@ class CampController extends FrontendController {
             foreach ($camp->fields as $field) {
                 $enrollField = new \EnrollField();
                 $enrollField->camp_field_id = $field->id;
-                if ($field->type == 'text' || $field->type == 'textarea') {
+                if ($field->type == \CampField::TEXT || $field->type == \CampField::TEXTAREA) {
                     $enrollField->value = Input::get('field_' . $field->id);
                 } else {
                     $file = Input::file('field_' . $field->id);

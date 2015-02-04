@@ -25,11 +25,11 @@
                         @endif
                     </label>
                     <div class="col-sm-10">
-                        @if($field->type === 'text')
+                        @if($field->type === \CampField::TEXT)
                         <input type="text" class="form-control" id="field_{{$field->id}}" name="field_{{$field->id}}" value="{{ Input::old("field_{$field->id}") }}">
-                        @elseif($field->type === 'textarea')
+                        @elseif($field->type === \CampField::TEXTAREA)
                         <textarea class="form-control" id="field_{{$field->id}}" name="field_{{$field->id}}">{{ Input::old("field_{$field->id}") }}</textarea>
-                        @elseif($field->type === 'file')
+                        @elseif($field->type === \CampField::FILE)
                         <input type="file" id="field_{{$field->id}}" name="field_{{$field->id}}">
                         @endif
                     </div>

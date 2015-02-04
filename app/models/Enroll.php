@@ -1,6 +1,13 @@
 <?php
 
 class Enroll extends Eloquent {
+    
+    const STATUS_PENDING = "PENDING";
+    const STATUS_DOCUMENT_RECIEVED = "DOCUMENT_RECIEVED";
+    const STATUS_APPROVED = "APPROVED";
+    
+    const ROLE_STUDENT = "STUDENT";
+    const ROLE_STAFF = "STAFF";
 
     public function camp() {
         return $this->belongsTo('Camp');
