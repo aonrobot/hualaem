@@ -6,6 +6,12 @@ use BackendController;
 use Input;
 
 class CampController extends BackendController {
+    
+    public function getIndex(){
+        $camps = \Camp::orderBy('id','desc')->paginate(15);
+        
+        return $this->view('camp.list',compact('camps'));
+    }
 
     public function getAdd() {
         $allProvinces = \Province::orderBy('name')->get();

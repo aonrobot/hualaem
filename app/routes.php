@@ -45,6 +45,7 @@ Route::group(array('prefix' => 'admin'), function() {
     ]);
     
     Route::controller('camp', 'mix5003\Hualaem\Backend\CampController',[
+        'getIndex' => 'admin.camp.list',
         'getAdd'=>'admin.camp.add',
         'getEdit'=>'admin.camp.edit',
         'postSave'=>'admin.camp.save',
