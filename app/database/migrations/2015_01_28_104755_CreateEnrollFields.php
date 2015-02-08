@@ -14,7 +14,7 @@ class CreateEnrollFields extends Migration {
         Schema::create('enroll_fields', function(Blueprint $table) {
             $table->increments('id');
             $table->integer('enroll_id')->unsigned()->index();
-            $table->integer('camp_field_id')->unsigned()->index();
+            $table->integer('camp_fields_id')->unsigned()->index();
             $table->text('value');
         });
     }

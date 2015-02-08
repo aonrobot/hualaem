@@ -50,6 +50,8 @@ Route::group(array('prefix' => 'admin'), function() {
         'getApplication'=>'admin.camp.application',
         'getEdit'=>'admin.camp.edit',
         'postSave'=>'admin.camp.save',
+        'getAjaxCampField'=>'ajax.admin.camp.camp_fields',
+        'getDownloadApplicationFile'=>'admin.camp.download_application_file'
     ]);
 });
 

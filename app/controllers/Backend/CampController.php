@@ -144,7 +144,32 @@ class CampController extends BackendController {
             $enroll = \Enroll::findOrFail(Input::get('unapprove'));
             $enroll->status = \Enroll::STATUS_PENDING;
             $enroll->save();
+        }elseif(Input::has('delete')){
+            $enroll = \Enroll::findOrFail(Input::get('delete'));
+            $enroll->delete();
         }
         return \Redirect::back();
+    }
+    
+    public function getAjaxCampField($enrollID){
+        $enroll = \Enroll::findOrFail($enrollID);
+        $enroll->load('fields','fields.campFields');
+        
+        return $this->view('ajax.camp_fields',[
+            'fields'=>$enroll->fields
+        ]);
+    }
+    
+    public function getDownloadApplicationFile($enrollFieldId){
+        $field = \EnrollField::findOrFail($enrollFieldId);
+        if($field->campFields->type != \CampField::FILE){
+            return \App::abort(404);
+        }
+        $fileData = json_decode($field->value);
+        $ext = substr($fileData->file_name, strrpos($fileData->file_name, '.'));
+        $filePath = storage_path('enroll_fields/'.$field->enroll_id.'_'.$field->campFields->id.$ext);
+        
+        return \Response::download($filePath, $fileData->file_name);
+        
     }
 }
