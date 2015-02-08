@@ -28,6 +28,10 @@ Route::group(array(), function() {
         'getView' => 'guest.camp.view',
         'getRegister' => 'student.camp.register'
     ]);
+    
+    Route::controller('user','mix5003\Hualaem\Frontend\UserController',[
+        
+    ]);
 });
 
 
