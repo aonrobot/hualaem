@@ -30,7 +30,8 @@ Route::group(array(), function() {
     ]);
     
     Route::controller('user','mix5003\Hualaem\Frontend\UserController',[
-        
+        'getCalendar'=>'student.user.calendar',
+        'getCalendarData'=>'ajax.student.calendar_data',
     ]);
 });
 
