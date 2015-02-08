@@ -183,7 +183,7 @@ class ImportUserController extends BackendController {
                         if ($type == 'users') {
                             $obj = new \User();
                             $obj->student_id = $csvRow[0];
-                            $obj->role = 'VERIFIED';
+                            $obj->role = \User::VERIFIED;
                             $csvRow[$data[$type]['citizen_id']] = str_replace(array('-',' '), '', $csvRow[$data[$type]['citizen_id']]);
                             $csvRow[$data[$type]['mobile_no']] = str_replace(array('-',' '), '', $csvRow[$data[$type]['mobile_no']]);
                             $csvRow[$data[$type]['birthdate']] = $this->reformatDate(trim($csvRow[$data[$type]['birthdate']]));
@@ -243,7 +243,8 @@ class ImportUserController extends BackendController {
                                 $enroll = new \Enroll();
                                 $enroll->user_id = \Cache::get('user_' . $csvRow[0]);
                                 $enroll->camp_id = \Cache::get('camp_' . $csvRow[$data[$type]['name']]);
-                                $enroll->role = $csvRow[$originData[$type]['role']] == 'ผู้เรียน' ? 'STUDENT' : 'STAFF';
+                                $enroll->status = \Enroll::STATUS_APPROVED;
+                                $enroll->role = $csvRow[$originData[$type]['role']] == 'ผู้เรียน' ? \Enroll::ROLE_STUDENT : \Enroll::ROLE_STAFF;
                                 $enroll->save();
 
                                 continue;
@@ -290,7 +291,8 @@ class ImportUserController extends BackendController {
                             $enroll = new \Enroll();
                             $enroll->user_id = \Cache::get('user_' . $csvRow[0]);
                             $enroll->camp_id = $obj->id;
-                            $enroll->role = $csvRow[$originData[$type]['role']] == 'ผู้เรียน' ? 'STUDENT' : 'STAFF';
+                            $enroll->status = \Enroll::STATUS_APPROVED;
+                            $enroll->role = $csvRow[$originData[$type]['role']] == 'ผู้เรียน' ? \Enroll::ROLE_STUDENT : \Enroll::ROLE_STAFF;
                             $enroll->save();
                         }
                     }

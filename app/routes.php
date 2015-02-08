@@ -24,7 +24,14 @@ Route::group(array(), function() {
         'getIndex' => 'guest.login'
     ]);
     Route::controller('camp','mix5003\Hualaem\Frontend\CampController',[
+        'getIndex' => 'guest.camp.list',
+        'getView' => 'guest.camp.view',
         'getRegister' => 'student.camp.register'
+    ]);
+    
+    Route::controller('user','mix5003\Hualaem\Frontend\UserController',[
+        'getCalendar'=>'student.user.calendar',
+        'getCalendarData'=>'ajax.student.calendar_data',
     ]);
 });
 
@@ -43,9 +50,13 @@ Route::group(array('prefix' => 'admin'), function() {
     ]);
     
     Route::controller('camp', 'mix5003\Hualaem\Backend\CampController',[
+        'getIndex' => 'admin.camp.list',
         'getAdd'=>'admin.camp.add',
+        'getApplication'=>'admin.camp.application',
         'getEdit'=>'admin.camp.edit',
         'postSave'=>'admin.camp.save',
+        'getAjaxCampField'=>'ajax.admin.camp.camp_fields',
+        'getDownloadApplicationFile'=>'admin.camp.download_application_file'
     ]);
 });
 

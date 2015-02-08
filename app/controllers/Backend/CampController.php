@@ -6,6 +6,12 @@ use BackendController;
 use Input;
 
 class CampController extends BackendController {
+    
+    public function getIndex(){
+        $camps = \Camp::orderBy('id','desc')->paginate(15);
+        
+        return $this->view('camp.list',compact('camps'));
+    }
 
     public function getAdd() {
         $allProvinces = \Province::orderBy('name')->get();
@@ -46,50 +52,55 @@ class CampController extends BackendController {
             $camp->save();
 
             //Save Image
-            if (Input::has('image')) {
+            if (Input::hasFile('image')) {
                 $file = Input::file('image');
                 $filename = $camp->id . '.' . $file->getClientOriginalExtension();
                 $file->move(public_path('uploads/camps'), $filename);
                 $camp->image_path = \URL::to('uploads/camps/' . $filename);
                 $camp->save();
             }
+            
 
             $fields = Input::get('fields');
-            foreach ($fields as $fieldData) {
-                if (empty($fieldData['id'])) {
-                    $field = new \CampField();
-                } else {
-                    $field = \CampField::find($fieldData['id']);
-                }
-                $field->camp_id = $camp->id;
-                $field->name = $fieldData['name'];
-                $field->type = $fieldData['type'];
-                $field->is_required = isset($fieldData['is_required']);
-                $field->save();
-            }
-
-            $subjects = Input::get('subjects');
-            foreach ($subjects as $subjectData) {
-                if (empty($subjectData['id'])) {
-                    $subject = new \CampSubject();
-                } else {
-                    $subject = \CampSubject::find($subjectData['id']);
-                }
-                $subject->camp_id = $camp->id;
-                $subject->name = $subjectData['name'];
-                $subject->save();
-
-                if(empty($subjectData['tests'])) continue;
-                
-                foreach ($subjectData['tests'] as $testData) {
-                    if (empty($testData['id'])) {
-                        $test = new \CampTest();
+            if(!empty($fields)){
+                foreach ($fields as $fieldData) {
+                    if (empty($fieldData['id'])) {
+                        $field = new \CampField();
                     } else {
-                        $test = \CampTest::find($testData['id']);
+                        $field = \CampField::find($fieldData['id']);
                     }
-                    $test->camp_subject_id = $subject->id;
-                    $test->name = $testData['name'];
-                    $test->save();
+                    $field->camp_id = $camp->id;
+                    $field->name = $fieldData['name'];
+                    $field->type = $fieldData['type'];
+                    $field->is_required = isset($fieldData['is_required']);
+                    $field->save();
+                }
+            }
+            
+            $subjects = Input::get('subjects');
+            if(!empty($subjects)){
+                foreach ($subjects as $subjectData) {
+                    if (empty($subjectData['id'])) {
+                        $subject = new \CampSubject();
+                    } else {
+                        $subject = \CampSubject::find($subjectData['id']);
+                    }
+                    $subject->camp_id = $camp->id;
+                    $subject->name = $subjectData['name'];
+                    $subject->save();
+
+                    if(empty($subjectData['tests'])) continue;
+
+                    foreach ($subjectData['tests'] as $testData) {
+                        if (empty($testData['id'])) {
+                            $test = new \CampTest();
+                        } else {
+                            $test = \CampTest::find($testData['id']);
+                        }
+                        $test->camp_subject_id = $subject->id;
+                        $test->name = $testData['name'];
+                        $test->save();
+                    }
                 }
             }
             //TODO: Return
@@ -97,6 +108,7 @@ class CampController extends BackendController {
             //TODO: Create Subject and field by my input
             return \Redirect::back()->withInput()->withErrors($v);
         }
+
     }
 
     public function getEdit($campID) {
@@ -112,4 +124,52 @@ class CampController extends BackendController {
         return $this->view('camp.form', compact('provinces', 'camp'));
     }
 
+    public function getApplication($campID){
+        $camp = \Camp::find($campID);
+        $camp->load('enrolls','enrolls.user');
+        
+        return $this->view('camp.application',compact('camp'));
+    }
+    
+    public function postApplication($campID){
+        //TODO:: Add Notification
+        if(Input::has('action')){
+            $setTo = Input::get('action') =='Approved' ? \Enroll::STATUS_APPROVED : \Enroll::STATUS_PENDING;
+            \DB::table((new \Enroll())->getTable())->whereIn('id', Input::get('selected',[0]))->update(['status'=>$setTo]);
+        }elseif(Input::has('approve')){
+            $enroll = \Enroll::findOrFail(Input::get('approve'));
+            $enroll->status = \Enroll::STATUS_APPROVED;
+            $enroll->save();
+        }elseif(Input::has('unapprove')){
+            $enroll = \Enroll::findOrFail(Input::get('unapprove'));
+            $enroll->status = \Enroll::STATUS_PENDING;
+            $enroll->save();
+        }elseif(Input::has('delete')){
+            $enroll = \Enroll::findOrFail(Input::get('delete'));
+            $enroll->delete();
+        }
+        return \Redirect::back();
+    }
+    
+    public function getAjaxCampField($enrollID){
+        $enroll = \Enroll::findOrFail($enrollID);
+        $enroll->load('fields','fields.campFields');
+        
+        return $this->view('ajax.camp_fields',[
+            'fields'=>$enroll->fields
+        ]);
+    }
+    
+    public function getDownloadApplicationFile($enrollFieldId){
+        $field = \EnrollField::findOrFail($enrollFieldId);
+        if($field->campFields->type != \CampField::FILE){
+            return \App::abort(404);
+        }
+        $fileData = json_decode($field->value);
+        $ext = substr($fileData->file_name, strrpos($fileData->file_name, '.'));
+        $filePath = storage_path('enroll_fields/'.$field->enroll_id.'_'.$field->campFields->id.$ext);
+        
+        return \Response::download($filePath, $fileData->file_name);
+        
+    }
 }

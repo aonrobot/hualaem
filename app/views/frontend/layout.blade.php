@@ -71,14 +71,16 @@
         </div>
         <div class="navbar navbar-default" data-collapse="medium" data-animation="default" data-duration="400" data-contain="1">
             <div class="container">
+                @if(Auth::check())
                 <ul class="nav navbar-nav">
                     <li><a class="w-nav-link navlink" href="#">Dashboard</a></li>
-                    <li><a class="w-nav-link navlink" href="#">Calendar</a></li>
+                    <li><a class="w-nav-link navlink" href="{{ URL::route('student.user.calendar') }}">Calendar</a></li>
                     <li><a class="w-nav-link navlink" href="#">Profile</a></li>
                 </ul>
+                @endif
 
                 <ul class="nav navbar-nav navbar-right">
-                    <li><a class="w-nav-link navlink" href="#">Register Camp</a></li>
+                    <li><a class="w-nav-link navlink" href="{{ URL::route('guest.camp.list') }}">Register Camp</a></li>
                 </ul>
             </div>
         </div>

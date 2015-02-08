@@ -7,6 +7,10 @@ use Illuminate\Auth\Reminders\RemindableInterface;
 
 class User extends Eloquent implements UserInterface, RemindableInterface {
 
+    const UNVERIFY = "UNVERIFY";
+    const VERIFIED = "VERIFIED";
+    const ADMIN = "ADMIN";
+    
     use UserTrait,
         RemindableTrait;
 
