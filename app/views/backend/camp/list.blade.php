@@ -6,7 +6,7 @@
 <div class="container">
     <div class="row">
         <div class="col-md-12">
-            <h1>Active List</h1>
+            <h1>Camp List <a href="{{ URL::route('admin.camp.add') }}" class="btn btn-info btn-sm">Add</a></h1>
         </div>
     </div>
 </div>
