@@ -41,7 +41,7 @@
         </div>
         @endif
     @endforeach
-        @if($k % 2 == 0)
+        @if(isset($k) && $k % 2 == 0)
         </div>
         @endif
 </div>
