@@ -63,7 +63,8 @@ Route::group(array('prefix' => 'admin'), function() {
     ]);
     
     Route::controller('user','mix5003\Hualaem\Backend\UserController',[
-        
+        'getIndex'=>'admin.user.list',
+        'getView'=>'admin.user.view',
     ]);
 });
 

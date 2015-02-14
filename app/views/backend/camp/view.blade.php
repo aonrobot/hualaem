@@ -1,4 +1,4 @@
-@extends('frontend.layout')
+@extends('backend.layout')
 
 @section('title') {{ $camp->name }} @stop
 

@@ -1,4 +1,4 @@
-@extends('frontend.layout')
+@extends('backend.layout')
 
 @section('title') Application for {{$camp->name}} @stop
 

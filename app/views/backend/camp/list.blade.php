@@ -1,4 +1,4 @@
-@extends('frontend.layout')
+@extends('backend.layout')
 
 @section('title') List Camp @stop
 

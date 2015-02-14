@@ -1,4 +1,4 @@
-@extends('frontend.layout')
+@extends('backend.layout')
 
 @section('title') List User @stop
 
@@ -28,7 +28,11 @@
                 <tbody>
                     @foreach($users as $user)
                     <tr>
-                        <td>{{ $user->fullname_th }}</td>
+                        <td>
+                            <a href="{{ URL::route('admin.user.view',[$user->id]) }}">
+                            {{ $user->fullname_th }}
+                            </a>
+                        </td>
                         <td>{{ $user->student_id }}</td>
                         <td>{{ $user->role }}</td>
                         <td>{{ $user->mobile_no }}</td>
