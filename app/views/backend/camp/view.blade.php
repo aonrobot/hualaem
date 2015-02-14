@@ -35,7 +35,7 @@
                     <div class="checkbox">
                         <label>
                             <input type="checkbox" name="selected[]" value="{{ $enroll->id }}" class="chk-select" data-status="{{$enroll->status}}"> 
-                            {{ $enroll->user->firstname_th }} {{ $enroll->user->lastname_th }}
+                            {{ $enroll->user->fullname_th }}
                         </label>
                     </div>
                 </div>
@@ -45,7 +45,7 @@
                 <div class="col-md-12">
                     <a href="{{ URL::route('admin.camp.score',[$enroll->id])}}" class="btn btn-info btn-sm">Score</a>
                     <button type="button" class="btn btn-success btn-sm btn-field-data"  data-id="{{$enroll->id}}"
-                            data-name="{{ $enroll->user->firstname_th }} {{ $enroll->user->lastname_th }}">
+                            data-name="{{ $enroll->user->fullname_th }}">
                         View Writing
                     </button>
                 </div>

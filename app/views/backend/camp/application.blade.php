@@ -38,13 +38,13 @@
         </div>
         <br>
         @foreach($camp->enrolls as $enroll)
-        <div class="row well row-data" data-name="{{ $enroll->user->firstname_th }} {{ $enroll->user->lastname_th }}" 
+        <div class="row well row-data" data-name="{{ $enroll->user->fullname_th }}" 
              data-date="{{ $enroll->created_at->format('Y-m-d') }}">
             <div class="col-md-12">
                 <div class="checkbox">
                     <label>
                         <input type="checkbox" name="selected[]" value="{{ $enroll->id }}" class="chk-select" data-status="{{$enroll->status}}"> 
-                        {{ $enroll->user->firstname_th }} {{ $enroll->user->lastname_th }}
+                        {{ $enroll->user->fullname_th }}
                     </label>
                 </div>
 
@@ -55,7 +55,7 @@
                 <button class="btn btn-warning btn-sm" name="unapprove" value="{{ $enroll->id}}">Unapprove</button>
                 @endif
                 <button type="button" class="btn btn-success btn-sm btn-field-data"  data-id="{{$enroll->id}}"
-                        data-name="{{ $enroll->user->firstname_th }} {{ $enroll->user->lastname_th }}">
+                        data-name="{{ $enroll->user->fullname_th }}">
                     View Writing
                 </button>
                 <button class="btn btn-danger btn-sm" name="delete" value="{{ $enroll->id}}">Delete</button>

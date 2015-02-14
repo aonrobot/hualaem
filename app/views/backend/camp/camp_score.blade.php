@@ -37,7 +37,7 @@
                         @foreach($camp->subjects as $subject)
                         @foreach($subject->tests as $test)
                         <tr class="row-score" data-enroll="{{ $enroll->id }}">
-                            <td class="col-name">{{$enroll->user->firstname_th}} {{$enroll->user->lastname_th}}</td>
+                            <td class="col-name">{{$enroll->user->fullname_th }}</td>
                             <td>{{$subject->name}}</td>
                             <td>{{$test->name}}</td>
                             <td>
@@ -48,7 +48,7 @@
                         </tr>
                         @endforeach
                         <tr class="row-score row-sum">
-                            <td class="col-name">{{$enroll->user->firstname_th}} {{$enroll->user->lastname_th}}</td>
+                            <td class="col-name">{{$enroll->user->fullname_th }}</td>
                             <td>{{$subject->name}}</td>
                             <td><strong>Total</strong></td>
                             <td class="td-total-subject" data-find="sc_{{ $enroll->id }}_{{ $subject->id }}">

@@ -1,6 +1,6 @@
 @extends('backend.layout')
 
-@section('title') Score for {{ $enroll->user->firstname_th }} {{ $enroll->user->lastname_th }} in {{ $camp->name}} @stop
+@section('title') Score for {{ $enroll->user->fullname_th }} in {{ $camp->name}} @stop
 
 @section('css')
 @parent
@@ -12,7 +12,7 @@
     <div class="container">
         <div class="row">
             <div class="col-md-12">
-                <h1>Score for {{ $enroll->user->firstname_th}} {{ $enroll->user->lastname_th}} in {{ $camp->name}}</h1>
+                <h1>Score for {{ $enroll->user->fullname_th }} in {{ $camp->name}}</h1>
             </div>
         </div>
 
