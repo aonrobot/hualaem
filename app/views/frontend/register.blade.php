@@ -139,15 +139,16 @@
             }
         }
 
-        function makeHideable(parentObj, childObj) {
-            var myMap = {};
-            childObj.find('option').each(function () {
-                var my_parent = $(this).data('parent');
-                if (!myMap[my_parent]) {
-                    myMap[my_parent] = [];
-                }
-                myMap[my_parent].push($(this));
+        function makeHideable(parentObj, childObj,additionCallback) {
+            var objs = [];
+            var oldValues = childObj.find('option').each(function(){
+                objs.push({
+                    val: this.value,
+                    text: this.innerHTML,
+                    parent: $(this).data('parent')
+                });
             });
+            
             setDisable(childObj, true);
 
             parentObj.change(function () {
@@ -157,18 +158,28 @@
                     return;
                 }
 
-                childObj.find('option').hide();
-                var childMap = myMap[my_id];
-                for (var i = 0, l = childMap.length; i < l; i++) {
-                    childMap[i].show();
+                var html = '';
+                for(var i = 0,l=objs.length;i<l;i++){
+                    var obj = objs[i];
+                    var parent = obj.parent;
+                    if(parent == '' || parent == my_id){
+                        html += '<option value="'+obj.val+'">'+obj.text+'</option>';
+                    }
                 }
-                childObj.find('option:first').show();
+                childObj.html(html);
                 childObj.val('');
                 setDisable(childObj, false);
+                
+                if(additionCallback){
+                    additionCallback();
+                }
             });
         }
 
-        makeHideable($('#province_id'), $('#district_id'));
+        makeHideable($('#province_id'), $('#district_id'),function(){
+            $('#sub_district_id').val('');
+            setDisable($('#sub_district_id'),true);
+        });
         makeHideable($('#district_id'), $('#sub_district_id'));
     });
 </script>
