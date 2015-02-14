@@ -63,6 +63,7 @@ class CreateAddresses extends Migration {
         Schema::create('addresses', function(Blueprint $table) {
             $table->increments('id');
             $table->integer('user_id')->unsigned();
+            $table->string('name',100);
             $table->string('house_no', 10)->default('');
             $table->string('road', 30)->default('');
             $table->string('village_no', 5)->default('');

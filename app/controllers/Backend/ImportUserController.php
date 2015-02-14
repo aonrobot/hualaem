@@ -196,8 +196,8 @@ class ImportUserController extends BackendController {
                             
                         } elseif ($type == 'addresses') {
                             $obj = new \Address();
+                            $obj->name = 'บ้าน';
                             $obj->user_id = \Cache::get('user_' . $csvRow[0]);
-
 
                             if (!empty($provinces[$csvRow[$data[$type]['province']]])) {
                                 $obj->province_id = $provinces[$csvRow[$data[$type]['province']]];
