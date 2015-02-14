@@ -61,5 +61,9 @@ Route::group(array('prefix' => 'admin'), function() {
         'getScore'=> 'admin.camp.score',
         'getCampScore'=> 'admin.camp.camp_score',
     ]);
+    
+    Route::controller('user','mix5003\Hualaem\Backend\UserController',[
+        
+    ]);
 });
 
