@@ -20,5 +20,9 @@ class Enroll extends Eloquent {
     public function fields(){
         return $this->hasMany('EnrollField');
     }
+    
+    public function scores(){
+        return $this->hasMany('EnrollScore');
+    }
 
 }

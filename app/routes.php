@@ -51,12 +51,14 @@ Route::group(array('prefix' => 'admin'), function() {
     
     Route::controller('camp', 'mix5003\Hualaem\Backend\CampController',[
         'getIndex' => 'admin.camp.list',
+        'getView'=> 'admin.camp.view',
         'getAdd'=>'admin.camp.add',
         'getApplication'=>'admin.camp.application',
         'getEdit'=>'admin.camp.edit',
         'postSave'=>'admin.camp.save',
         'getAjaxCampField'=>'ajax.admin.camp.camp_fields',
-        'getDownloadApplicationFile'=>'admin.camp.download_application_file'
+        'getDownloadApplicationFile'=>'admin.camp.download_application_file',
+        'getScore'=> 'admin.camp.score',
     ]);
 });
 

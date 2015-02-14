@@ -2,7 +2,7 @@
 <html data-wf-site="545f56f8c3684d9f25f51d7e" data-wf-page="546203cc80bbb1ac3735af5c">
     <head>
         <meta charset="utf-8">
-        <title>import - tgt</title>
+        <title>@yield('title')</title>
         <meta name="viewport" content="width=device-width, initial-scale=1">
         <link rel="shortcut icon" type="image/x-icon" href="https://y7v4p6k4.ssl.hwcdn.net/placeholder/favicon.ico">
         <meta name="generator" content="Webflow">

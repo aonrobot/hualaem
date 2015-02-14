@@ -8,4 +8,7 @@ class CampTest extends Eloquent {
         return $this->belongsTo('Subject');
     }
 
+    public function scores(){
+        return $this->hasMany('EnrollScore');
+    }
 }
