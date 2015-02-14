@@ -90,6 +90,11 @@ class ImportUserController extends BackendController {
 
     private function getCSVRow($fp) {
         $cols = fgetcsv($fp, 0, "\t", '"');
+        if (isset($cols[0])) {
+            foreach ($cols as $key => $val) {
+                $cols[$key] = trim($val);
+            }
+        }
         return $cols;
     }
 
@@ -184,9 +189,11 @@ class ImportUserController extends BackendController {
                             $obj = new \User();
                             $obj->student_id = $csvRow[0];
                             $obj->role = \User::VERIFIED;
-                            $csvRow[$data[$type]['citizen_id']] = str_replace(array('-',' '), '', $csvRow[$data[$type]['citizen_id']]);
-                            $csvRow[$data[$type]['mobile_no']] = str_replace(array('-',' '), '', $csvRow[$data[$type]['mobile_no']]);
+                            $csvRow[$data[$type]['citizen_id']] = str_replace(array('-', ' '), '', $csvRow[$data[$type]['citizen_id']]);
+                            $csvRow[$data[$type]['mobile_no']] = str_replace(array('-', ' '), '', $csvRow[$data[$type]['mobile_no']]);
                             $csvRow[$data[$type]['birthdate']] = $this->reformatDate(trim($csvRow[$data[$type]['birthdate']]));
+                            $csvRow[$data[$type]['created_at']] = $this->reformatDate(trim($csvRow[$data[$type]['created_at']]));
+                            
                         } elseif ($type == 'addresses') {
                             $obj = new \Address();
                             $obj->user_id = \Cache::get('user_' . $csvRow[0]);
@@ -209,7 +216,7 @@ class ImportUserController extends BackendController {
                             if (empty($csvRow[$originData[$type]['firstname_th']])) {
                                 continue;
                             }
-                            $csvRow[$data[$type]['mobile_no']] = str_replace(array('-',' '), '', $csvRow[$data[$type]['mobile_no']]);
+                            $csvRow[$data[$type]['mobile_no']] = str_replace(array('-', ' '), '', $csvRow[$data[$type]['mobile_no']]);
                             $obj = new \UserParent();
                             $obj->user_id = \Cache::get('user_' . $csvRow[0]);
                             if ($type == 'father') {

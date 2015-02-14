@@ -20,6 +20,7 @@ return [
                 'email' => 'Email',
                 'nickname' => 'ชื่อเล่น',
                 'birthdate' => 'วันเกิด',
+                'created_at' => 'วันที่สมัคร',
             ],
             'addresses' => [
                 'house_no' => 'บ้านเลขที่',
