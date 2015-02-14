@@ -59,6 +59,7 @@ Route::group(array('prefix' => 'admin'), function() {
         'getAjaxCampField'=>'ajax.admin.camp.camp_fields',
         'getDownloadApplicationFile'=>'admin.camp.download_application_file',
         'getScore'=> 'admin.camp.score',
+        'getCampScore'=> 'admin.camp.camp_score',
     ]);
 });
 

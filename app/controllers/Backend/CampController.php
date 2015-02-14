@@ -205,16 +205,16 @@ class CampController extends BackendController {
 
         $scores = Input::get('scores');
         if (!empty($scores)) {
-            foreach ($scores as $test_id => $score) {
-                if(isset($scored[$test_id])){
-                    $score_obj = $scored[$test_id];
+            foreach ($scores as $testID => $score) {
+                if(isset($scored[$testID])){
+                    $score_obj = $scored[$testID];
                 }else{
                     if(empty($score)) { 
                         continue;
                     }
                     $score_obj = new \EnrollScore();
                     $score_obj->enroll_id = $enrollID;
-                    $score_obj->camp_test_id = $test_id;
+                    $score_obj->camp_test_id = $testID;
                 }
                 $score_obj->score = $score;
                 
@@ -225,4 +225,52 @@ class CampController extends BackendController {
         return \Redirect::route('admin.camp.view',[$camp->id]);
     }
 
+    public function getCampScore($campId){
+        $camp = \Camp::findOrFail($campId);
+        $camp->load('enrolls','enrolls.user','enrolls.scores','subjects', 'subjects.tests');
+        
+        $scored = [];
+        foreach($camp->enrolls as $enroll){
+            foreach($enroll->scores as $score){
+                $scored[$enroll->id][$score->camp_test_id] = $score->score;
+            }
+        }
+        
+        return $this->view('camp.camp_score',compact('camp','scored'));
+    }
+    
+    public function postCampScore($campId){
+        $inpScored = Input::get('scored');
+        $camp = \Camp::findOrFail($campId);
+        $camp->load('enrolls','enrolls.scores');
+        
+        $scored = [];
+        foreach($camp->enrolls as $enroll){
+            foreach($enroll->scores as $score){
+                $scored[$enroll->id][$score->camp_test_id] = $score;
+            }
+        }
+        
+        if(!empty($inpScored)){
+            foreach ($inpScored as $enrollID => $scores) {
+                foreach($scores as $testID => $score){
+                    if(isset($scored[$enrollID][$testID])){
+                        $score_obj = $scored[$enrollID][$testID];
+                    }else{
+                        if(empty($score)) { 
+                            continue;
+                        }
+                        $score_obj = new \EnrollScore();
+                        $score_obj->enroll_id = $enrollID;
+                        $score_obj->camp_test_id = $testID;
+                    }
+                    $score_obj->score = $score;
+
+                    $score_obj->save();
+                }
+            }
+        }
+        
+        return \Redirect::route('admin.camp.camp_score',[$campId]);
+    }
 }

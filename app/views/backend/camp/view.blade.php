@@ -21,7 +21,10 @@
 <div class="container well">
     <div class="row">
         <div class="col-md-12">
-            <h2>Applicants</h2>
+            <h2>
+                Applicants 
+                <a href="{{ URL::route('admin.camp.camp_score',[$camp->id]) }}" class="btn btn-info btn-sm">Scores</a>
+            </h2>
         </div>
     </div>
     @foreach($camp->enrolls as $enroll)
