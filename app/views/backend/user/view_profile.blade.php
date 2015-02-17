@@ -14,7 +14,14 @@
 <div class="container well">
     <div class="row">
         <div class="col-md-12">
-            <h2>{{ $user->fullname_th }}</h2>
+            <h2>
+                {{ $user->fullname_th }} 
+                @if($user->role == 'VERIFIED')
+                <span class="glyphicon glyphicon-ok"></span>
+                @elseif($user->role == 'UNVERIFIED')
+                <span class="glyphicon glyphicon-remove"></span>
+                @endif
+            </h2>
         </div>
     </div>
 
@@ -38,6 +45,7 @@
                 <!-- Tab panes -->
                 <div class="tab-content">
                     <div role="tabpanel" class="tab-pane active" id="basic">
+                        Student ID: {{ $user->student_id }}<br>
                         Name: {{ $user->firstname_th }}<br>
                         Lastname: {{ $user->lastname_th }}<br>
                         Nickname: {{ $user->nickname }}<br>
