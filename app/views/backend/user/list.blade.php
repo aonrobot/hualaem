@@ -25,44 +25,55 @@
             </div>
         </form>
     </div>
-    
+
     <br>
 </div>
 
-<div class="container">
-    <div class="row">
-        <div class="col-md-12">
-            <table class="table table-striped table-bordered table-hover table-condensed">
-                <thead>
-                    <tr>
-                        <th>Name</th>
-                        <th>StudentID</th>
-                        <th>role</th>
-                        <th>Mobile No</th>
-                        <th>Email</th>
-                        <th>Registered Date</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    @foreach($users as $user)
-                    <tr>
-                        <td>
-                            <a href="{{ URL::route('admin.user.view',[$user->id]) }}">
-                                {{ $user->fullname_th }}
-                            </a>
-                        </td>
-                        <td>{{ $user->student_id }}</td>
-                        <td>{{ $user->role }}</td>
-                        <td>{{ $user->mobile_no }}</td>
-                        <td>{{ $user->email }}</td>
-                        <td>{{ $user->created_at }}</td>
-                    </tr>
-                    @endforeach
-                </tbody>
-            </table>
+<form method="POST" action="{{ URL::route('admin.user.mass_update_user') }}">
+    <div class="container">
+        <div class="row">
+            <div class="col-md-12">
+                <table class="table table-striped table-bordered table-hover table-condensed">
+                    <thead>
+                        <tr>
+                            <th></th>
+                            <th>Name</th>
+                            <th>StudentID</th>
+                            <th>role</th>
+                            <th>Mobile No</th>
+                            <th>Email</th>
+                            <th>Registered Date</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @foreach($users as $user)
+                        <tr>
+                            <td><input type="checkbox" name="selects[]" value="{{ $user->id }}"></td>
+                            <td>
+                                <a href="{{ URL::route('admin.user.view',[$user->id]) }}">
+                                    {{ $user->fullname_th }}
+                                </a>
+                            </td>
+                            <td>{{ $user->student_id }}</td>
+                            <td>{{ $user->role }}</td>
+                            <td>{{ $user->mobile_no }}</td>
+                            <td>{{ $user->email }}</td>
+                            <td>{{ $user->created_at }}</td>
+                        </tr>
+                        @endforeach
+                    </tbody>
+                </table>
+            </div>
+        </div>
+        
+        <div class="row">
+            <div class="col-md-12">
+                <button type="submit" name="action" value="VERIFIED" class="btn btn-info">VERIFIED SELECT USER</button>
+                <button type="submit" name="action" value="UNVERIFIED" class="btn btn-info">UNVERIFIED SELECT USER</button>
+            </div>
         </div>
     </div>
-</div>
+</form>
 
 <div class="container">
     <div class="row">
@@ -78,13 +89,13 @@
 {{ HTML::script('js/bootstrap-datetimepicker.min.js') }}
 
 <script>
-    (function(){
+    (function () {
         $('#txtSearchDate').datetimepicker({
             format: 'YYYY-MM-DD'
         });
-        $('#txtSearchDate').on('dp.change', function(){
+        $('#txtSearchDate').on('dp.change', function () {
             $('#searchForm').submit();
-        });    
+        });
     })();
 
 </script>

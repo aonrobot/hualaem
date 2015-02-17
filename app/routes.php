@@ -64,6 +64,7 @@ Route::group(array('prefix' => 'admin'), function() {
     
     Route::controller('user','mix5003\Hualaem\Backend\UserController',[
         'getIndex'=>'admin.user.list',
+        'postMassUpdateUser'=>'admin.user.mass_update_user',
         'getView'=>'admin.user.view',
     ]);
 });
