@@ -28,7 +28,7 @@ class CreateUsers extends Migration {
             $table->string('lastname_en', 50)->nullable();
 
             $table->string('mobile_no', 10)->nullable();
-            $table->string('email', 25)->nullable();
+            $table->string('email', 100)->nullable();
             $table->string('nickname', 25)->nullable();
             $table->date('birthdate')->nullable();
 
