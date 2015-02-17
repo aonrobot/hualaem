@@ -7,7 +7,23 @@ use Input;
 
 class UserController extends BackendController {
     public function getIndex(){
-        $users = \User::orderBy('id','desc')->paginate();
+        $query = \User::orderBy('id','desc');
+        if(Input::has('txtSearchUser')){
+            $query->where(function($query){
+                $word = '%'.Input::get('txtSearchUser').'%';
+                $query->where('firstname_th','like',$word);
+                $query->orWhere('lastname_th','like',$word);
+                $query->orWhere('username','like',$word);
+            });
+        }
+        if(Input::has('txtSearchDate')){
+            $time = strtotime(Input::get('txtSearchDate'));
+            $tomorrowTime = strtotime('tomorrow',$time);
+            
+            $query->where('created_at','>=',Input::get('txtSearchDate'));
+            $query->where('created_at','<',date('Y-m-d',$tomorrowTime));
+        }
+        $users = $query->paginate();
         
         return $this->view('user.list',  compact('users'));
     }

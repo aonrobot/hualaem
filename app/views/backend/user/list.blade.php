@@ -2,6 +2,11 @@
 
 @section('title') List User @stop
 
+@section('css')
+@parent
+{{ HTML::style('css/bootstrap-datetimepicker.min.css') }}
+@stop
+
 @section('content')
 <div class="container">
     <div class="row">
@@ -9,6 +14,19 @@
             <h1>User List</h1>
         </div>
     </div>
+
+    <div class="row">
+        <form method="GET" id="searchForm">
+            <div class="col-md-3">
+                <input class="form-control input-sm" placeholder="Search By Username" name="txtSearchUser" id="txtSearchUser" value="{{ Input::get('txtSearchUser') }}">
+            </div>
+            <div class="col-md-3">
+                <input class="form-control input-sm" placeholder="YYYY-MM-DD"  name="txtSearchDate" id="txtSearchDate" value="{{ Input::get('txtSearchDate') }}">
+            </div>
+        </form>
+    </div>
+    
+    <br>
 </div>
 
 <div class="container">
@@ -30,7 +48,7 @@
                     <tr>
                         <td>
                             <a href="{{ URL::route('admin.user.view',[$user->id]) }}">
-                            {{ $user->fullname_th }}
+                                {{ $user->fullname_th }}
                             </a>
                         </td>
                         <td>{{ $user->student_id }}</td>
@@ -48,7 +66,7 @@
 
 <div class="container">
     <div class="row">
-        {{ $users->links() }}
+        {{ $users->appends(Input::except('page'))->links() }}
     </div>
 </div>
 @stop
@@ -56,4 +74,18 @@
 @section('js_foot')
 @parent
 
+{{ HTML::script('js/moment.min.js') }}
+{{ HTML::script('js/bootstrap-datetimepicker.min.js') }}
+
+<script>
+    (function(){
+        $('#txtSearchDate').datetimepicker({
+            format: 'YYYY-MM-DD'
+        });
+        $('#txtSearchDate').on('dp.change', function(){
+            $('#searchForm').submit();
+        });    
+    })();
+
+</script>
 @stop
