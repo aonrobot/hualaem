@@ -66,6 +66,7 @@ Route::group(array('prefix' => 'admin'), function() {
         'getIndex'=>'admin.user.list',
         'postMassUpdateUser'=>'admin.user.mass_update_user',
         'getView'=>'admin.user.view',
+        'getEdit'=>'admin.user.edit',
     ]);
 });
 

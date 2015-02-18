@@ -38,7 +38,7 @@ class UserController extends BackendController {
                     continue;
                 }
                 $user->role = 'VERIFIED';
-                if(empty($user->student_id)){
+                if (empty($user->student_id)) {
                     $user->student_id = \User::max('student_id') + 1;
                 }
                 $user->save();
@@ -52,7 +52,7 @@ class UserController extends BackendController {
                 $user->save();
             }
         }
-        
+
         return \Redirect::back();
     }
 
@@ -68,7 +68,33 @@ class UserController extends BackendController {
                     $q->where('camp_end', '<', date('Y-m-d'));
                 })->take(10)->orderBy('id')->get();
 
-        return $this->view('user.view_profile', compact('user', 'registerCamps', 'historyCamps'));
+        return $this->view('user.view', compact('user', 'registerCamps', 'historyCamps'));
+    }
+
+    public function getEdit($userID) {
+        $user = \User::findOrFail($userID);
+        $user->load('addresses', 'parents');
+
+        return $this->view('user.edit', compact('user'));
+    }
+
+    public function postEdit($userID) {
+        $user = \User::findOrFail($userID);
+        //TODO: validate input
+
+        $userForm = Input::get('user');
+        $insUserForm = array_only($userForm, ['firstname_th', 'lastname_th', 'nickname', 'birthdate', 'mobile_no', 'email', 'citizen_id']);
+        foreach ($insUserForm as $key => $val) {
+            if (empty($val)) {
+                continue;
+            }
+            $user->$key = $val;
+        }
+        $user->save();
+
+
+
+        return \Redirect::route('admin.user.view', [$user->id]);
     }
 
 }

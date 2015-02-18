@@ -32,6 +32,17 @@ class User extends Eloquent implements UserInterface, RemindableInterface {
         return $this->prefix_th.$this->firstname_th.' '.$this->lastname_th;
     }
     
+    public function getAgeAttribute(){
+        if($this->birthdate == NULL){
+            return "";
+        }
+        
+        $birthTime = strtotime($this->birthdate);
+        $diffTime = time() - $birthTime;
+        
+        return intval($diffTime / (3600 *24 *365));
+    }
+    
     public function addresses() {
         return $this->hasMany('Address');
     }

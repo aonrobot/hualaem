@@ -49,8 +49,18 @@
                         Name: {{ $user->firstname_th }}<br>
                         Lastname: {{ $user->lastname_th }}<br>
                         Nickname: {{ $user->nickname }}<br>
+                        Birthdate: {{ $user->birthdate }} 
+                        @if($user->birthdate != NULL)
+                            ( {{ $user->age }} Years)
+                        @endif
+                        <br>
+                        Citizen ID: {{ $user->citizen_id }}<br>
                         Mobile: {{ $user->mobile_no }}<br>
                         Email: {{ $user->email }}<br>
+                        
+                        <div class="pull-right">
+                            <a href="{{ URL::route('admin.user.edit',[$user->id]) }}" class="btn btn-info">Edit Profile</a>
+                        </div>
                     </div>
                     <div role="tabpanel" class="tab-pane" id="addresses">
                         <div class="panel-group" id="accordion" role="tablist" aria-multiselectable="true">
