@@ -88,7 +88,16 @@ class UserController extends BackendController {
             if (empty($val)) {
                 continue;
             }
-            $user->$key = $val;
+            if ($user->$key != $val) {
+                $log = new \UserLog();
+                $log->user_id = $user->id;
+                $log->field = $key;
+                $log->old_value = $user->$key;
+                $log->new_value = $val;
+                $log->save();
+                
+                $user->$key = $val;
+            }
         }
         $user->save();
 
