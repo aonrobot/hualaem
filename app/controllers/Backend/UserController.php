@@ -75,7 +75,33 @@ class UserController extends BackendController {
         $user = \User::findOrFail($userID);
         $user->load('addresses', 'parents');
 
-        return $this->view('user.edit', compact('user'));
+        $allProvinces = \Province::orderBy('name')->get();
+        $provinces = [];
+        foreach ($allProvinces as $province) {
+            $provinces[$province->id] = $province->name;
+        }
+        $allDistricts = \District::orderBy('name')->get();
+        $districts = [];
+        foreach ($allDistricts as $district) {
+            $districts[] = [
+                'id'=>$district->id,
+                'name'=> $district->name,
+                'parent_id'=> $district->province_id,
+            ];
+
+        }
+
+        $allSubDistricts = \SubDistrict::orderBy('name')->get();
+        $subDistricts = [];
+        foreach ($allSubDistricts as $subDistrict) {
+            $subDistricts[] = [
+                'id'=>$subDistrict->id,
+                'name'=> $subDistrict->name,
+                'parent_id'=> $subDistrict->district_id,
+            ];
+        }
+
+        return $this->view('user.edit', compact('user', 'provinces', 'districts', 'subDistricts'));
     }
 
     public function postEdit($userID) {
@@ -90,20 +116,61 @@ class UserController extends BackendController {
             }
             if ($user->$key != $val) {
                 $log = new \UserLog();
-                $log->user_id = $user->id;
+                $log->editor_id = \Auth::user()->id;
+                $log->target_type = 'PROFILE';
+                $log->target_id = $user->id;
                 $log->field = $key;
                 $log->old_value = $user->$key;
                 $log->new_value = $val;
                 $log->save();
-                
+
                 $user->$key = $val;
             }
         }
         $user->save();
 
+        $addressForm = Input::get('address');
+        $insAddressField = ['name', 'house_no', 'road', 'village_no', 'village', 'sub_district_id', 'district_id', 'province_id', 'postcode', 'phone_no'];
+        foreach ($addressForm as $address) {
+            if (!empty($address['id'])) {
+                $obj = \Address::find($address['id']);
+            } else {
+                if(empty($address['name'])){
+                    continue;
+                }
+                $obj = new \Address;
+                $obj->user_id = $user->id;
+            }
 
+            if ($obj->user_id != $user->id) {
+                continue;
+            }
 
-        return \Redirect::route('admin.user.view', [$user->id]);
+            if (!empty($address['delete'])) {
+                $obj->delete();
+                continue;
+            }
+
+            foreach ($insAddressField as $key) {
+                if (empty($address[$key])) {
+                    continue;
+                }
+                if (!empty($address['id']) && $obj->$key != $address[$key]) {
+                    $log = new \UserLog();
+                    $log->editor_id = \Auth::user()->id;
+                    $log->target_type = 'ADDRESS';
+                    $log->target_id = $address['id'];
+                    $log->field = $key;
+                    $log->old_value = $obj->$key;
+                    $log->new_value = $address[$key];
+                    $log->save();
+                }
+                $obj->$key = $address[$key];
+            }
+            $obj->save();
+        }
+        return "AAA;";
+        //return \Redirect::route('admin.user.view', [$user->id]);
     }
 
 }

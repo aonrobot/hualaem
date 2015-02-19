@@ -13,7 +13,9 @@ class CreateUserLogs extends Migration {
     public function up() {
         Schema::create('user_logs', function(Blueprint $table) {
             $table->increments('id');
-            $table->integer('user_id')->unsigned()->index();
+            $table->integer('editor_id')->unsigned()->index();
+            $table->enum('target_type',['PROFILE','ADDRESS','PARENT']);
+            $table->integer('target_id')->unsigned()->index();
             $table->string('field',50);
             $table->text('old_value')->nullable();
             $table->text('new_value')->nullable();

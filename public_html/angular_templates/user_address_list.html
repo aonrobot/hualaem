@@ -1,0 +1,92 @@
+<div class="panel panel-default" ng-repeat="address in addresses">
+    <input name="address[{{ $index }}][id]" type="hidden" ng-model="address.id" ng-value="address.id">
+    
+    <div class="panel-heading" role="tab" id="control_address_{{ $index }}">
+        <h4 class="panel-title">
+            
+                <div class="row">
+                    <div class="col-md-1">
+                        <a class="collapsed" data-toggle="collapse" data-parent="#accordion" href="#address_{{ $index }}" aria-expanded="true" aria-controls="address_{{ $index }}">
+                            แก้ไข
+                        </a>
+                    </div>
+                    
+                    <div class="col-md-9">
+                        <input name="address[{{ $index }}][name]" class="form-control" ng-model="address.name">
+                    </div>
+                    <div class="col-md-2">
+                        <div class="checkbox">
+                            <label>
+                                <input type="checkbox" name="address[{{ $index }}][delete]" value="1" ng-model="address.delete"> Delete
+                            </label>
+                        </div>
+                    </div>
+                </div>
+            
+        </h4>
+    </div>
+    <div id="address_{{ $index }}" class="panel-collapse collapse" role="tabpanel" aria-labelledby="headingOne">
+        <div class="panel-body">
+            <div class="form-group">
+                <label for="address[{{ $index }}][house_no]" class="col-sm-2 control-label">บ้านเลขที่</label>
+                <div class="col-sm-10">
+                    <input class="form-control" name="address[{{ $index }}][house_no]" placeholder="บ้านเลขที่" ng-model="address.house_no" type="text">
+                </div>
+            </div>
+            <div class="form-group">
+                <label for="address[{{ $index }}][road]" class="col-sm-2 control-label">ถนน</label>
+                <div class="col-sm-10">
+                    <input class="form-control" name="address[{{ $index }}][road]" placeholder="ถนน" ng-model="address.road" type="text">
+                </div>
+            </div>
+            <div class="form-group">
+                <label for="address[{{ $index }}][village_no]" class="col-sm-2 control-label">หมู่</label>
+                <div class="col-sm-10">
+                    <input class="form-control" name="address[{{ $index }}][village_no]" placeholder="หมู่" ng-model="address.village_no" type="text">
+                </div>
+            </div>
+            <div class="form-group">
+                <label class="col-sm-2 control-label" for="address[{{ $index }}][province_id]">จังหวัด</label>
+                <div class="col-sm-10">
+                    <select name="address[{{ $index }}][province_id]" id="address[{{ $index }}][province_id]" class="form-control" 
+                            ng-model="address.province_id" ng-options="key as value for (key,value) in provinces"
+                            ng-change="onProvinceChange(address);">
+
+                    </select>
+                </div>
+            </div>
+            <div class="form-group">
+                <label class="col-sm-2 control-label" for="address[{{ $index }}][district_id]">อำเภอ</label>
+                <div class="col-sm-10">
+                    <select name="address[{{ $index }}][district_id]" id="address[{{ $index }}][district_id]" class="form-control"
+                            ng-model="address.district_id" ng-options="key as value for (key,value) in districts"
+                            ng-change="onDistrictChange(address);">
+
+                    </select>
+                </div>
+            </div>
+            <div class="form-group">
+                <label class="col-sm-2 control-label" for="address[{{ $index }}][sub_district_id]">ตำบล</label>
+                <div class="col-sm-10">
+                    <select name="address[{{ $index }}][sub_district_id]" id="address[{{ $index }}][sub_district_id]" class="form-control"
+                            ng-model="address.sub_district_id" ng-options="key as value for (key,value) in subDistricts ">
+
+                    </select>
+                </div>
+            </div>
+            <div class="form-group">
+                <label for="address[{{ $index }}][postcode]" class="col-sm-2 control-label">รหัสไปรษณีย์</label>
+                <div class="col-sm-10">
+                    <input class="form-control" name="address[{{ $index }}][postcode]" placeholder="รหัสไปรษณีย์" ng-model="address.postcode" type="text">
+                </div>
+            </div>
+            <div class="form-group">
+                <label for="address[{{ $index }}][phone_no]" class="col-sm-2 control-label">เบอร์โทร</label>
+                <div class="col-sm-10">
+                    <input class="form-control" name="address[{{ $index }}][phone_no]" placeholder="เบอร์โทร" ng-model="address.phone_no" type="text">
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<button class="btn btn-info" type="button" ng-click="addAddress()">Add new Address</button>

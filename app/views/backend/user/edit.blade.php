@@ -32,8 +32,8 @@
 
     <div class="row">
         <div class="col-md-12">
-            <form method="POST" class="form-horizontal">
-                <div role="tabpanel">
+            <form method="POST" class="form-horizontal" id="rootform">
+                <div role="tabpanel" ng-app="UserForm">
 
                     <!-- Nav tabs -->
                     <ul class="nav nav-tabs" role="tablist">
@@ -61,29 +61,7 @@
                         </div>
                         <div role="tabpanel" class="tab-pane" id="addresses">
                             <div class="panel-group" id="accordion" role="tablist" aria-multiselectable="true">
-                                @foreach($user->addresses as $key => $address)
-                                <div class="panel panel-default">
-                                    <div class="panel-heading" role="tab" id="control_address_{{$address->id}}">
-                                        <h4 class="panel-title">
-                                            <a class="{{ $key == 0 ? '' : 'collapsed'}}" data-toggle="collapse" data-parent="#accordion" href="#address_{{$address->id}}" aria-expanded="true" aria-controls="address_{{$address->id}}">
-                                                {{$address->name}}
-                                            </a>
-                                        </h4>
-                                    </div>
-                                    <div id="address_{{$address->id}}" class="panel-collapse collapse {{ $key == 0 ? 'in' : ''}}" role="tabpanel" aria-labelledby="headingOne">
-                                        <div class="panel-body">
-                                            บ้านเลขที่: {{$address->house_no}}<br>
-                                            ถนน: {{$address->road}}<br>
-                                            หมู่: {{$address->village_no}}<br>
-                                            แขวง: {{ isset($address->subDistrict) ? $address->subDistrict->name : ''}}<br>
-                                            เขต: {{ isset($address->district) ? $address->district->name : ''}}<br>
-                                            จังหวัด: {{ isset($address->province) ? $address->province->name : ''}}<br>
-                                            รหัสไปรษณีย์: {{$address->postcode}}<br>
-                                            เบอร์โทร: {{$address->phone_no}}<br>
-                                        </div>
-                                    </div>
-                                </div>
-                                @endforeach
+                                <address-list></address-list>
                             </div>
                         </div>
                         <div role="tabpanel" class="tab-pane" id="parents">
@@ -103,9 +81,9 @@
                     </div>
 
                 </div>
-                
+
                 <div class="pull-right">
-                    <button type="submit" class="btn btn-success">Save Change</button>
+                    <button type="submit" class="btn btn-success" ng-click="document.getElementById('rootform').submit();">Save Change</button>
                 </div>
             </form>
         </div>
@@ -125,6 +103,10 @@
 {{ HTML::script('js/bootstrap-datetimepicker.min.js') }}
 
 <script>
+    var addresses = {{ json_encode($user->addresses) }};
+    var provinces = {{ json_encode($provinces) }};
+    var districts = {{ json_encode($districts) }};
+    var subDistricts = {{ json_encode($subDistricts) }};
     (function () {
         $('#user\\[birthdate\\]').datetimepicker({
             format: 'YYYY-MM-DD'
@@ -132,4 +114,8 @@
     })();
 
 </script>
+
+{{ HTML::script('js/angular.min.js') }}
+{{ HTML::script('js/angular_modules/user_form.js') }}
+
 @stop
