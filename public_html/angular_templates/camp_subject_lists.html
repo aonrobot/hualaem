@@ -1,39 +1,41 @@
-<div class="container well">
-    <div class="row">
-        <div class="col-md-12">
-            <h2>Secton 3 | Score</h2>
+<div class="container">
+    <div class="well">
+        <div class="row">
+            <div class="col-md-12">
+                <h2>Secton 3 | Score</h2>
+            </div>
         </div>
-    </div>
-    <div class="row">
-        <div class="col-md-12">
-            <div id="subject_list" class="panel-group" role="tablist" aria-multiselectable="true">
+        <div class="row">
+            <div class="col-md-12">
+                <div id="subject_list" class="panel-group" role="tablist" aria-multiselectable="true">
 
-                <div class="panel panel-default" ng-repeat="subject in subjects" ng-init="subjectIndex = $index">
+                    <div class="panel panel-default" ng-repeat="subject in subjects" ng-init="subjectIndex = $index">
 
-                    <div class="panel-heading" role="tab" id="subject{{ subjectIndex }}">
-                        <h4 class="panel-title">
-                            <a data-toggle="collapse" data-parent="#subject_list" href="#collapseSubject{{ subjectIndex }}" aria-expanded="true" aria-controls="collapseSubject{{ subjectIndex}}">
-                                {{ subjectIndex + 1 }} Subject 
-                            </a>
-                            <input name="subjects[{{ subjectIndex }}][name]" ng-model="subject.name" class="form-control input-sm" placeholder="Subject">
-                            <input type="hidden" name="subjects[{{ subjectIndex }}][id]" ng-value="subject.id">
-                        </h4>
-                    </div>
-                    <div id="collapseSubject{{ subjectIndex }}" class="panel-collapse collapse" role="tabpanel" aria-labelledby="subject{{ subjectIndex }}">
-                        <div class="panel-body">
-                            <ul class="list-group">
-                                <li class="list-group-item" ng-repeat="test in subject.tests" ng-init="testIndex = $index">
-                                    <input name="subjects[{{ subjectIndex }}][tests][{{ testIndex }}][name]" ng-model="test.name" class="form-control input-sm">
-                                    <input type="hidden" name="subjects[{{ subjectIndex }}][tests][{{ testIndex }}][id]" ng-value="test.id">
-                                </li>
-                            </ul>
-                            <button type="button" class="btn btn-success" ng-click="addTest(subject)">Add Score +</button>
+                        <div class="panel-heading" role="tab" id="subject{{ subjectIndex }}">
+                            <h4 class="panel-title">
+                                <a data-toggle="collapse" data-parent="#subject_list" href="#collapseSubject{{ subjectIndex }}" aria-expanded="true" aria-controls="collapseSubject{{ subjectIndex}}">
+                                    {{ subjectIndex + 1 }} Subject 
+                                </a>
+                                <input name="subjects[{{ subjectIndex }}][name]" ng-model="subject.name" class="form-control input-sm" placeholder="Subject">
+                                <input type="hidden" name="subjects[{{ subjectIndex }}][id]" ng-value="subject.id">
+                            </h4>
+                        </div>
+                        <div id="collapseSubject{{ subjectIndex }}" class="panel-collapse collapse" role="tabpanel" aria-labelledby="subject{{ subjectIndex }}">
+                            <div class="panel-body">
+                                <ul class="list-group">
+                                    <li class="list-group-item" ng-repeat="test in subject.tests" ng-init="testIndex = $index">
+                                        <input name="subjects[{{ subjectIndex }}][tests][{{ testIndex }}][name]" ng-model="test.name" class="form-control input-sm">
+                                        <input type="hidden" name="subjects[{{ subjectIndex }}][tests][{{ testIndex }}][id]" ng-value="test.id">
+                                    </li>
+                                </ul>
+                                <button type="button" class="btn btn-success" ng-click="addTest(subject)">Add Score +</button>
+                            </div>
                         </div>
                     </div>
-                </div>
 
+                </div>
+                <button type="button" class="btn btn-success" ng-click="addSubject()">Add Subject +</button>
             </div>
-            <button type="button" class="btn btn-success" ng-click="addSubject()">Add Subject +</button>
         </div>
     </div>
 </div>

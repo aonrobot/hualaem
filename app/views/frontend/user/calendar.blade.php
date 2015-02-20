@@ -15,10 +15,12 @@
         </div>
     </div>
 </div>
-<div class="container well">
-    <div class="row">
-        <div class="col-md-12" id="calendar">
+<div class="container">
+    <div class="well">
+        <div class="row">
+            <div class="col-md-12" id="calendar">
 
+            </div>
         </div>
     </div>
 </div>
@@ -38,10 +40,10 @@
             },
             eventSources: [
                 {
-                    url: "{{ URL::route('ajax.student.calendar_data',[\Enroll::STATUS_APPROVED]) }}" 
+                    url: "{{ URL::route('ajax.student.calendar_data',[\Enroll::STATUS_APPROVED]) }}"
                 },
                 {
-                    url: "{{ URL::route('ajax.student.calendar_data',[\Enroll::STATUS_PENDING]) }}", 
+                    url: "{{ URL::route('ajax.student.calendar_data',[\Enroll::STATUS_PENDING]) }}",
                     color: 'yellow',
                     textColor: 'black'
                 }

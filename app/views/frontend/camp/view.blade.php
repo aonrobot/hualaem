@@ -10,16 +10,18 @@
         </div>
     </div>
 </div>
-<div class="container well">
-    <div class="row">
-        <div class="col-md-12">
-            {{ $camp->description }}
-            
-            @if(Auth::check())
-            <div class="pull-right">
-                <a href="{{ URL::route('student.camp.register',[$camp->id]) }}" class="btn btn-info">Register</a>
+<div class="container">
+    <div class="well">
+        <div class="row">
+            <div class="col-md-12">
+                {{ $camp->description }}
+
+                @if(Auth::check())
+                <div class="pull-right">
+                    <a href="{{ URL::route('student.camp.register',[$camp->id]) }}" class="btn btn-info">Register</a>
+                </div>
+                @endif
             </div>
-            @endif
         </div>
     </div>
 </div>
