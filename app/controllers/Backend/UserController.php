@@ -67,8 +67,10 @@ class UserController extends BackendController {
         $historyCamps = $user->enrolls()->with('camp')->whereHas('camp', function($q) {
                     $q->where('camp_end', '<', date('Y-m-d'));
                 })->take(10)->orderBy('id')->get();
+                
+        $userLogs = $user->logs()->orderBy('id','desc')->limit(20)->get();
 
-        return $this->view('user.view', compact('user', 'registerCamps', 'historyCamps'));
+        return $this->view('user.view', compact('user', 'registerCamps', 'historyCamps','userLogs'));
     }
 
     public function getEdit($userID) {
@@ -116,7 +118,7 @@ class UserController extends BackendController {
             }
             if ($user->$key != $val) {
                 $log = new \UserLog();
-                $log->editor_id = \Auth::user()->id;
+                $log->user_id = \Auth::user()->id;
                 $log->target_type = 'PROFILE';
                 $log->target_id = $user->id;
                 $log->field = $key;
@@ -157,7 +159,7 @@ class UserController extends BackendController {
                 }
                 if (!empty($address['id']) && $obj->$key != $address[$key]) {
                     $log = new \UserLog();
-                    $log->editor_id = \Auth::user()->id;
+                    $log->user_id = \Auth::user()->id;
                     $log->target_type = 'ADDRESS';
                     $log->target_id = $address['id'];
                     $log->field = $key;
