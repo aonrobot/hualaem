@@ -65,18 +65,7 @@
                             </div>
                         </div>
                         <div role="tabpanel" class="tab-pane" id="parents">
-                            @foreach($user->parents as $key => $parent)
-                            <div class="panel panel-default">
-                                <div class="panel-heading">{{ $parent->relation }}</div>
-                                <div class="panel-body">
-                                    ชื่อ: {{ $parent->fullname_th }}<br>
-                                    เบอร์โทร: {{ $parent->mobile_no }}<br>
-                                    อาชีพ: {{ $parent->job }}<br>
-                                    ตำแหน่ง: {{ $parent->job_title }}<br>
-                                    ทำงานด้าน: {{ $parent->job_type }}<br>
-                                </div>
-                            </div>
-                            @endforeach
+                            <parent-list></parent-list>
                         </div>
                     </div>
 
@@ -103,6 +92,7 @@
 {{ HTML::script('js/bootstrap-datetimepicker.min.js') }}
 
 <script>
+    var parents = {{ json_encode($user->parents) }};
     var addresses = {{ json_encode($user->addresses) }};
     var provinces = {{ json_encode($provinces) }};
     var districts = {{ json_encode($districts) }};

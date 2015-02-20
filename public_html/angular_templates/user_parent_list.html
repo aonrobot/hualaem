@@ -1,0 +1,70 @@
+<div class="panel panel-default" ng-repeat="parent in parents">
+    <input name="parent[{{ $index }}][id]" type="hidden" ng-model="parent.id" ng-value="parent.id">
+    
+    <div class="panel-heading" role="tab" id="control_address_{{ $index }}">
+        <h4 class="panel-title">
+            
+                <div class="row">
+                    <div class="col-md-1">
+                        <a class="collapsed" data-toggle="collapse" data-parent="#accordion" href="#parent_{{ $index }}" aria-expanded="true" aria-controls="parent_{{ $index }}">
+                            แก้ไข
+                        </a>
+                    </div>
+                    
+                    <div class="col-md-9">
+                        <input name="parent[{{ $index }}][relation]" class="form-control" ng-model="parent.relation">
+                    </div>
+                    <div class="col-md-2">
+                        <div class="checkbox">
+                            <label>
+                                <input type="checkbox" name="parent[{{ $index }}][delete]" value="1" ng-model="parent.delete"> Delete
+                            </label>
+                        </div>
+                    </div>
+                </div>
+            
+        </h4>
+    </div>
+    <div id="parent_{{ $index }}" class="panel-collapse collapse" role="tabpanel" aria-labelledby="headingOne">
+        <div class="panel-body">
+            <div class="form-group">
+                <label for="parent[{{ $index }}][firstname_th]" class="col-sm-2 control-label">ชื่อ</label>
+                <div class="col-sm-10">
+                    <input class="form-control" name="parent[{{ $index }}][firstname_th]" placeholder="ชื่อ" ng-model="parent.firstname_th" type="text">
+                </div>
+            </div>
+            <div class="form-group">
+                <label for="parent[{{ $index }}][lastname_th]" class="col-sm-2 control-label">นามสกุล</label>
+                <div class="col-sm-10">
+                    <input class="form-control" name="parent[{{ $index }}][lastname_th]" placeholder="นามสกุล" ng-model="parent.lastname_th" type="text">
+                </div>
+            </div>
+            <div class="form-group">
+                <label for="parent[{{ $index }}][mobile_no]" class="col-sm-2 control-label">เบอร์โทร</label>
+                <div class="col-sm-10">
+                    <input class="form-control" name="parent[{{ $index }}][mobile_no]" placeholder="เบอร์โทร" ng-model="parent.mobile_no" type="text">
+                </div>
+            </div>
+            <div class="form-group">
+                <label for="parent[{{ $index }}][job]" class="col-sm-2 control-label">อาชีพ</label>
+                <div class="col-sm-10">
+                    <input class="form-control" name="parent[{{ $index }}][job]" placeholder="อาชีพ" ng-model="parent.job" type="text">
+                </div>
+            </div>
+            <div class="form-group">
+                <label for="parent[{{ $index }}][job_title]" class="col-sm-2 control-label">ตำแหน่ง</label>
+                <div class="col-sm-10">
+                    <input class="form-control" name="parent[{{ $index }}][job_title]" placeholder="ตำแหน่ง" ng-model="parent.job_title" type="text">
+                </div>
+            </div>
+            <div class="form-group">
+                <label for="parent[{{ $index }}][job_type]" class="col-sm-2 control-label">ทำงานด้าน</label>
+                <div class="col-sm-10">
+                    <input class="form-control" name="parent[{{ $index }}][job_type]" placeholder="ทำงานด้าน" ng-model="parent.job_type" type="text">
+                </div>
+            </div>
+            
+        </div>
+    </div>
+</div>
+<button class="btn btn-info" type="button" ng-click="addParent()">Add new Parent</button>

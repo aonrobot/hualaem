@@ -67,10 +67,10 @@ class UserController extends BackendController {
         $historyCamps = $user->enrolls()->with('camp')->whereHas('camp', function($q) {
                     $q->where('camp_end', '<', date('Y-m-d'));
                 })->take(10)->orderBy('id')->get();
-                
-        $userLogs = $user->logs()->orderBy('id','desc')->limit(20)->get();
 
-        return $this->view('user.view', compact('user', 'registerCamps', 'historyCamps','userLogs'));
+        $userLogs = $user->logs()->orderBy('id', 'desc')->limit(20)->get();
+
+        return $this->view('user.view', compact('user', 'registerCamps', 'historyCamps', 'userLogs'));
     }
 
     public function getEdit($userID) {
@@ -86,20 +86,19 @@ class UserController extends BackendController {
         $districts = [];
         foreach ($allDistricts as $district) {
             $districts[] = [
-                'id'=>$district->id,
-                'name'=> $district->name,
-                'parent_id'=> $district->province_id,
+                'id' => $district->id,
+                'name' => $district->name,
+                'parent_id' => $district->province_id,
             ];
-
         }
 
         $allSubDistricts = \SubDistrict::orderBy('name')->get();
         $subDistricts = [];
         foreach ($allSubDistricts as $subDistrict) {
             $subDistricts[] = [
-                'id'=>$subDistrict->id,
-                'name'=> $subDistrict->name,
-                'parent_id'=> $subDistrict->district_id,
+                'id' => $subDistrict->id,
+                'name' => $subDistrict->name,
+                'parent_id' => $subDistrict->district_id,
             ];
         }
 
@@ -110,6 +109,14 @@ class UserController extends BackendController {
         $user = \User::findOrFail($userID);
         //TODO: validate input
 
+        $this->saveUser($user);
+        $this->saveAddress($user);
+        $this->saveParent($user);
+        
+        return \Redirect::route('admin.user.view', [$user->id]);
+    }
+
+    private function saveUser($user) {
         $userForm = Input::get('user');
         $insUserForm = array_only($userForm, ['firstname_th', 'lastname_th', 'nickname', 'birthdate', 'mobile_no', 'email', 'citizen_id']);
         foreach ($insUserForm as $key => $val) {
@@ -130,14 +137,16 @@ class UserController extends BackendController {
             }
         }
         $user->save();
+    }
 
+    private function saveAddress($user) {
         $addressForm = Input::get('address');
         $insAddressField = ['name', 'house_no', 'road', 'village_no', 'village', 'sub_district_id', 'district_id', 'province_id', 'postcode', 'phone_no'];
         foreach ($addressForm as $address) {
             if (!empty($address['id'])) {
                 $obj = \Address::find($address['id']);
             } else {
-                if(empty($address['name'])){
+                if (empty($address['name'])) {
                     continue;
                 }
                 $obj = new \Address;
@@ -171,8 +180,49 @@ class UserController extends BackendController {
             }
             $obj->save();
         }
-        return "AAA;";
-        //return \Redirect::route('admin.user.view', [$user->id]);
     }
 
+    private function saveParent($user){
+        $parentForm = Input::get('parent');
+        $insParentField = ['firstname_th', 'lastname_th', 'mobile_no', 'job', 'job_title', 'job_type'];
+        foreach ($parentForm as $parent) {
+            if (!empty($parent['id'])) {
+                $obj = \UserParent::find($parent['id']);
+            } else {
+                if (empty($parent['relation'])) {
+                    continue;
+                }
+                $obj = new \UserParent;
+                $obj->user_id = $user->id;
+                $obj->relation = $parent['relation'];
+            }
+
+            if ($obj->user_id != $user->id) {
+                continue;
+            }
+
+            if (!empty($parent['delete'])) {
+                $obj->delete();
+                continue;
+            }
+            
+            foreach ($insParentField as $key) {
+                if (empty($parent[$key])) {
+                    continue;
+                }
+                if (!empty($parent['id']) && $obj->$key != $parent[$key]) {
+                    $log = new \UserLog();
+                    $log->user_id = \Auth::user()->id;
+                    $log->target_type = 'PARENT';
+                    $log->target_id = $parent['id'];
+                    $log->field = $key;
+                    $log->old_value = $obj->$key;
+                    $log->new_value = $parent[$key];
+                    $log->save();
+                }
+                $obj->$key = $parent[$key];
+            }
+            $obj->save();
+        }
+    }
 }

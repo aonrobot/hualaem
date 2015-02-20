@@ -85,3 +85,21 @@ app.directive('addressList', function () {
         templateUrl: 'angular_templates/user_address_list.html'
     };
 });
+
+app.controller('ParentController', ['$scope',
+    function($scope){
+        $scope.parents = window.parents;
+        
+        $scope.addParent = function(){
+            $scope.parents.push({});
+        };
+    }
+]);
+
+app.directive('parentList', function () {
+    return {
+        restrict: 'E',
+        controller: 'ParentController',
+        templateUrl: 'angular_templates/user_parent_list.html'
+    };
+});
