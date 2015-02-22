@@ -1,6 +1,6 @@
 @extends('backend.layout')
 
-@section('title') List User @stop
+@section('title') User List @stop
 
 @section('css')
 @parent

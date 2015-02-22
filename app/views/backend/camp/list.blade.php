@@ -1,6 +1,6 @@
 @extends('backend.layout')
 
-@section('title') List Camp @stop
+@section('title') Camp List @stop
 
 @section('content')
 <div class="container">
