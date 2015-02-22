@@ -68,5 +68,11 @@ Route::group(array('prefix' => 'admin'), function() {
         'getView'=>'admin.user.view',
         'getEdit'=>'admin.user.edit',
     ]);
+    
+    Route::controller('news','mix5003\Hualaem\Backend\NewsController',[
+        'getIndex'=>'admin.news.list',
+        'getAdd'=>'admin.news.add',
+        'getEdit'=>'admin.news.edit',
+    ]);
 });
 
