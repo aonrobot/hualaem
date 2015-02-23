@@ -22,7 +22,7 @@
             <div class="container">
                 <div class="row">
                     <div class="col-md-6 text-left">
-                        <a  href="index.html">
+                        <a  href="{{ URL::to('/') }}">
                             <img src="{{ URL::asset('images/1415577731_handdrawn-lightbulb-48.png') }}" alt="545faced7848976b2dd62a5e_1415577731_handdrawn-lightbulb-48.png">
                             <em>TGT |<br></em>
                         </a>
@@ -64,6 +64,13 @@
                             <!-- Form for login-->
 
                         </div>
+                        @else
+                            <strong>{{ Auth::user()->fullname_th }}</strong><br>
+                            <a href="#">My Profile</a><br>
+                            @if(Auth::user()->role == 'ADMIN')
+                            <a href="{{ URL::to('/admin') }}">Admin</a><br>
+                            @endif
+                            <a href="#">Logout</a><br>
                         @endif
                     </div>
                 </div>
@@ -72,15 +79,10 @@
         <div class="navbar navbar-default" data-collapse="medium" data-animation="default" data-duration="400" data-contain="1">
             <div class="container">
                 <ul class="nav navbar-nav">
-                    <li><a class="w-nav-link navlink" href="#">Dashboard</a></li>
-                    <li><a class="w-nav-link navlink" href="#">Import/Export</a></li>
-                    <li><a class="w-nav-link navlink" href="#">Report</a></li>
-                    <li><a class="w-nav-link navlink" href="#">EntryData</a></li>
-                    <li><a class="w-nav-link navlink" href="#">Search</a></li>
-                    <li><a class="w-nav-link navlink" href="#">Validation</a></li>
-                    <li><a class="w-nav-link navlink" href="#">Camp</a></li>
-                    <li><a class="w-nav-link navlink" href="#">Setting</a></li>
-                    
+                    <li><a class="w-nav-link navlink" href="{{ route('admin.user.list') }}">User</a></li>
+                    <li><a class="w-nav-link navlink" href="{{ route('admin.camp.list') }}">Camp</a></li>
+                    <li><a class="w-nav-link navlink" href="{{ route('admin.news.list') }}">News</a></li>
+                    <li><a class="w-nav-link navlink" href="{{ URL::action('mix5003\Hualaem\Backend\ImportUserController@getStep1') }}">Import</a></li>
                 </ul>
             </div>
         </div>

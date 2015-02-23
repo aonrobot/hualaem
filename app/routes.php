@@ -40,6 +40,10 @@ Route::group(array(), function() {
 
 Route::group(array('prefix' => 'admin'), function() {
     //Admin Group
+    Route::get('/',function(){
+       return View::make('backend.layout');
+    });
+    
     Route::controller('import', 'mix5003\Hualaem\Backend\ImportUserController', [
         'getIndex' => 'admin.import.index',
         'getStep1' => 'admin.import.step1',

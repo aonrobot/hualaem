@@ -22,7 +22,7 @@
             <div class="container">
                 <div class="row">
                     <div class="col-md-6 text-left">
-                        <a  href="index.html">
+                        <a  href="{{ URL::to('/') }}">
                             <img src="{{ URL::asset('images/1415577731_handdrawn-lightbulb-48.png') }}" alt="545faced7848976b2dd62a5e_1415577731_handdrawn-lightbulb-48.png">
                             <em>TGT |<br></em>
                         </a>
@@ -64,6 +64,13 @@
                             <!-- Form for login-->
 
                         </div>
+                        @else
+                            <strong>{{ Auth::user()->fullname_th }}</strong><br>
+                            <a href="#">My Profile</a><br>
+                            @if(Auth::user()->role == 'ADMIN')
+                            <a href="{{ URL::to('/admin') }}">Admin</a><br>
+                            @endif
+                            <a href="#">Logout</a><br>
                         @endif
                     </div>
                 </div>
@@ -73,7 +80,6 @@
             <div class="container">
                 @if(Auth::check())
                 <ul class="nav navbar-nav">
-                    <li><a class="w-nav-link navlink" href="#">Dashboard</a></li>
                     <li><a class="w-nav-link navlink" href="{{ URL::route('student.user.calendar') }}">Calendar</a></li>
                     <li><a class="w-nav-link navlink" href="#">Profile</a></li>
                 </ul>
