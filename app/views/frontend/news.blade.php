@@ -19,15 +19,25 @@
                 <div class="row">
                     <div class="col-md-12">
                         <hr style="margin:0">
-                        {{ $news->detail     }}
+                        {{ $news->detail }}
                     </div>
                 </div>
             </article>
         </div>
         <div class="col-md-3">
-            <div class="well">
-
-            </div>
+            <aside class="well">
+                <h2>Latest News</h2>
+                <ol>
+                    @foreach($lastestNews as $otherNews)
+                    <li>
+                        <a href="{{ route('guest.news.view',[$otherNews->id]) }}">
+                            {{ $otherNews->name }} 
+                        </a>
+                        <small>({{ $otherNews->short_publish_at }})</small>
+                    </li>
+                    @endforeach
+                </ol>
+            </aside>
         </div>
     </div>
 </div>

@@ -14,6 +14,11 @@ class News extends Eloquent {
         }
     }
     
+    public function getShortPublishAtAttribute() {
+        $c = new \Carbon\Carbon($this->publish_at);
+        return $c->format('Y-m-d');
+    }
+    
     public function scopePublished($query){
         $query->where('publish_at','<=',date('Y-m-d H:i:s'));
     }
