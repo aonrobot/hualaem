@@ -13,4 +13,8 @@ class News extends Eloquent {
             return $this->detail;
         }
     }
+    
+    public function scopePublished($query){
+        $query->where('publish_at','<=',date('Y-m-d H:i:s'));
+    }
 }
