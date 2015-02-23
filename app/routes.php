@@ -73,6 +73,7 @@ Route::group(array('prefix' => 'admin'), function() {
         'getIndex'=>'admin.news.list',
         'getAdd'=>'admin.news.add',
         'getEdit'=>'admin.news.edit',
+        'postSave'=>'admin.news.save',
     ]);
 });
 
