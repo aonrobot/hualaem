@@ -8,7 +8,11 @@ use Input;
 class NewsController extends BackendController {
 
     public function getIndex() {
-        $news = \News::with('user')->orderBy('publish_at')->paginate(20);
+        $query = \News::with('user')->orderBy('publish_at', 'desc');
+        if(Input::has('txtSearchTitle')){
+            $query->where('name','like','%'.Input::get('txtSearchTitle').'%');
+        }
+        $news = $query->paginate(20);
 
         return $this->view('news.list', compact('news'));
     }
@@ -18,8 +22,8 @@ class NewsController extends BackendController {
         return $this->view('news.form', compact('news'));
     }
 
-    public function getEdit($newsId) {
-        
+    public function getEdit($newsID) {
+
     }
 
     public function postSave($newsID = 0) {
