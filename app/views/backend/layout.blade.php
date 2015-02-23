@@ -70,7 +70,7 @@
                             @if(Auth::user()->role == 'ADMIN')
                             <a href="{{ URL::to('/admin') }}">Admin</a><br>
                             @endif
-                            <a href="#">Logout</a><br>
+                            <a href="{{ route('user.logout') }}">Logout</a><br>
                         @endif
                     </div>
                 </div>

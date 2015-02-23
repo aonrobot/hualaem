@@ -70,7 +70,7 @@
                             @if(Auth::user()->role == 'ADMIN')
                             <a href="{{ URL::to('/admin') }}">Admin</a><br>
                             @endif
-                            <a href="#">Logout</a><br>
+                            <a href="{{ route('user.logout') }}">Logout</a><br>
                         @endif
                     </div>
                 </div>
@@ -80,7 +80,7 @@
             <div class="container">
                 @if(Auth::check())
                 <ul class="nav navbar-nav">
-                    <li><a class="w-nav-link navlink" href="{{ URL::route('student.user.calendar') }}">Calendar</a></li>
+                    <li><a class="w-nav-link navlink" href="{{ URL::route('user.student.calendar') }}">Calendar</a></li>
                     <li><a class="w-nav-link navlink" href="#">Profile</a></li>
                 </ul>
                 @endif

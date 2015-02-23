@@ -33,7 +33,8 @@ Route::group(array(), function() {
 Route::group(array(), function() {
     // User Group
     Route::controller('user', 'mix5003\Hualaem\Frontend\UserController', [
-        'getCalendar' => 'student.user.calendar',
+        'getCalendar' => 'user.student.calendar',
+        'getLogout' => 'user.logout',
         'getCalendarData' => 'ajax.student.calendar_data',
     ]);
 });

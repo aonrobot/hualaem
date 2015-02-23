@@ -38,4 +38,9 @@ class UserController extends FrontendController {
         return \Response::json($events);
     }
     
+    public function getLogout(){
+        \Auth::logout();
+        return \Redirect::to('/');
+    }
+    
 }
