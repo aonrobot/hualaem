@@ -11,13 +11,12 @@
   |
  */
 
-
 Route::group(array(), function() {
     //Guest Group
-    Route::controller('/', 'mix5003\Hualaem\Frontend\IndexController', [
-        'getIndex' => 'index'
+    Route::get('/', array('as' => 'guest.index', 'uses' => 'mix5003\Hualaem\Frontend\IndexController@getIndex'));
+    Route::controller('news', 'mix5003\Hualaem\Frontend\NewsController', [
+        'getView' => 'guest.news.view'
     ]);
-
     Route::controller('register', 'mix5003\Hualaem\Frontend\RegisterController', [
         'getIndex' => 'guest.register'
     ]);

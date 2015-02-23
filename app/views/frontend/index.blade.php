@@ -12,7 +12,7 @@
                     <div class="row">
                         <div class="col-md-12">
                             <header>
-                                <a href="#">
+                                <a href="{{ route('guest.news.view',[$news->id]) }}">
                                 <h1 style="margin:0;">{{ $news->name }}</h1>
                                 </a>
                                 <small>Publish By {{ $news->user->fullname_th }} at {{ $news->publish_at }}</small>
