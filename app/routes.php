@@ -36,6 +36,8 @@ Route::group(array(), function() {
         'getCalendar' => 'user.student.calendar',
         'getLogout' => 'user.logout',
         'getCalendarData' => 'ajax.student.calendar_data',
+        'getProfile'=>'user.profile.view',
+        'getEdit'=>'user.profile.edit',
     ]);
 });
 

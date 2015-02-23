@@ -6,7 +6,7 @@
         <meta name="viewport" content="width=device-width, initial-scale=1">
         <link rel="shortcut icon" type="image/x-icon" href="https://y7v4p6k4.ssl.hwcdn.net/placeholder/favicon.ico">
         <meta name="generator" content="Webflow">
-
+        <base href="{{ URL::to('/') }}/">
 
         @section('css')
         {{ HTML::style('css/bootstrap.min.css') }}
@@ -66,7 +66,7 @@
                         </div>
                         @else
                             <strong>{{ Auth::user()->fullname_th }}</strong><br>
-                            <a href="#">My Profile</a><br>
+                            <a href="{{ route('user.profile.view') }}">My Profile</a><br>
                             @if(Auth::user()->role == 'ADMIN')
                             <a href="{{ URL::to('/admin') }}">Admin</a><br>
                             @endif
@@ -81,7 +81,7 @@
                 @if(Auth::check())
                 <ul class="nav navbar-nav">
                     <li><a class="w-nav-link navlink" href="{{ URL::route('user.student.calendar') }}">Calendar</a></li>
-                    <li><a class="w-nav-link navlink" href="#">Profile</a></li>
+                    <li><a class="w-nav-link navlink" href="{{ route('user.profile.view') }}">Profile</a></li>
                 </ul>
                 @endif
 

@@ -57,8 +57,10 @@ class UserController extends BackendController {
     }
 
     public function getView($userID) {
+        // Duplicate with Frontend/UserController/getProfile
+
         $user = \User::findOrFail($userID);
-        $user->load('addresses', 'parents');
+        $user->load('addresses', 'parents', 'addresses.subDistrict', 'addresses.district', 'addresses.province');
 
         $registerCamps = $user->enrolls()->with('camp')->whereHas('camp', function($q) {
                     $q->where('camp_end', '>=', date('Y-m-d'));
@@ -112,7 +114,7 @@ class UserController extends BackendController {
         $this->saveUser($user);
         $this->saveAddress($user);
         $this->saveParent($user);
-        
+
         return \Redirect::route('admin.user.view', [$user->id]);
     }
 
@@ -141,6 +143,9 @@ class UserController extends BackendController {
 
     private function saveAddress($user) {
         $addressForm = Input::get('address');
+        if (empty($addressForm)) {
+            return;
+        }
         $insAddressField = ['name', 'house_no', 'road', 'village_no', 'village', 'sub_district_id', 'district_id', 'province_id', 'postcode', 'phone_no'];
         foreach ($addressForm as $address) {
             if (!empty($address['id'])) {
@@ -182,8 +187,11 @@ class UserController extends BackendController {
         }
     }
 
-    private function saveParent($user){
+    private function saveParent($user) {
         $parentForm = Input::get('parent');
+        if (empty($parentForm)) {
+            return;
+        }
         $insParentField = ['firstname_th', 'lastname_th', 'mobile_no', 'job', 'job_title', 'job_type'];
         foreach ($parentForm as $parent) {
             if (!empty($parent['id'])) {
@@ -205,7 +213,7 @@ class UserController extends BackendController {
                 $obj->delete();
                 continue;
             }
-            
+
             foreach ($insParentField as $key) {
                 if (empty($parent[$key])) {
                     continue;
@@ -225,4 +233,5 @@ class UserController extends BackendController {
             $obj->save();
         }
     }
+
 }

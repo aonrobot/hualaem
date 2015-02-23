@@ -66,7 +66,7 @@
                         </div>
                         @else
                             <strong>{{ Auth::user()->fullname_th }}</strong><br>
-                            <a href="#">My Profile</a><br>
+                            <a href="{{ route('user.profile.view') }}">My Profile</a><br>
                             @if(Auth::user()->role == 'ADMIN')
                             <a href="{{ URL::to('/admin') }}">Admin</a><br>
                             @endif
