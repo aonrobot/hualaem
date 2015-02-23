@@ -27,7 +27,7 @@ class RegisterController extends FrontendController {
             $subDistricts[$subDistrict->id]['parent_id'] = $subDistrict->district_id;
         }
 
-        return $this->view('register', compact('provinces', 'districts', 'subDistricts'));
+        return $this->view('user.register', compact('provinces', 'districts', 'subDistricts'));
     }
 
     public function postIndex() {
