@@ -9,8 +9,8 @@ class NewsController extends BackendController {
 
     public function getIndex() {
         $query = \News::with('user')->orderBy('publish_at', 'desc');
-        if(Input::has('txtSearchTitle')){
-            $query->where('name','like','%'.Input::get('txtSearchTitle').'%');
+        if (Input::has('txtSearchTitle')) {
+            $query->where('name', 'like', '%' . Input::get('txtSearchTitle') . '%');
         }
         $news = $query->paginate(20);
 
@@ -23,7 +23,8 @@ class NewsController extends BackendController {
     }
 
     public function getEdit($newsID) {
-
+        $news = \News::find($newsID);
+        return $this->view('news.form', compact('news'));
     }
 
     public function postSave($newsID = 0) {

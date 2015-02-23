@@ -17,7 +17,7 @@
     <div class="row">
         <form method="GET" id="searchForm">
             <div class="col-md-3">
-                <input class="form-control input-sm" placeholder="Search By Title" name="txtSearchTitle" id="txtSearchTitle" value="{{ Input::get('txtSearchUser') }}">
+                <input class="form-control input-sm" placeholder="Search By Title" name="txtSearchTitle" id="txtSearchTitle" value="{{ Input::get('txtSearchTitle') }}">
             </div>
         </form>
     </div>
