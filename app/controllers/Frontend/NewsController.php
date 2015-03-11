@@ -10,7 +10,7 @@ class NewsController extends FrontendController {
         $news = \News::find($newsID);
         $lastestNews = \News::published()->orderBy('publish_at','desc')->limit(20)->get();
         
-        return $this->view('news',compact('news','lastestNews'));
+        return $this->view('other.news',compact('news','lastestNews'));
     }
 
 }

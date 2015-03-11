@@ -1,6 +1,6 @@
 @extends('frontend.layout')
 
-@section('title') Register @stop
+@section('title') {{ $news->name }} @stop
 
 @section('content')
 
