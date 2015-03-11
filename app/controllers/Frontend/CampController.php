@@ -23,15 +23,12 @@ class CampController extends FrontendController {
         try {
             $camp = \Camp::openForRegisterCamp()->where('id', $campID)->firstOrFail();
         } catch (\Exception $e) {
-            //TODO: Redirect to camp list with error
             return \Redirect::route('guest.register')->withErrors(['camp-register' => 'Camp not open for register.']);
-            //throw $e;
         }
 
         $existsEnroll = \Enroll::where('user_id', \Auth::user()->id)->where('camp_id', $campID);
         if ($existsEnroll->exists()) {
-            //TODO: Create soft error and redirect
-            dd("Exists");
+            return \Redirect::route('guest.camp.view',[$campID])->withErrors(['camp-register' => 'Already Registered.']);
         }
 
         return $this->view('camp.register', compact('camp'));
@@ -41,15 +38,12 @@ class CampController extends FrontendController {
         try {
             $camp = \Camp::openForRegisterCamp()->where('id', $campID)->firstOrFail();
         } catch (\Exception $e) {
-            //TODO: Redirect to camp list with error
-            return \Redirect::route('guest.register')->withErrors(['camp-register' => 'Camp not open for register.']);
-            //throw $e;
+            return \Redirect::route('guest.camp.view',[$campID])->withErrors(['camp-register' => 'Camp not open for register.']);
         }
 
         $existsEnroll = \Enroll::where('user_id', \Auth::user()->id)->where('camp_id', $campID);
         if ($existsEnroll->exists()) {
-            //TODO: Create soft error and redirect
-            dd("Exists");
+            return \Redirect::route('guest.camp.view',[$campID])->withErrors(['camp-register' => 'Already Registered.']);
         }
 
         $rules = [];
@@ -83,8 +77,7 @@ class CampController extends FrontendController {
                 }
                 $enroll->fields()->save($enrollField);
             }
-
-            //TODO: Redirect To somewhere
+            return \Redirect::route('guest.camp.view',[$campID])->with('infos',['Register Succesfully']);
         } else {
             return \Redirect::route('student.camp.register', [$campID])->withInput()->withErrors($v);
         }

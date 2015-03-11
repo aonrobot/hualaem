@@ -16,6 +16,10 @@ class BaseController extends Controller {
     }
 
     protected function view($name, $data = []) {
+        if(Session::has('infos')){
+            $data['infos'] = Session::get('infos');
+        }
+
         return View::make($this->view_prefix . $name, $data);
     }
 

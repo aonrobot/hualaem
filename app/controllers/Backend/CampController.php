@@ -110,7 +110,8 @@ class CampController extends BackendController {
                     }
                 }
             }
-            //TODO: Return
+
+            return \Redirect::route('admin.camp.list');
         } else {
             //TODO: Create Subject and field by my input
             return \Redirect::back()->withInput()->withErrors($v);

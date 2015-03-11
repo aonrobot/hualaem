@@ -86,6 +86,19 @@
                 </ul>
             </div>
         </div>
+        @if(!empty($infos))
+            <div class="container">
+                <div class="alert alert-success alert-dismissible" role="alert">
+                    <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                    <ul>
+                        @foreach ($infos as $message)
+                            <li>{{ $message }}</li>
+                        @endforeach
+                    </ul>
+                </div>
+            </div>
+        @endif
+
         @if($errors->any())
         <div class="container">
             <div class="alert alert-warning alert-dismissible" role="alert">
