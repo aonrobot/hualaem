@@ -10,3 +10,5 @@ nbproject/private/
 _ide_helper.php
 _ide_helper_models.php
 laravel/public
+.idea
+app/storage/debugbar/
