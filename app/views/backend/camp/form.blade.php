@@ -88,8 +88,8 @@
 
 <script>
     var savedData = {
-        subjects: {{ empty($camp) ? json_encode(Input::old('subjects',[])) : json_encode($camp->subjects) }},
-        fields: {{ empty($camp) ? json_encode(Input::old('fields',[])) : json_encode($camp->fields) }}
+        subjects: {{ empty($camp) || empty($camp->subjects)  ? json_encode(Input::old('subjects',[])) : json_encode($camp->subjects) }},
+        fields: {{ empty($camp) || empty($camp->fields) ? json_encode(Input::old('fields',[])) : json_encode($camp->fields) }}
     };
     
     $(function () {
