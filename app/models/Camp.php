@@ -32,4 +32,12 @@ class Camp extends Eloquent {
         });
     }
 
+    public function getImagePathAttribute($value){
+        if(!empty($value)){
+            return $value;
+        }
+
+        return asset('images/1415577731_handdrawn-lightbulb-48.png');
+    }
+
 }
