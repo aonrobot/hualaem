@@ -34,7 +34,11 @@
                         <td>{{ $obj->group->id }}</td>
                         <td>
                             <a href="{{ URL::route('user.pm.view', [$obj->group->id] ) }}">
-                                {{ $obj->group->topic }}
+                                @if($obj->last_open == null || $obj->last_open < $obj->updated_at )
+                                    <strong>{{ $obj->group->topic }}</strong>
+                                @else
+                                    {{ $obj->group->topic }}
+                                @endif
                             </a>
                         </td>
                         <td>
