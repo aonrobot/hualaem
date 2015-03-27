@@ -41,6 +41,11 @@ Route::group(array(
         'getProfile'=>'user.profile.view',
         'getEdit'=>'user.profile.edit',
     ]);
+
+    Route::controller('pm','mix5003\Hualaem\Frontend\PrivateMessageController',[
+        'getCreate' => 'user.pm.create',
+
+    ]);
 });
 
 Route::group(array(
