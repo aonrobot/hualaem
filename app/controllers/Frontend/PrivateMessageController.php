@@ -39,6 +39,38 @@ class PrivateMessageController extends FrontendController {
         return \Redirect::route('user.pm.list')->with('infos',['Create Private Message Successfully.']);
     }
 
+    public function postReply(){
+        //TODO:: Validate Input
+        $pmGroup_id = Input::get('group');
+        $pmGroup = \PrivateMessageGroup::findOrFail($pmGroup_id);
+
+        $to_id = Input::get('to');
+        $to = \User::findOrFail($to_id);
+
+        \DB::transaction(function() use ($to,$pmGroup) {
+
+            $pmData = new \PrivateMessageData();
+            $pmData->group_id = $pmGroup->id;
+            $pmData->sender_id = \Auth::user()->id;
+            $pmData->message = Input::get('message');
+            $pmData->save();
+
+            $chkQuery = \PrivateMessageGroupUser::where('user_id',$to->id)->where('group_id',$pmGroup->id);
+            if(!$chkQuery->exists()) {
+                $pmGroupUser = new \PrivateMessageGroupUser();
+                $pmGroupUser->user_id = $to->id;
+                $pmGroupUser->group_id = $pmGroup->id;
+                $pmGroupUser->save();
+            }
+            $pmGroupUsers = \PrivateMessageGroupUser::where('group_id',$pmGroup->id)->get();
+            foreach($pmGroupUsers as $pmGroupUser){
+                $pmGroupUser->touch();
+            }
+        });
+
+        return \Redirect::route('user.pm.list')->with('infos',['Reply Private Message Successfully.']);
+    }
+
     public function getList(){
         $pms = \Auth::user()->privateMessages()->with('group','group.sender')->paginate();
 

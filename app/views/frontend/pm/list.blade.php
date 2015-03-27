@@ -31,7 +31,7 @@
                 <tbody>
                     @foreach($pms as $obj)
                     <tr>
-                        <td>{{ $obj->id }}</td>
+                        <td>{{ $obj->group->id }}</td>
                         <td>
                             <a href="{{ URL::route('user.pm.view', [$obj->group->id] ) }}">
                                 {{ $obj->group->topic }}
@@ -39,9 +39,10 @@
                         </td>
                         <td>
                             @if($obj->group->sender->id != Auth::user()->id)
-                                {{ $obj->group->sender->fullanme_th }} ({{ $obj->group->sender->username }})
+                                {{ $obj->group->sender->fullname_th }} ({{ $obj->group->sender->username }})
                             @else
-                                {{ $obj->group->groupUsers()->first()->sender->fullanme_th }} ({{ $obj->group->groupUsers()->first()->sender->username }})
+                                {{ $obj->group->groupUsers()->first()->user->fullname_th }}
+                                ({{ $obj->group->groupUsers()->first()->user->username }})
                             @endif
                         </td>
                         <td>{{ $obj->updated_at }}</td>

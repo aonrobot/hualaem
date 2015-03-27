@@ -31,6 +31,27 @@
         </div>
         @endforeach
     </div>
+
+    <div class="container">
+        <div class="well">
+            <div class="row">
+                <div class="col-md-12">
+                    <form method="POST" class="form-horizontal" action="{{ URL::route('user.pm.reply') }}">
+                        <textarea class="form-control" name="message"></textarea>
+                        <input type="hidden" name="group" value="{{ $pmGroup->id }}">
+                        @if($pmGroup->sender->id != Auth::user()->id)
+                            <input type="hidden" name="to" value="{{ $pmGroup->sender->id }}">
+                        @else
+                            <input type="hidden" name="to" value="{{ $pmGroup->groupUsers()->first()->user->id }}">
+                        @endif
+                        <div class="pull-right">
+                            <button type="submit" class="btn btn-success">Reply</button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
 @stop
 
 @section('js_foot')

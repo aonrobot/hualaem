@@ -46,6 +46,7 @@ Route::group(array(
         'getCreate' => 'user.pm.create',
         'getList'   => 'user.pm.list',
         'getView'   => 'user.pm.view',
+        'postReply' => 'user.pm.reply',
     ]);
 });
 
