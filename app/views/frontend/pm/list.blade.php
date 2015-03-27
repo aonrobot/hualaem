@@ -33,7 +33,9 @@
                     <tr>
                         <td>{{ $obj->id }}</td>
                         <td>
-                            {{ $obj->group->topic }}
+                            <a href="{{ URL::route('user.pm.view', [$obj->group->id] ) }}">
+                                {{ $obj->group->topic }}
+                            </a>
                         </td>
                         <td>
                             @if($obj->group->sender->id != Auth::user()->id)

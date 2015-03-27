@@ -44,4 +44,17 @@ class PrivateMessageController extends FrontendController {
 
         return $this->view('pm.list',compact('pms'));
     }
+
+    public function getView($group_id){
+        $pmGroup = \PrivateMessageGroup::findOrFail($group_id);
+
+        $chkQuery = \PrivateMessageGroupUser::where('group_id',$group_id)->where('user_id',\Auth::user()->id);
+        if($chkQuery->exists()){
+            $pmGroup->load('datas','datas.sender');
+
+            return $this->view('pm.view',compact('pmGroup'));
+        }else{
+            return \App::abort(403);
+        }
+    }
 }
