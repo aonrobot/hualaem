@@ -30,7 +30,9 @@ Route::group(array(), function() {
     ]);
 });
 
-Route::group(array(), function() {
+Route::group(array(
+    'before'=>'auth'
+), function() {
     // User Group
     Route::controller('user', 'mix5003\Hualaem\Frontend\UserController', [
         'getCalendar' => 'user.student.calendar',
@@ -41,7 +43,10 @@ Route::group(array(), function() {
     ]);
 });
 
-Route::group(array('prefix' => 'admin'), function() {
+Route::group(array(
+    'prefix' => 'admin',
+    'before' => 'admin',
+), function() {
     //Admin Group
     Route::get('/',function(){
        return View::make('backend.layout');
