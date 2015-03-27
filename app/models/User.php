@@ -42,7 +42,11 @@ class User extends Eloquent implements UserInterface, RemindableInterface {
         
         return intval($diffTime / (3600 *24 *365));
     }
-    
+
+    public function privateMessages(){
+        return $this->hasMany('PrivateMessageGroupUser')->orderBy('updated_at','desc');
+    }
+
     public function addresses() {
         return $this->hasMany('Address');
     }

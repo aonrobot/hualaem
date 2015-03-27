@@ -44,7 +44,7 @@ Route::group(array(
 
     Route::controller('pm','mix5003\Hualaem\Frontend\PrivateMessageController',[
         'getCreate' => 'user.pm.create',
-
+        'getList'   => 'user.pm.list',
     ]);
 });
 

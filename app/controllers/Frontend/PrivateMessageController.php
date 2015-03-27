@@ -6,8 +6,7 @@ use FrontendController;
 use Input;
 
 class PrivateMessageController extends FrontendController {
-    public function getCreate(){
-        $to_id = Input::get('to');
+    public function getCreate($to_id){
         $to = \User::findOrFail($to_id);
         return $this->view('pm.form',compact('to'));
     }
@@ -37,6 +36,12 @@ class PrivateMessageController extends FrontendController {
             $pmGroupUser->save();
         });
 
-        //TODO:: redirect
+        return \Redirect::route('user.pm.list')->with('infos',['Create Private Message Successfully.']);
+    }
+
+    public function getList(){
+        $pms = \Auth::user()->privateMessages()->with('group','group.sender')->paginate();
+
+        return $this->view('pm.list',compact('pms'));
     }
 }
