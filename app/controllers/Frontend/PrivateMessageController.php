@@ -62,7 +62,7 @@ class PrivateMessageController extends FrontendController
             $pmGroupUsers = \PrivateMessageGroupUser::where('group_id', $pmGroup->id)->get();
             foreach ($pmGroupUsers as $pmGroupUser) {
                 $pmGroupUser->touch();
-                
+
                 if($pmGroupUser->user_id == \Auth::user()->id){
                     $pmGroupUser->timestamps = false;
                     $pmGroupUser->last_open = \Carbon\Carbon::now();

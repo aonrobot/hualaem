@@ -15,6 +15,9 @@
     <div class="well">
         <div class="row">
             <div class="col-md-12">
+                <a href="{{ URL::route('user.pm.create',[$user->id]) }}" class="btn btn-info pull-right">
+                    <span class="glyphicon glyphicon-envelope"></span>
+                </a>
                 <h2>
                     {{ $user->fullname_th }} 
                     @if($user->role == 'VERIFIED')
@@ -23,6 +26,7 @@
                     <span class="glyphicon glyphicon-remove"></span>
                     @endif
                 </h2>
+
             </div>
         </div>
 

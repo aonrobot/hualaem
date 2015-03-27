@@ -20,7 +20,10 @@
         <div class="well">
             <div class="row">
                 <div class="col-md-12">
-                    <strong>{{ $obj->sender->fullname_th }}</strong> ({{  $obj->created_at }})
+                    <a href="{{ URL::route('user.profile.view',[$obj->sender->id]) }}">
+                    <strong>{{ $obj->sender->fullname_th }}</strong>
+                    </a>
+                    ({{  $obj->created_at }})
                 </div>
             </div>
             <div class="row">

@@ -43,10 +43,14 @@
                         </td>
                         <td>
                             @if($obj->group->sender->id != Auth::user()->id)
+                                <a href="{{ URL::route('user.profile.view',[$obj->group->sender->id]) }}">
                                 {{ $obj->group->sender->fullname_th }} ({{ $obj->group->sender->username }})
+                                </a>
                             @else
+                                <a href="{{ URL::route('user.profile.view',[$obj->group->groupUsers()->first()->user->id]) }}">
                                 {{ $obj->group->groupUsers()->first()->user->fullname_th }}
                                 ({{ $obj->group->groupUsers()->first()->user->username }})
+                                </a>
                             @endif
                         </td>
                         <td>{{ $obj->updated_at }}</td>
