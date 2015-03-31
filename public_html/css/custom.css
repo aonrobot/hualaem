@@ -16,3 +16,8 @@ label.register{
     padding:0;
     font-size:14px;
 }
+
+.search-height-full{
+    height: 200px;
+    overflow:auto;
+}

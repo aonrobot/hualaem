@@ -97,5 +97,9 @@ Route::group(array(
         'getEdit' => 'admin.news.edit',
         'postSave' => 'admin.news.save',
     ]);
+
+    Route::controller('search', 'mix5003\Hualaem\Backend\SearchController', [
+
+    ]);
 });
 
