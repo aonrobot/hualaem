@@ -10,4 +10,8 @@ class Semester extends Eloquent {
         return $this->belongsTo('School');
     }
 
+    public function level(){
+        return $this->belongsTo('Level');
+    }
+
 }

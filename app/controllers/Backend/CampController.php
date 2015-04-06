@@ -20,13 +20,14 @@ class CampController extends BackendController {
     }
 
     public function getAdd() {
+        $levels = \Level::where('parent_id',null)->with('childs','childs.childs')->orderBy('order')->get();
         $allProvinces = \Province::orderBy('name')->get();
         $provinces = [];
         foreach ($allProvinces as $province) {
             $provinces[$province->id] = $province->name;
         }
         $camp = new \Camp();
-        return $this->view('camp.form', compact('provinces', 'camp'));
+        return $this->view('camp.form', compact('provinces', 'camp','levels'));
     }
 
     public function postSave($campID = 0) {
@@ -119,6 +120,7 @@ class CampController extends BackendController {
     }
 
     public function getEdit($campID) {
+        $levels = \Level::where('parent_id',null)->with('childs','childs.childs')->orderBy('order')->get();
         $allProvinces = \Province::orderBy('name')->get();
         $provinces = [];
         foreach ($allProvinces as $province) {
@@ -128,7 +130,7 @@ class CampController extends BackendController {
         $camp = \Camp::find($campID);
         $camp->load(['fields', 'subjects', 'subjects.tests']);
 
-        return $this->view('camp.form', compact('provinces', 'camp'));
+        return $this->view('camp.form', compact('provinces', 'camp','levels'));
     }
 
     public function getApplication($campID) {

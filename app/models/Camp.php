@@ -2,6 +2,10 @@
 
 class Camp extends Eloquent {
 
+    public function level(){
+        return $this->belongsTo('Level');
+    }
+
     public function fields(){
         return $this->hasMany('CampField');
     }

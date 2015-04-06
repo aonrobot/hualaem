@@ -7,6 +7,8 @@ use Input;
 
 class ImportUserController extends BackendController {
 
+    private $cacheLevel = [];
+
     public function getIndex() {
         return $this->getStep1();
     }
@@ -234,12 +236,17 @@ class ImportUserController extends BackendController {
                             $obj->user_id = \Cache::get('user_' . $csvRow[0]);
                             $obj->school_id = \Cache::get('school_' . $csvRow[$data[$type]['name']]);
 
+                            if(!empty($csvRow[$data[$type]['level']])){
+                                $obj->level_id = $this->getLevelID($csvRow[$data[$type]['level']]);
+                            }
+
                             if (empty($obj->user_id)) {
                                 //TODO: i guess data not same source
                                 continue;
                             }
 
                             unset($data[$type]['name']);
+                            unset($data[$type]['level']);
                         } elseif ($type == 'camp') {
 
                             if (\Cache::has('camp_' . $csvRow[$data[$type]['name']])) {
@@ -252,6 +259,7 @@ class ImportUserController extends BackendController {
                                 $enroll->camp_id = \Cache::get('camp_' . $csvRow[$data[$type]['name']]);
                                 $enroll->status = \Enroll::STATUS_APPROVED;
                                 $enroll->role = $csvRow[$originData[$type]['role']] == 'ผู้เรียน' ? \Enroll::ROLE_STUDENT : \Enroll::ROLE_STAFF;
+
                                 $enroll->save();
 
                                 continue;
@@ -266,6 +274,10 @@ class ImportUserController extends BackendController {
                                 $csvRow[$data[$type]['camp_start']] = $this->reformatDate(trim($startDate));
                             }
 
+                            if(!empty($csvRow[$data[$type]['level']])){
+                                $obj->level_id = $this->getLevelID($csvRow[$data[$type]['level']]);
+                            }
+
                             unset($data[$type]['role']);
 
                             if (!empty($provinces[$csvRow[$data[$type]['province']]])) {
@@ -273,6 +285,7 @@ class ImportUserController extends BackendController {
                             }
 
                             unset($data[$type]['province']);
+                            unset($data[$type]['level']);
                         }
 
                         foreach ($fields as $field => $label) {
@@ -320,6 +333,56 @@ class ImportUserController extends BackendController {
             return null;
         }
         return (intval($arr[0]) - 543) . '-' . $arr[1] . '-' . $arr[2];
+    }
+
+    private function getLevelID($strLevel){
+        if(isset($this->cacheLevel[$strLevel])) return $this->cacheLevel[$strLevel];
+
+        switch($strLevel){
+            case 'ประถม-มัธยม':
+                $key = 'ประถม';
+                break;
+            case 'ประถมปลาย':
+                $key = 'ประถมปลาย';
+                break;
+            case 'มหาวิทยาลัย':
+                $key = 'ปริญญา';
+                break;
+            case 'มัธยม':
+            case 'มัธยม-ประถม':
+                $key = 'มัธยม';
+                break;
+            case 'มัธยมต้น':
+                $key = 'มัธยมต้น';
+                break;
+            case 'มัธยมปลาย':
+                $key = 'มัธยมปลาย';
+                break;
+            case 'มัธยมศึกษาปีที่ 6':
+                $key = 'ม.6';
+                break;
+            default: break;
+        }
+        $level = Level::where('name',$key)->first();
+        if(!empty($level)) {
+            $this->cacheLevel[$strLevel] = $level->id;
+            return  $level->id;
+        }
+
+        $key = str_replace('ปี', 'ปี ', $strLevel);
+        if ($key == 'G.10') {
+            $key = 'ม.4';
+        }
+        if ($key == 'G.11') {
+            $key = 'ม.5';
+        }
+        $level = Level::where('name', $key)->first();
+        if(!empty($level)) {
+            $this->cacheLevel[$strLevel] = $level->id;
+            return  $level->id;
+        }
+
+        return null;
     }
 
 }

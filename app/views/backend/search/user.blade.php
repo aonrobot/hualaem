@@ -51,7 +51,21 @@
                         <div class="col-md-3 search-height-full">
                             <ul>
                                 @foreach($filters['levels'] as $level)
-                                    <li>{{ $level->level  }}</li>
+                                    <li>{{ $level->name  }}</li>
+
+                                    @if(!empty($level->childs))
+                                        @foreach($level->childs as $level2)
+                                            <li>{{ $level2->name  }}</li>
+
+                                            @if(!empty($level2->childs))
+                                                @foreach($level2->childs as $level3)
+                                                    <li>{{ $level3->name  }}</li>
+                                                @endforeach
+                                            @endif
+
+                                        @endforeach
+                                    @endif
+
                                 @endforeach
                             </ul>
                         </div>

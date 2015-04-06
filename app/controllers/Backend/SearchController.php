@@ -15,7 +15,7 @@ class SearchController extends BackendController {
         $provinces = \Province::orderBy('name')->get();
         $districts = \District::orderBy('name')->get();
         $schools = \School::orderBy('name')->get();
-        $levels = \Semester::select('level')->distinct()->orderBy('level')->get();
+        $levels = \Level::where('parent_id',null)->with('childs','childs.childs')->orderBy('order')->get();
         $filters = compact('provinces','districts','schools','levels');
 
         $data['users'] = $users;
