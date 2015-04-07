@@ -74,4 +74,5 @@ class User extends Eloquent implements UserInterface, RemindableInterface {
     public function logs(){
         return $this->hasMany('UserLog');
     }
+
 }

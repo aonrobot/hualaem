@@ -103,3 +103,27 @@ app.directive('parentList', function () {
         templateUrl: 'angular_templates/user_parent_list.html'
     };
 });
+
+app.controller('SemesterController', ['$scope',
+    function($scope){
+        var semesters = window.semesters
+        $scope.semesters = semesters;
+        $scope.lastLevel = window.lastLevel;
+
+        for(var i = 0,l=semesters.length;i<l;i++){
+            semesters[i].level_id = parseInt( semesters[i].level_id, 10);
+        }
+
+        $scope.addSemester = function(){
+            $scope.semesters.push({});
+        };
+    }
+]);
+
+app.directive('semesterList', function () {
+    return {
+        restrict: 'E',
+        controller: 'SemesterController',
+        templateUrl: 'angular_templates/user_semester_list.html'
+    };
+});

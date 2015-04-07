@@ -47,6 +47,9 @@
                             <li role="presentation">
                                 <a href="#parents" aria-controls="parents" role="tab" data-toggle="tab">Parents</a>
                             </li>
+                            <li role="presentation">
+                                <a href="#semester" aria-controls="semester" role="tab" data-toggle="tab">Semester</a>
+                            </li>
                         </ul>
 
                         <!-- Tab panes -->
@@ -67,6 +70,9 @@
                             </div>
                             <div role="tabpanel" class="tab-pane" id="parents">
                                 <parent-list></parent-list>
+                            </div>
+                            <div role="tabpanel" class="tab-pane" id="semester">
+                                <semester-list></semester-list>
                             </div>
                         </div>
 
@@ -95,9 +101,11 @@
 <script>
     var parents = {{ json_encode($user->parents) }};
     var addresses = {{ json_encode($user->addresses) }};
+    var semesters = {{ json_encode($semesters) }};
     var provinces = {{ json_encode($provinces) }};
     var districts = {{ json_encode($districts) }};
     var subDistricts = {{ json_encode($subDistricts) }};
+    var lastLevel = {{ json_encode($lastLevel) }};
     (function () {
         $('#user\\[birthdate\\]').datetimepicker({
             format: 'YYYY-MM-DD'

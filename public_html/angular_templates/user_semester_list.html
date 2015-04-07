@@ -1,0 +1,57 @@
+<div class="panel panel-default" ng-repeat="semester in semesters">
+    <input name="semester[{{ $index }}][id]" type="hidden" ng-model="semester.id" ng-value="semester.id">
+    
+    <div class="panel-heading" role="tab" id="control_semester_{{ $index }}">
+        <h4 class="panel-title">
+            
+                <div class="row">
+                    <div class="col-md-1">
+                        <a class="collapsed" data-toggle="collapse" data-parent="#accordion" href="#semester_{{ $index }}" aria-expanded="true" aria-controls="semester_{{ $index }}">
+                            แก้ไข
+                        </a>
+                    </div>
+                    
+                    <div class="col-md-9">
+                        <input type="hidden" name="semester[{{ $index }}][level_id]" ng-model="semester.level_id" ng-value="semester.level_id">
+                        <select  ng-model="semester.level_id" class="form-control"
+                                ng-options="level.id as level.name for level in lastLevel">
+                        </select>
+                    </div>
+                    <div class="col-md-2">
+                        <div class="checkbox">
+                            <label>
+                                <input type="checkbox" name="semester[{{ $index }}][delete]" value="1" ng-model="semester.delete"> Delete
+                            </label>
+                        </div>
+                    </div>
+                </div>
+            
+        </h4>
+    </div>
+    <div id="semester_{{ $index }}" class="panel-collapse collapse" role="tabpanel" aria-labelledby="headingOne">
+        <div class="panel-body">
+            <div class="form-group">
+                <label for="semester[{{ $index }}][school_name]" class="col-sm-2 control-label">โรงเรียน</label>
+                <div class="col-sm-10">
+                    <input class="form-control" name="semester[{{ $index }}][school_name]]"
+                           placeholder="โรงเรียน" ng-model="semester.school.name" type="text">
+                </div>
+            </div>
+            <div class="form-group">
+                <label for="semester[{{ $index }}][year]" class="col-sm-2 control-label">ปีการศึกษา</label>
+                <div class="col-sm-10">
+                    <input class="form-control" name="semester[{{ $index }}][year]]"
+                           placeholder="โรงเรียน" ng-model="semester.year" type="text">
+                </div>
+            </div>
+            <div class="form-group">
+                <label for="semester[{{ $index }}][semester]" class="col-sm-2 control-label">ภาคเรียน</label>
+                <div class="col-sm-10">
+                    <input class="form-control" name="semester[{{ $index }}][semester]]"
+                           placeholder="โรงเรียน" ng-model="semester.semester" type="text">
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<button class="btn btn-info" type="button" ng-click="addSemester()">Add new Semester</button>

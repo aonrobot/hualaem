@@ -75,9 +75,34 @@ class UserController extends BackendController {
         return $this->view('user.view', compact('user', 'registerCamps', 'historyCamps', 'userLogs'));
     }
 
+    private function flatLastLevel($parent)
+    {
+        $ret = [];
+        if (!isset($parent->childs[0])) {
+            $ret[] = $parent;
+        } else {
+            foreach ($parent->childs as $child) {
+                if (!isset($child->childs[0])) {
+                    $ret[] = $child;
+                }else{
+                    $ret = array_merge($ret,$this->flatLastLevel($child));
+                }
+            }
+        }
+        return $ret;
+    }
+
     public function getEdit($userID) {
         $user = \User::findOrFail($userID);
         $user->load('addresses', 'parents');
+
+        $lastLevel = [];
+        foreach(\Level::where('parent_id',null)->with('childs','childs.childs','childs.childs.childs')->get() as $level){
+            $lastLevel = array_merge($lastLevel,$this->flatLastLevel($level));
+        }
+
+        $semesters = $user->semesters()->join('levels','semesters.level_id' ,'=','levels.id')->orderBy('levels.order','desc')->select('semesters.*')->get();
+        $semesters->load('level','school');
 
         $allProvinces = \Province::orderBy('name')->get();
         $provinces = [];
@@ -104,7 +129,7 @@ class UserController extends BackendController {
             ];
         }
 
-        return $this->view('user.edit', compact('user', 'provinces', 'districts', 'subDistricts'));
+        return $this->view('user.edit', compact('user', 'provinces', 'districts', 'subDistricts','semesters','lastLevel'));
     }
 
     public function postEdit($userID) {
@@ -114,6 +139,7 @@ class UserController extends BackendController {
         $this->saveUser($user);
         $this->saveAddress($user);
         $this->saveParent($user);
+        $this->saveSemester($user);
 
         return \Redirect::route('admin.user.view', [$user->id]);
     }
@@ -234,4 +260,43 @@ class UserController extends BackendController {
         }
     }
 
+    private function saveSemester($user) {
+        $semesterForm = Input::get('semester');
+        if (empty($semesterForm)) {
+            return;
+        }
+        foreach ($semesterForm as $semester) {
+            if (!empty($semester['id'])) {
+                $obj = \Semester::find($semester['id']);
+            } else {
+                if (empty($semester['level_id'])) {
+                    continue;
+                }
+                $obj = new \Semester;
+                $obj->user_id = $user->id;
+            }
+
+            if ($obj->user_id != $user->id) {
+                continue;
+            }
+
+            $obj->level_id = $semester['level_id'];
+            $obj->year = $semester['year'];
+            $obj->semester = $semester['semester'];
+
+            $school = \School::where('name',trim($semester['school_name']))->first();
+            if(empty($school)){
+                $school = new \School();
+                $school->name = trim($semester['school_name']);
+                $school->save();
+            }
+            $obj->school_id = $school->id;
+
+            if (!empty($semester['delete'])) {
+                $obj->delete();
+                continue;
+            }
+            $obj->save();
+        }
+    }
 }
