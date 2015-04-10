@@ -90,7 +90,7 @@
                                     @if(!empty($user->current_school))
                                     School: {{ $user->current_school->name }}<br>
                                     @endif
-                                    Address: {{ $user->addresses()->first()->address }}<br>
+                                    Address: {{ $user->addresses[0]->address }}<br>
                                 </div>
                             </div>
                         </div>

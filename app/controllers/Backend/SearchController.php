@@ -10,7 +10,7 @@ class SearchController extends BackendController {
     private function _getFilteredData(){
         $data = [];
 
-        $users = \User::orderBy('created_at','desc')->paginate();
+        $users = \User::orderBy('created_at','desc')->with('addresses','addresses.province')->paginate();
 
         $provinces = \Province::orderBy('name')->get();
         $districts = \District::orderBy('name')->get();
