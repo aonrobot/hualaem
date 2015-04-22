@@ -42,7 +42,14 @@
                                 </div>
                                 <div class="form-group">
                                     <label class="label register" for="firstname_th">ชื่อ</label>
-                                    {{ Form::myInput('firstname_th','Name') }}
+                                    <div class="row">
+                                        <div class="col-md-3">
+                                            {{ Form::select('prefix_th',['เด็กชาย'=>'เด็กชาย','เด็กหญิง'=>'เด็กหญิง','นาย'=>'นาย','นางสาว'=>'นางสาว'],null,['class'=>'form-control input-sm']) }}
+                                        </div>
+                                        <div class="col-md-9">
+                                            {{ Form::myInput('firstname_th','Name') }}
+                                        </div>
+                                    </div>
                                 </div>
                                 <div class="form-group">
                                     <label class="label register" for="lastname_th">นามสกุล</label>

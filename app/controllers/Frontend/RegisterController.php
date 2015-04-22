@@ -35,6 +35,7 @@ class RegisterController extends FrontendController {
             'username' => 'required|unique:users',
             'password' => 'required|confirmed|min:6',
             'email' => 'required|email|unique:users',
+            'prefix_th' => 'required',
             'firstname_th' => 'required',
             'lastname_th' => 'required',
             'nickname' => 'required',
@@ -58,6 +59,7 @@ class RegisterController extends FrontendController {
             $user->username = Input::get('username');
             $user->password = \Hash::make(Input::get('password'));
             $user->email = Input::get('email');
+            $user->prefix_th = Input::get('prefix_th');
             $user->firstname_th = Input::get('firstname_th');
             $user->lastname_th = Input::get('lastname_th');
             $user->nickname = Input::get('nickname');

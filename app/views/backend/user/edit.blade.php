@@ -55,6 +55,12 @@
                         <!-- Tab panes -->
                         <div class="tab-content">
                             <div role="tabpanel" class="tab-pane active" id="basic">
+                                <div class="form-group">
+                                    <label for="prefix_th" class="col-sm-2 control-label">คำนำหน้า</label>
+                                    <div class="col-sm-10">
+                                        {{ Form::select('prefix_th',['เด็กชาย'=>'เด็กชาย','เด็กหญิง'=>'เด็กหญิง','นาย'=>'นาย','นางสาว'=>'นางสาว'],$user->prefix_th,['class'=>'form-control']) }}
+                                    </div>
+                                </div>
                                 {{ Form::bsInlineGroup('Name','user[firstname_th]',$user->firstname_th) }}
                                 {{ Form::bsInlineGroup('Lastname','user[lastname_th]',$user->lastname_th) }}
                                 {{ Form::bsInlineGroup('Nickname','user[nickname]',$user->nickname) }}
