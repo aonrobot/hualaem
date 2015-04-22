@@ -10,18 +10,19 @@ class Address extends Eloquent {
         if(!empty($this->village)){
             $ret .= ' หมู่บ้าน'.$this->village_no;
         }
-        if(!empty($this->sub_district)){
+        $this->load('subDistrict','district');
+        if(!empty($this->subDistrict)){
             if($this->province->id == 1){
-                $ret .= ' แขวง'.$this->sub_district->name;
+                $ret .= ' แขวง'.$this->subDistrict->name;
             }else {
-                $ret .= ' ตำบล' . $this->sub_district->name;
+                $ret .= ' ตำบล' . $this->subDistrict->name;
             }
         }
         if(!empty($this->district)){
             if($this->province->id == 1){
-                $ret .= ' เขต'.$this->sub_district->name;
+                $ret .= ' '.$this->district->name;
             }else {
-                $ret .= ' อำเภอ' . $this->sub_district->name;
+                $ret .= ' อำเภอ' . $this->district->name;
             }
         }
         $ret .= ' จังหวัด'.$this->province->name.' '.$this->postcode;

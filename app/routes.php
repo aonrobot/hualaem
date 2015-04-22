@@ -99,7 +99,7 @@ Route::group(array(
     ]);
 
     Route::controller('search', 'mix5003\Hualaem\Backend\SearchController', [
-
+        'getUser'=> 'admin.search.user',
     ]);
 });
 

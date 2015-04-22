@@ -18,6 +18,17 @@ label.register{
 }
 
 .search-height-full{
-    height: 200px;
+    height: 210px;
     overflow:auto;
+}
+
+.search-height-2row{
+    height: 130px;
+    overflow:auto;
+}
+
+.search-height-full ul{
+    background-color: #EEE;
+    list-style: none;
+    padding-left:10px
 }

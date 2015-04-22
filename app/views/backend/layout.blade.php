@@ -82,6 +82,7 @@
                     <li><a class="w-nav-link navlink" href="{{ route('admin.user.list') }}">User</a></li>
                     <li><a class="w-nav-link navlink" href="{{ route('admin.camp.list') }}">Camp</a></li>
                     <li><a class="w-nav-link navlink" href="{{ route('admin.news.list') }}">News</a></li>
+                    <li><a class="w-nav-link navlink" href="{{ route('admin.search.user') }}">Search</a></li>
                     <li><a class="w-nav-link navlink" href="{{ URL::action('mix5003\Hualaem\Backend\ImportUserController@getStep1') }}">Import</a></li>
                 </ul>
             </div>
