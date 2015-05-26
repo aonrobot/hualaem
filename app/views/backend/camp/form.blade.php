@@ -30,7 +30,7 @@
                     <div class="col-md-12">
                         {{ Form::bsInlineGroup('Camp Name','name',$camp->name) }}
                         {{ Form::bsInlineGroup('Type','type',$camp->type) }}
-                        {{ Form::bsSelectLevel($levels,'ระดับ','level',$camp->level) }}
+                        {{ Form::bsSelectLevel($levels,'ระดับ','level_id',$camp->level_id) }}
                         {{ Form::bsInlineGroup('Register Start','register_start',empty($camp->register_start) ? date('Y-m-d') : $camp->register_start) }}
                         {{ Form::bsInlineGroup('Register End','register_end',$camp->register_end) }}
                         {{ Form::bsInlineGroup('Camp Start','camp_start',$camp->camp_start) }}

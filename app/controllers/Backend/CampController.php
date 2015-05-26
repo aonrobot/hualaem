@@ -34,7 +34,7 @@ class CampController extends BackendController {
         $campRule = [
             'name' => 'required',
             'type' => 'required',
-            'level' => 'required',
+            'level_id' => 'required|exists:levels,id',
             'register_start' => 'date',
             'register_end' => 'date',
             'camp_start' => 'date',
@@ -42,7 +42,7 @@ class CampController extends BackendController {
             'province_id' => 'required|exists:provinces,id',
             'image' => 'image',
         ];
-        $campData = Input::only(['name', 'type', 'level', 'register_start', 'register_end', 'camp_start', 'camp_end', 'place', 'province_id', 'image', 'description']);
+        $campData = Input::only(['name', 'type', 'level_id', 'register_start', 'register_end', 'camp_start', 'camp_end', 'place', 'province_id', 'image', 'description']);
 
         $v = \Validator::make($campData, $campRule);
         if ($v->passes()) {
@@ -67,7 +67,8 @@ class CampController extends BackendController {
                 $camp->save();
             }
 
-
+            $allIDs = \CampField::where('camp_id',$camp->id)->get(['id'])->fetch('id')->toArray();
+            $foundIDs = [];
             $fields = Input::get('fields');
             if (!empty($fields)) {
                 foreach ($fields as $fieldData) {
@@ -75,6 +76,9 @@ class CampController extends BackendController {
                         $field = new \CampField();
                     } else {
                         $field = \CampField::find($fieldData['id']);
+                        if(in_array($fieldData['id'],$allIDs)){
+                            $foundIDs[] = $fieldData['id'];
+                        }
                     }
                     $field->camp_id = $camp->id;
                     $field->name = $fieldData['name'];
@@ -82,6 +86,11 @@ class CampController extends BackendController {
                     $field->is_required = isset($fieldData['is_required']);
                     $field->save();
                 }
+            }
+
+            $deleteField = array_diff($allIDs, $foundIDs);
+            if(!empty($deleteField)){
+                \CampField::whereIn('id',$deleteField)->delete();
             }
 
             $subjects = Input::get('subjects');

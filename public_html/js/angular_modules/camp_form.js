@@ -33,6 +33,11 @@ app.controller('FieldController', ['$scope',
         $scope.addField = function () {
             $scope.fields.push({is_required:true});
         };
+
+        $scope.deleteField = function(field){
+            var index = $scope.fields.indexOf(field);
+            $scope.fields.splice(index,1);
+        };
     }
 ]);
 
