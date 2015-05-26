@@ -34,6 +34,7 @@
                 <div class="col-md-12">
                     <a class="btn btn-success btn-sm" id="btnSelectAll">Select All</a>
                     <a class="btn btn-warning btn-sm" id="btnSelectPending">Select Pending</a>
+                    <a class="btn btn-info btn-sm" id="btnSelectReceived">Select Document Received</a>
                     <a class="btn btn-primary btn-sm" id="btnSelectApproved">Select Approved</a>
                 </div>
             </div>
@@ -50,8 +51,10 @@
                     </div>
 
                     {{ $enroll->created_at }}<br>
-                    @if($enroll->status == \Enroll::STATUS_PENDING)
-                    <button class="btn btn-info btn-sm" name="approve" value="{{ $enroll->id}}">Approved</button>
+                    @if($enroll->status == \Enroll::STATUS_DOCUMENT_RECIEVED)
+                    <button class="btn btn-primary btn-sm" name="approve" value="{{ $enroll->id}}">Approved</button>
+                    @elseif($enroll->status == \Enroll::STATUS_PENDING)
+                        <button class="btn btn-info btn-sm" name="received" value="{{ $enroll->id}}">Received</button>
                     @elseif($enroll->status == \Enroll::STATUS_APPROVED)
                     <button class="btn btn-warning btn-sm" name="unapprove" value="{{ $enroll->id}}">Unapprove</button>
                     @endif
@@ -66,6 +69,7 @@
             <div class="row">
                 <div class="col-md-12">
                     <button class="btn btn-primary btn-sm" type="submit" name="action" value="Approved">Approve All Selected</button>
+                    <button class="btn btn-primary btn-sm" type="submit" name="action" value="Received">Received All Selected</button>
                     <button class="btn btn-warning btn-sm" type="submit" name="action" value="Unapproved">Unapprove All Selected</button>
                 </div>
             </div>
@@ -113,11 +117,14 @@
         });
 
         $('#btnSelectPending').click(function () {
-            $('.chk-select[data-status=PENDING]').prop('checked', true);
+            $('.chk-select[data-status={{ \Enroll::STATUS_PENDING }}]').prop('checked', true);
+        });
+        $('#btnSelectReceived').click(function () {
+            $('.chk-select[data-status={{ \Enroll::STATUS_DOCUMENT_RECIEVED }}]').prop('checked', true);
         });
 
         $('#btnSelectApproved').click(function () {
-            $('.chk-select[data-status=APPROVED]').prop('checked', true);
+            $('.chk-select[data-status={{ \Enroll::STATUS_APPROVED }}]').prop('checked', true);
         });
 
         function filter() {

@@ -167,15 +167,29 @@ class CampController extends BackendController {
     public function postApplication() {
         //TODO:: Add Notification
         if (Input::has('action')) {
-            $setTo = Input::get('action') == 'Approved' ? \Enroll::STATUS_APPROVED : \Enroll::STATUS_PENDING;
+            switch(Input::get('action')){
+                case 'Approved':
+                    $setTo = \Enroll::STATUS_APPROVED;
+                    break;
+                case 'Received':
+                    $setTo = \Enroll::STATUS_DOCUMENT_RECIEVED;
+                    break;
+                case 'Unapproved':
+                    $setTo = \Enroll::STATUS_PENDING;
+                    break;
+            }
             \DB::table((new \Enroll())->getTable())->whereIn('id', Input::get('selected', [0]))->update(['status' => $setTo]);
         } elseif (Input::has('approve')) {
             $enroll = \Enroll::findOrFail(Input::get('approve'));
             $enroll->status = \Enroll::STATUS_APPROVED;
             $enroll->save();
+        } elseif (Input::has('received')) {
+            $enroll = \Enroll::findOrFail(Input::get('received'));
+            $enroll->status = \Enroll::STATUS_DOCUMENT_RECIEVED;
+            $enroll->save();
         } elseif (Input::has('unapprove')) {
             $enroll = \Enroll::findOrFail(Input::get('unapprove'));
-            $enroll->status = \Enroll::STATUS_PENDING;
+            $enroll->status = \Enroll::STATUS_DOCUMENT_RECIEVED;
             $enroll->save();
         } elseif (Input::has('delete')) {
             $enroll = \Enroll::findOrFail(Input::get('delete'));
