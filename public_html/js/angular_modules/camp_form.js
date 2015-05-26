@@ -15,6 +15,16 @@ app.controller('SubjectController', ['$scope',
         $scope.addTest = function(subject){
             subject.tests.push({});
         };
+
+        $scope.removeSubject = function(subject){
+            var index = $scope.subjects.indexOf(subject);
+            $scope.subjects.splice(index,1);
+        };
+
+        $scope.removeTest = function(test,subject){
+            var index = subject.tests.indexOf(test);
+            subject.tests.splice(index,1);
+        };
     }
 ]);
 

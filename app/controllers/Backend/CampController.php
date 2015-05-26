@@ -76,9 +76,7 @@ class CampController extends BackendController {
                         $field = new \CampField();
                     } else {
                         $field = \CampField::find($fieldData['id']);
-                        if(in_array($fieldData['id'],$allIDs)){
-                            $foundIDs[] = $fieldData['id'];
-                        }
+                        $foundIDs[] = $fieldData['id'];
                     }
                     $field->camp_id = $camp->id;
                     $field->name = $fieldData['name'];
@@ -93,6 +91,9 @@ class CampController extends BackendController {
                 \CampField::whereIn('id',$deleteField)->delete();
             }
 
+
+            $allSubjectIds = \CampSubject::where('camp_id',$camp->id)->get(['id'])->fetch('id')->toArray();
+            $foundSubjectIds = [];
             $subjects = Input::get('subjects');
             if (!empty($subjects)) {
                 foreach ($subjects as $subjectData) {
@@ -100,25 +101,39 @@ class CampController extends BackendController {
                         $subject = new \CampSubject();
                     } else {
                         $subject = \CampSubject::find($subjectData['id']);
+                        $foundSubjectIds[] = $subjectData['id'];
                     }
                     $subject->camp_id = $camp->id;
                     $subject->name = $subjectData['name'];
                     $subject->save();
 
-                    if (empty($subjectData['tests']))
+                    if (empty($subjectData['tests'])) {
+                        \CampTest::where('camp_subject_id',$subject->id)->delete();
                         continue;
+                    }
 
+                    $allTestIds = \CampTest::where('camp_subject_id',$subject->id)->get(['id'])->fetch('id')->toArray();
+                    $foundTestIds = [];
                     foreach ($subjectData['tests'] as $testData) {
                         if (empty($testData['id'])) {
                             $test = new \CampTest();
                         } else {
                             $test = \CampTest::find($testData['id']);
+                            $foundTestIds[] = $testData['id'];
                         }
                         $test->camp_subject_id = $subject->id;
                         $test->name = $testData['name'];
                         $test->save();
                     }
+                    $deleteTest = array_diff($allTestIds, $foundTestIds);
+                    if(!empty($deleteTest)){
+                        \CampTest::whereIn('id',$deleteTest)->delete();
+                    }
                 }
+            }
+            $deleteSubject = array_diff($allSubjectIds, $foundSubjectIds);
+            if(!empty($deleteSubject)){
+                \CampSubject::whereIn('id',$deleteSubject)->delete();
             }
 
             return \Redirect::route('admin.camp.list');
