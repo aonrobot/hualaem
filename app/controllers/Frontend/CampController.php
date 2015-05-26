@@ -15,8 +15,13 @@ class CampController extends FrontendController {
     
     public function getView($campId){
         $camp = \Camp::findOrFail($campId);
+
+        if(\Auth::check()){
+            $enroll = \Auth::user()-> enrolls()->where('camp_id',$campId)->first();
+
+        }
         
-        return $this->view('camp.view',compact('camp'));
+        return $this->view('camp.view',compact('camp','enroll'));
     }
 
     public function getRegister($campID) {

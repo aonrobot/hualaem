@@ -17,9 +17,25 @@
                 {{ $camp->description }}
 
                 @if(Auth::check())
-                <div class="pull-right">
-                    <a href="{{ URL::route('student.camp.register',[$camp->id]) }}" class="btn btn-info">Register</a>
-                </div>
+                    @if($enroll)
+                        @if($enroll->status == Enroll::STATUS_PENDING)
+                            <div class="pull-right">
+                                <div class="btn btn-warning">PENING</div>
+                            </div>
+                        @elseif($enroll->status == Enroll::STATUS_DOCUMENT_RECIEVED)
+                            <div class="pull-right">
+                                <div class="btn btn-info">RECEIVED DOCUMENT</div>
+                            </div>
+                        @elseif($enroll->status == Enroll::STATUS_APPROVED)
+                            <div class="pull-right">
+                                <div class="btn btn-success">APPROVED</div>
+                            </div>
+                        @endif
+                    @else
+                        <div class="pull-right">
+                            <a href="{{ URL::route('student.camp.register',[$camp->id]) }}" class="btn btn-info">Register</a>
+                        </div>
+                    @endif
                 @endif
             </div>
         </div>
