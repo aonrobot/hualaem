@@ -11,7 +11,7 @@ class LoginController extends FrontendController {
     }
     
     public function postIndex(){
-        $inp = Input::only(['username','password']);
+        $inp = Input::only(['email','password']);
         
         if(\Auth::attempt($inp)){
             return \Redirect::to('/');

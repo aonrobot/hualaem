@@ -32,7 +32,6 @@ class RegisterController extends FrontendController {
 
     public function postIndex() {
         $rules = [
-            'username' => 'required|unique:users',
             'password' => 'required|confirmed|min:6',
             'email' => 'required|email|unique:users',
             'prefix_th' => 'required',
@@ -56,9 +55,8 @@ class RegisterController extends FrontendController {
 
         if ($v->passes()) {
             $user = new \User();
-            $user->username = Input::get('username');
-            $user->password = \Hash::make(Input::get('password'));
             $user->email = Input::get('email');
+            $user->password = \Hash::make(Input::get('password'));
             $user->prefix_th = Input::get('prefix_th');
             $user->firstname_th = Input::get('firstname_th');
             $user->lastname_th = Input::get('lastname_th');

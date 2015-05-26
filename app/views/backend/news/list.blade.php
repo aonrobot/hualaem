@@ -49,7 +49,7 @@
                                 {{ $obj->name }}
                             </a>
                         </td>
-                        <td>{{ $obj->user->fullname_th }} ({{ $obj->user->username }})</td>
+                        <td>{{ $obj->user->fullname_th }} ( User: {{ $obj->user->id }} )</td>
                         <td>{{ $obj->publish_at }}</td>
                         <td>{{ $obj->created_at }}</td>
                         <td>{{ $obj->updated_at }}</td>

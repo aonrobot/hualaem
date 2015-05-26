@@ -125,7 +125,7 @@
                     <div class="row">
                         <div class="col-md-12 well">
                             <a data-toggle="collapse" data-parent="#containner_user" href="#user_{{ $user->id }}" aria-expanded="false" aria-controls="user_{{ $user->id }}">
-                                {{  $user->fullname_th }} ( {{ $user->username }} )
+                                {{  $user->fullname_th }} ( User: {{ $user->id }} )
                             </a>
                             <div class="collapse" id="user_{{ $user->id }}" >
                                 <div class="well">

@@ -44,12 +44,12 @@
                         <td>
                             @if($obj->group->sender->id != Auth::user()->id)
                                 <a href="{{ URL::route('user.profile.view',[$obj->group->sender->id]) }}">
-                                {{ $obj->group->sender->fullname_th }} ({{ $obj->group->sender->username }})
+                                {{ $obj->group->sender->fullname_th }} ( User: {{ $obj->group->sender->id }} )
                                 </a>
                             @else
                                 <a href="{{ URL::route('user.profile.view',[$obj->group->groupUsers()->first()->user->id]) }}">
                                 {{ $obj->group->groupUsers()->first()->user->fullname_th }}
-                                ({{ $obj->group->groupUsers()->first()->user->username }})
+                                ( User: {{ $obj->group->groupUsers()->first()->user->id }} )
                                 </a>
                             @endif
                         </td>

@@ -25,8 +25,8 @@
                             <div class="col-md-6">
                                 <div class="text regis_col_name">ข้อมูลพื้นฐาน</div>
                                 <div class="form-group">
-                                    <label class="label register" for="username">ชื่อผู้ใช้</label>
-                                    {{ Form::myInput('username','Username','text',null,['autofocus'=>'autofocus']) }}
+                                    <label class="label register" for="email">อีเมลล์</label>
+                                    {{ Form::myInput('email','Email','email') }}
                                 </div>
                                 <div class="form-group">
                                     <label class="label register" for="password">รหัสผ่าน</label>
@@ -35,10 +35,6 @@
                                 <div class="form-group">
                                     <label class="label register" for="password_confirmation">ยืนยันรหัสผ่าน</label>
                                     {{ Form::myInput('password_confirmation','Retype-Password','password') }}
-                                </div>
-                                <div class="form-group">
-                                    <label class="label register" for="email">อีเมลล์</label>
-                                    {{ Form::myInput('email','Email','email') }}
                                 </div>
                                 <div class="form-group">
                                     <label class="label register" for="firstname_th">ชื่อ</label>

@@ -40,7 +40,7 @@
                                         <img class="icon _48" src="{{ URL::asset('images/1415840683_user-32.png') }}" alt="5463af9714d72b9b0fb5a9c1_1415840683_user-32.png">
                                     </div>
                                     <div class="col-md-4">
-                                        <input class="form-control input-sm" id="username" type="text" placeholder="Username" name="username" required="required" tabindex="1">
+                                        <input class="form-control input-sm" id="email" type="email" placeholder="Email" name="email" required="required" tabindex="1">
                                     </div>
                                     <div class="col-md-4">
                                         <a href="{{ URL::route('guest.register') }}" class="btn btn-default btn-sm col-md-12" tabindex="4">Sign Up</a>
