@@ -28,6 +28,8 @@ class User extends Eloquent implements UserInterface, RemindableInterface {
      */
     protected $hidden = array('password', 'remember_token');
 
+    protected $appends = array('fullname_th');
+
     public function getFullnameTHAttribute(){
         return $this->prefix_th.$this->firstname_th.' '.$this->lastname_th;
     }

@@ -265,6 +265,7 @@ class ImportUserController extends BackendController {
                                 continue;
                             }
                             $obj = new \Camp();
+                            $obj->is_judge = true;
                             $startDate = $csvRow[$data[$type]['camp_start']];
                             if (strpos($startDate, '-') !== false) {
                                 $arr = explode('-', $startDate);

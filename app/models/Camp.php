@@ -26,7 +26,7 @@ class Camp extends Eloquent {
         return $this->hasManyThrough('User', 'Enroll');
     }
 
-    public function getOpenForRegisterAttrbute(){
+    public function getOpenForRegisterAttribute(){
         $now = date('Y-m-d');
         return ($this->camp_start == null || $this->camp_start >= $now) && $this->register_start <= $now &&
             ($this->register_end == null || $this->register_end >= $now || $this->register_end == '0000-00-00');

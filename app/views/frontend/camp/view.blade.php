@@ -35,7 +35,7 @@
                                 <div class="btn btn-danger">NOT APPROVED</div>
                             </div>
                         @endif
-                    @elseif($camp->open_for_refister)
+                    @elseif($camp->open_for_register)
                         <div class="pull-right">
                             <a href="{{ URL::route('student.camp.register',[$camp->id]) }}" class="btn btn-info">Register</a>
                         </div>

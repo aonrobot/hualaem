@@ -36,6 +36,11 @@
                                 <a href="{{ URL::route('admin.camp.application',[$camp->id]) }}" class="btn btn-info btn-xs">
                                     View Application
                                 </a>
+                                @if(!$camp->is_judge)
+                                    <button class="btn btn-success btn-xs btn-judged" data-id="{{ $camp->id }}">
+                                        ประกาศผล
+                                    </button>
+                                @endif
                             </div>
                         </div>
 
@@ -59,5 +64,20 @@
 
 @section('js_foot')
 @parent
-
+<script>
+    $(document).ready(function(){
+        $('.btn-judged').click(function(){
+            var obj = $(this);
+            var id = obj.data('id');
+            $.post('{{ route('admin.camp.judged') }}/'+id,function(data){
+                if(data.status == 'success'){
+                    obj.remove();
+                    alert("ส่งอีเมล์รายงานผลเรียบร้อยแล้ว");
+                }else{
+                    alert(data.message);
+                }
+            });
+        });
+    });
+</script>
 @stop

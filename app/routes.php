@@ -82,6 +82,8 @@ Route::group(array(
         'getDownloadApplicationFile' => 'admin.camp.download_application_file',
         'getScore' => 'admin.camp.score',
         'getCampScore' => 'admin.camp.camp_score',
+
+        'postJudged' => 'admin.camp.judged',
     ]);
 
     Route::controller('user', 'mix5003\Hualaem\Backend\UserController', [

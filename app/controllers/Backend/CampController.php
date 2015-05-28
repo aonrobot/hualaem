@@ -173,6 +173,20 @@ class CampController extends BackendController {
                     break;
                 case 'Received':
                     $setTo = \Enroll::STATUS_DOCUMENT_RECIEVED;
+
+                    \Enroll::whereIn('id', Input::get('selected', [0]))->chunk(1000,function($rows){
+                        foreach($rows as $enroll){
+                            if($enroll->status == \Enroll::STATUS_PENDING){
+                                $data = [
+                                    'user'=>$enroll->user->toArray(),
+                                    'camp'=>$enroll->camp->toArray(),
+                                ];
+                                \Mail::queue('email.camp_not_approved',$data,function($message) use ($data){
+                                    $message->to($data['user']['email'], $data['user']['fullname_th'])->subject('ได้รับใบสมัครค่าย '.$data['camp']['name'].' แล้ว');
+                                });
+                            }
+                        }
+                    });
                     break;
                 case 'Unapproved':
                     $setTo = \Enroll::STATUS_NOT_APPROVED;
@@ -187,6 +201,13 @@ class CampController extends BackendController {
             $enroll = \Enroll::findOrFail(Input::get('received'));
             $enroll->status = \Enroll::STATUS_DOCUMENT_RECIEVED;
             $enroll->save();
+            $data = [
+                'user'=>$enroll->user->toArray(),
+                'camp'=>$enroll->camp->toArray(),
+            ];
+            \Mail::queue('email.camp_not_approved',$data,function($message) use ($data){
+                $message->to($data['user']['email'], $data['user']['fullname_th'])->subject('ได้รับใบสมัครค่าย '.$data['camp']['name'].' แล้ว');
+            });
         } elseif (Input::has('unapprove')) {
             $enroll = \Enroll::findOrFail(Input::get('unapprove'));
             $enroll->status = \Enroll::STATUS_NOT_APPROVED;
@@ -279,7 +300,42 @@ class CampController extends BackendController {
         
         return $this->view('camp.camp_score',compact('camp','scored'));
     }
-    
+
+    public function postJudged($campID){
+        $notJudgeCount = \Enroll::where('camp_id',$campID)->whereIn('status',[\Enroll::STATUS_PENDING,\Enroll::STATUS_DOCUMENT_RECIEVED])->count();
+        if($notJudgeCount > 0){
+            return \Response::json([
+                'status'=>'not success',
+                'message'=>'โปรดเปลี่ยนสถานะผู้ใช้ให้ครบทุกคนก่อน'
+            ]);
+        }
+
+        $camp = \Camp::find($campID);
+        \Enroll::where('camp_id',$campID)->with('user')->chunk(1000,function($rows) use ($camp){
+            foreach($rows as $row){
+                $data = [
+                    'user'=>$row->user->toArray(),
+                    'camp'=>$camp->toArray(),
+                ];
+                if($row->status == \Enroll::STATUS_APPROVED){
+                    \Mail::queue('email.camp_approved',$data,function($message) use ($data){
+                        $message->to($data['user']['email'], $data['user']['fullname_th'])->subject('รายงานผลการสมัครค่าย '.$data['camp']['name']);
+                    });
+                }else{
+                    \Mail::queue('email.camp_not_approved',$data,function($message) use ($data){
+                        $message->to($data['user']['email'], $data['user']['fullname_th'])->subject('รายงานผลการสมัครค่าย '.$data['camp']['name']);
+                    });
+                }
+            }
+        });
+        $camp->is_judge = true;
+        $camp->save();
+
+        return \Response::json([
+            'status'=>'success'
+        ]);
+    }
+
     public function postCampScore($campId){
         $inpScored = Input::get('scored');
         $camp = \Camp::findOrFail($campId);
