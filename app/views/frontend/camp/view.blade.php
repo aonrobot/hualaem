@@ -22,7 +22,7 @@
                             <div class="pull-right">
                                 <div class="btn btn-warning">PENING</div>
                             </div>
-                        @elseif($enroll->status == Enroll::STATUS_DOCUMENT_RECIEVED)
+                        @elseif($enroll->status == Enroll::STATUS_DOCUMENT_RECIEVED || $camp->is_judge == false)
                             <div class="pull-right">
                                 <div class="btn btn-info">RECEIVED DOCUMENT</div>
                             </div>
