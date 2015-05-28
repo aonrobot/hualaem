@@ -52,11 +52,14 @@
 
                     {{ $enroll->created_at }}<br>
                     @if($enroll->status == \Enroll::STATUS_DOCUMENT_RECIEVED)
-                    <button class="btn btn-primary btn-sm" name="approve" value="{{ $enroll->id}}">Approved</button>
+                        <button class="btn btn-primary btn-sm" name="approve" value="{{ $enroll->id}}">Approved</button>
+                        <button class="btn btn-warning btn-sm" name="unapprove" value="{{ $enroll->id}}">Unapprove</button>
                     @elseif($enroll->status == \Enroll::STATUS_PENDING)
                         <button class="btn btn-info btn-sm" name="received" value="{{ $enroll->id}}">Received</button>
                     @elseif($enroll->status == \Enroll::STATUS_APPROVED)
-                    <button class="btn btn-warning btn-sm" name="unapprove" value="{{ $enroll->id}}">Unapprove</button>
+                        <button class="btn btn-warning btn-sm" name="unapprove" value="{{ $enroll->id}}">Unapprove</button>
+                    @elseif($enroll->status == \Enroll::STATUS_NOT_APPROVED)
+                        <button class="btn btn-primary btn-sm" name="approve" value="{{ $enroll->id}}">Approved</button>
                     @endif
                     <button type="button" class="btn btn-success btn-sm btn-field-data"  data-id="{{$enroll->id}}"
                             data-name="{{ $enroll->user->fullname_th }}">

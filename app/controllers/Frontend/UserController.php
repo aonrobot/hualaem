@@ -13,7 +13,12 @@ class UserController extends FrontendController {
 
     public function getCalendarData($status) {
         $user = \Auth::user();
-        $enrolls = $user->enrolls()->where('status', $status)->whereHas('camp', function($q) {
+        if($status == 'PENDING'){
+            $status = [\Enroll::STATUS_PENDING,\Enroll::STATUS_DOCUMENT_RECIEVED];
+        }else{
+            $status = [$status];
+        }
+        $enrolls = $user->enrolls()->whereIn('status', $status)->whereHas('camp', function($q) {
                     $start = Input::get('start');
                     $end = Input::get('end');
                     $q->where(function($q) use ($start, $end) {

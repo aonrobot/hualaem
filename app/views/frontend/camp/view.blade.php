@@ -30,6 +30,10 @@
                             <div class="pull-right">
                                 <div class="btn btn-success">APPROVED</div>
                             </div>
+                        @elseif($enroll->status == Enroll::STATUS_NOT_APPROVED)
+                            <div class="pull-right">
+                                <div class="btn btn-danger">NOT APPROVED</div>
+                            </div>
                         @endif
                     @else
                         <div class="pull-right">

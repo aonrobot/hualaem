@@ -5,6 +5,7 @@ class Enroll extends Eloquent {
     const STATUS_PENDING = "PENDING";
     const STATUS_DOCUMENT_RECIEVED = "DOCUMENT_RECIEVED";
     const STATUS_APPROVED = "APPROVED";
+    const STATUS_NOT_APPROVED = "NOT_APPROVED";
     
     const ROLE_STUDENT = "STUDENT";
     const ROLE_STAFF = "STAFF";

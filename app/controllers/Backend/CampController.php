@@ -175,7 +175,7 @@ class CampController extends BackendController {
                     $setTo = \Enroll::STATUS_DOCUMENT_RECIEVED;
                     break;
                 case 'Unapproved':
-                    $setTo = \Enroll::STATUS_PENDING;
+                    $setTo = \Enroll::STATUS_NOT_APPROVED;
                     break;
             }
             \DB::table((new \Enroll())->getTable())->whereIn('id', Input::get('selected', [0]))->update(['status' => $setTo]);
@@ -189,7 +189,7 @@ class CampController extends BackendController {
             $enroll->save();
         } elseif (Input::has('unapprove')) {
             $enroll = \Enroll::findOrFail(Input::get('unapprove'));
-            $enroll->status = \Enroll::STATUS_DOCUMENT_RECIEVED;
+            $enroll->status = \Enroll::STATUS_NOT_APPROVED;
             $enroll->save();
         } elseif (Input::has('delete')) {
             $enroll = \Enroll::findOrFail(Input::get('delete'));
