@@ -230,4 +230,21 @@ class UserController extends FrontendController {
         }
     }
 
+
+    public function getNotification(){
+        $unreadCount = \Auth::user()->notifications()->where('is_read',false)->count();
+        if($unreadCount > 10){
+            $notifications = \Auth::user()->notifications()->where('is_read',false)->get();
+        }else{
+            $notifications = \Auth::user()->notifications()->take(10)->get();
+        }
+
+        $ids = [];
+        foreach($notifications as $notification){
+            $ids[] = $notification->id;
+        }
+        \Notification::whereIn('id',$ids)->update(['is_read'=>true]);
+
+        return \View::make('ajax.notifications',['notifications'=>$notifications]);
+    }
 }

@@ -40,6 +40,7 @@ Route::group(array(
         'getCalendarData' => 'ajax.student.calendar_data',
         'getProfile'=>'user.profile.view',
         'getEdit'=>'user.profile.edit',
+        'getNotification'=>'user.notification',
     ]);
 
     Route::controller('pm','mix5003\Hualaem\Frontend\PrivateMessageController',[

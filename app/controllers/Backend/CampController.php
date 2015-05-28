@@ -184,6 +184,11 @@ class CampController extends BackendController {
                                 \Mail::queue('email.camp_not_approved',$data,function($message) use ($data){
                                     $message->to($data['user']['email'], $data['user']['fullname_th'])->subject('ได้รับใบสมัครค่าย '.$data['camp']['name'].' แล้ว');
                                 });
+                                $noti = new \Notification();
+                                $noti->user_id = $enroll->user->id;
+                                $noti->message = 'ได้รับเอกสารการสมัครค่าย '.$enroll->camp->name.' แล้ว';
+                                $noti->url = \URL::route('guest.camp.view',[$enroll->camp->id]);
+                                $noti->save();
                             }
                         }
                     });
@@ -208,6 +213,11 @@ class CampController extends BackendController {
             \Mail::queue('email.camp_not_approved',$data,function($message) use ($data){
                 $message->to($data['user']['email'], $data['user']['fullname_th'])->subject('ได้รับใบสมัครค่าย '.$data['camp']['name'].' แล้ว');
             });
+            $noti = new \Notification();
+            $noti->user_id = $enroll->user->id;
+            $noti->message = 'ได้รับเอกสารการสมัครค่าย '.$enroll->camp->name.' แล้ว';
+            $noti->url = \URL::route('guest.camp.view',[$enroll->camp->id]);
+            $noti->save();
         } elseif (Input::has('unapprove')) {
             $enroll = \Enroll::findOrFail(Input::get('unapprove'));
             $enroll->status = \Enroll::STATUS_NOT_APPROVED;
@@ -321,10 +331,20 @@ class CampController extends BackendController {
                     \Mail::queue('email.camp_approved',$data,function($message) use ($data){
                         $message->to($data['user']['email'], $data['user']['fullname_th'])->subject('รายงานผลการสมัครค่าย '.$data['camp']['name']);
                     });
+                    $noti = new \Notification();
+                    $noti->user_id = $row->user->id;
+                    $noti->message = 'คุณผ่านการคัดเลือกค่าย '.$camp->name;
+                    $noti->url = \URL::route('guest.camp.view',[$camp->id]);
+                    $noti->save();
                 }else{
                     \Mail::queue('email.camp_not_approved',$data,function($message) use ($data){
                         $message->to($data['user']['email'], $data['user']['fullname_th'])->subject('รายงานผลการสมัครค่าย '.$data['camp']['name']);
                     });
+                    $noti = new \Notification();
+                    $noti->user_id = $row->user->id;
+                    $noti->message = 'คุณไม่ผ่านการคัดเลือกค่าย '.$camp->name;
+                    $noti->url = \URL::route('guest.camp.view',[$camp->id]);
+                    $noti->save();
                 }
             }
         });

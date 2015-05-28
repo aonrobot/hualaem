@@ -65,12 +65,26 @@
 
                         </div>
                         @else
-                            <strong>{{ Auth::user()->fullname_th }}</strong><br>
-                            <a href="{{ route('user.profile.view') }}">My Profile</a><br>
-                            @if(Auth::user()->role == 'ADMIN')
-                            <a href="{{ URL::to('/admin') }}">Admin</a><br>
-                            @endif
-                            <a href="{{ route('user.logout') }}">Logout</a><br>
+                            <div class="pull-right">
+                                <strong>{{ Auth::user()->fullname_th }}</strong><br>
+                                <a href="{{ route('user.profile.view') }}">My Profile</a><br>
+                                @if(Auth::user()->role == 'ADMIN')
+                                    <a href="{{ URL::to('/admin') }}">Admin</a><br>
+                                @endif
+                                <a href="{{ route('user.logout') }}">Logout</a><br>
+                            </div>
+                            <div class="pull-right">
+                                <div style="vertical-align: middle; height: 80px; position: relative; width: 50px;">
+                                    <a href="#" data-poload="{{ route('user.notification') }}" style="display: block; position: absolute; top: 50%; margin-top: -15px;">
+                                        <i class="fa fa-bell-o" style="font-size: 30px;"></i>
+                                        @if(Auth::user()->un_read)
+                                            <div class="notification-number">
+                                                {{ Auth::user()->un_read }}
+                                            </div>
+                                        @endif
+                                    </a>
+                                </div>
+                            </div>
                         @endif
                     </div>
                 </div>
@@ -126,6 +140,26 @@
         {{ HTML::script('js/jquery.min.js') }}
         {{ HTML::script('js/bootstrap.min.js') }}
         <!--[if lte IE 9]><script src="https://cdnjs.cloudflare.com/ajax/libs/placeholders/3.0.2/placeholders.min.js"></script><![endif]-->
+        <script>
+            $(document).ready(function(){
+                var poLoadFn = function() {
+                    var e=$(this);
+                    e.off('click');
+                    $.get(e.data('poload'),function(d) {
+                        e.popover({content: d,html:true,placement:'bottom'}).popover('show');
+                        $('.notification-number').css('visibility','hidden');
+                        e.click(function(){
+                            e.popover('destroy');
+                            e.click(poLoadFn);
+                        });
+                    });
+                };
+
+                $('*[data-poload]').click(poLoadFn);
+            });
+
+        </script>
+
         @show
     </body>
 </html>

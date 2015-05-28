@@ -32,3 +32,32 @@ label.register{
     list-style: none;
     padding-left:10px
 }
+
+.notifications{
+    width:250px;
+    max-height:300px;
+    overflow: auto;
+
+}
+
+.notifications ul{
+    width:250px;
+    list-style: none;
+    padding:0;
+}
+.notifications li{
+    border-bottom: 1px solid #CCC;
+}
+.notifications li.unread{
+   font-weight: bold;
+}
+
+.notification-number{
+    background-color: #F00;
+    display: inline-block;
+    border-radius: 50px;
+    padding: 0 7px;
+    color: #FFF;
+    -webkit-transform: translate(10px,-15px);
+    transform: translate(10px,-15px);
+}

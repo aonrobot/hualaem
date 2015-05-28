@@ -45,6 +45,10 @@ class User extends Eloquent implements UserInterface, RemindableInterface {
         return intval($diffTime / (3600 *24 *365));
     }
 
+    public function getUnReadAttribute(){
+        return $this->notifications()->where('is_read',false)->count();
+    }
+
     public function currentSchool(){
         return $this->hasOne('Semester')->with('School')->orderBy('year','desc')->take(1);
     }
@@ -75,6 +79,10 @@ class User extends Eloquent implements UserInterface, RemindableInterface {
 
     public function logs(){
         return $this->hasMany('UserLog');
+    }
+
+    public function notifications(){
+        return $this->hasMany('Notification')->orderBy('created_at','desc');
     }
 
 }
