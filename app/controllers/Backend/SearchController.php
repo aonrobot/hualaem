@@ -45,7 +45,7 @@ class SearchController extends BackendController {
         if(Input::has('search')){
 			$query->where(function($searchQuery){
 				$searchQuery->where(function($subQuery){
-					$searchField = ['username', 'prefix_th', 'firstname_th', 'lastname_th', 'prefix_en', 'firstname_en', 'lastname_en', 'mobile_no', 'email', 'nickname', 'birthdate'];
+					$searchField = ['prefix_th', 'firstname_th', 'lastname_th', 'prefix_en', 'firstname_en', 'lastname_en', 'mobile_no', 'email', 'nickname', 'birthdate'];
 					foreach($searchField as $field){
 						$subQuery->orWhere($field,'like','%'.Input::get('search').'%');
 					}
