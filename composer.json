@@ -6,7 +6,7 @@
     "type": "project",
     "require": {
         "laravel/framework": "4.2.*",
-        "mews/captcha": "dev-master",
+        "mews/captcha": "dev-master-l4",
         "maatwebsite/excel": "~1.2.1"
     },
     "require-dev": {
