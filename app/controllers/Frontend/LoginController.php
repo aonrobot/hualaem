@@ -7,7 +7,7 @@ use Input;
 
 class LoginController extends FrontendController {
     public function getIndex(){
-        
+        return \Redirect::to('/');
     }
     
     public function postIndex(){

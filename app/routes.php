@@ -23,6 +23,10 @@ Route::group(array(), function() {
     Route::controller('login', 'mix5003\Hualaem\Frontend\LoginController', [
         'getIndex' => 'guest.login'
     ]);
+    Route::controller('forgot-password', 'mix5003\Hualaem\Frontend\ForgotPasswordController', [
+        'getIndex' => 'guest.forgot.form',
+        'getSetPassword' => 'guest.forget.set_password'
+    ]);
     Route::controller('camp', 'mix5003\Hualaem\Frontend\CampController', [
         'getIndex' => 'guest.camp.list',
         'getView' => 'guest.camp.view',

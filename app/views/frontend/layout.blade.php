@@ -59,6 +59,12 @@
                                     </div>
                                 </div>
 
+                                <div class="row">
+                                    <div class="col-md-12">
+                                        <a href="">Forgot Password?</a>
+                                    </div>
+                                </div>
+
                             </form>
                             
                             <!-- Form for login-->
