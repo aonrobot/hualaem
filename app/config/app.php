@@ -108,6 +108,7 @@ return array(
         'Illuminate\Workbench\WorkbenchServiceProvider',
         'Mews\Captcha\CaptchaServiceProvider',
         'Maatwebsite\Excel\ExcelServiceProvider',
+        'Barryvdh\DomPDF\ServiceProvider',
     ),
     /*
       |--------------------------------------------------------------------------
@@ -170,5 +171,6 @@ return array(
         'Validator' => 'Illuminate\Support\Facades\Validator',
         'View' => 'Illuminate\Support\Facades\View',
         'Captcha' => 'Mews\Captcha\Facades\Captcha',
+        'PDF' => 'Barryvdh\DomPDF\Facade',
     ),
 );

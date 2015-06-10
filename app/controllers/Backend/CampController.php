@@ -164,12 +164,19 @@ class CampController extends BackendController {
         return $this->view('camp.application', compact('camp'));
     }
 
+    protected function downloadPDF(){
+        $enrolls = \Enroll::whereIn('id', Input::get('selected', [0]))->get();
+        $enrolls->load('user','user.addresses','fields','fields.campFields');
+        return \PDF::loadView('pdf.applications',['enrolls'=>$enrolls])->download('print.pdf');
+    }
+
     public function postApplication() {
         //TODO:: Add Notification
         if (Input::has('action')) {
             switch(Input::get('action')){
                 case 'Approved':
                     $setTo = \Enroll::STATUS_APPROVED;
+                    \DB::table((new \Enroll())->getTable())->whereIn('id', Input::get('selected', [0]))->update(['status' => $setTo]);
                     break;
                 case 'Received':
                     $setTo = \Enroll::STATUS_DOCUMENT_RECIEVED;
@@ -192,12 +199,18 @@ class CampController extends BackendController {
                             }
                         }
                     });
+                    \DB::table((new \Enroll())->getTable())->whereIn('id', Input::get('selected', [0]))->update(['status' => $setTo]);
                     break;
                 case 'Unapproved':
                     $setTo = \Enroll::STATUS_NOT_APPROVED;
+                    \DB::table((new \Enroll())->getTable())->whereIn('id', Input::get('selected', [0]))->update(['status' => $setTo]);
                     break;
+                case 'Print':
+                    return $this->downloadPDF();
+                default:
+                    return \Redirect::back();
             }
-            \DB::table((new \Enroll())->getTable())->whereIn('id', Input::get('selected', [0]))->update(['status' => $setTo]);
+
         } elseif (Input::has('approve')) {
             $enroll = \Enroll::findOrFail(Input::get('approve'));
             $enroll->status = \Enroll::STATUS_APPROVED;

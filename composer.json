@@ -7,7 +7,8 @@
     "require": {
         "laravel/framework": "4.2.*",
         "mews/captcha": "dev-master-l4",
-        "maatwebsite/excel": "~1.2.1"
+        "maatwebsite/excel": "~1.2.1",
+        "barryvdh/laravel-dompdf": "0.4.*"
     },
     "require-dev": {
         "barryvdh/laravel-ide-helper": "1.*",

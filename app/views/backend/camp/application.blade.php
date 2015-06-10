@@ -74,6 +74,7 @@
                     <button class="btn btn-primary btn-sm" type="submit" name="action" value="Approved">Approve All Selected</button>
                     <button class="btn btn-primary btn-sm" type="submit" name="action" value="Received">Received All Selected</button>
                     <button class="btn btn-warning btn-sm" type="submit" name="action" value="Unapproved">Unapprove All Selected</button>
+                    <button class="btn btn-info btn-sm" type="submit" name="action" value="Print">Print All Selected</button>
                 </div>
             </div>
         </div>
