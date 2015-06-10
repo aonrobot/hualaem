@@ -15,4 +15,13 @@ return array(
 
 	'debug' => true,
 
+    'providers' => append_config([
+        'Way\Generators\GeneratorsServiceProvider',
+        'Barryvdh\Debugbar\ServiceProvider',
+        'Barryvdh\LaravelIdeHelper\IdeHelperServiceProvider',
+    ]),
+
+    'aliases' => append_config([
+        'Debugbar' => 'Barryvdh\Debugbar\Facade',
+    ])
 );
