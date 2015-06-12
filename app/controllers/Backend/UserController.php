@@ -14,7 +14,6 @@ class UserController extends BackendController {
                 $word = '%' . Input::get('txtSearchUser') . '%';
                 $query->where('firstname_th', 'like', $word);
                 $query->orWhere('lastname_th', 'like', $word);
-                $query->orWhere('username', 'like', $word);
             });
         }
         if (Input::has('txtSearchDate')) {
