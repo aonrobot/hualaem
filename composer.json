@@ -35,8 +35,6 @@
         ],
         "post-update-cmd": [
             "php artisan clear-compiled",
-            "((php artisan ide-helper:generate 2>&1 | grep -q Exception) && echo Do Nothing) || echo Generated Function Helper",
-            "((php artisan ide-helper:models --nowrite 2>&1 | grep -q Exception) && echo Do Nothing) || echo Generated Model Helper",
             "php artisan optimize"
         ],
         "post-create-project-cmd": [
