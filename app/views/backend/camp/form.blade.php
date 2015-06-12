@@ -10,22 +10,18 @@
 @section('content')
 <form class="form-horizontal" action="{{ empty($camp) ? URL::route('admin.camp.save') : URL::route('admin.camp.save',[$camp->id]) }}" method="POST" enctype="multipart/form-data">
     <div  ng-app="CampForm">
-        <div class="container">
-            <div class="row">
-                <div class="col-md-12">
-                    <h1>Add New Camp</h1>
-                </div>
+        <div class="row">
+            <div class="col-md-12">
+                <h1>Add New Camp</h1>
             </div>
-
         </div>
 
-        <div class="container">
-            <div class="well">
-                <div class="row">
-                    <div class="col-md-12">
-                        <h2>Secton 1 | Camp Detail Page</h2>
-                    </div>
-                </div>
+        <div class="panel panel-default">
+            <div class="panel-heading">
+                Secton 1 | Camp Detail Page
+            </div>
+            <!-- /.panel-heading -->
+            <div class="panel-body">
                 <div class="row">
                     <div class="col-md-12">
                         {{ Form::bsInlineGroup('Camp Name','name',$camp->name) }}
@@ -46,8 +42,8 @@
                             <label class="col-sm-2 control-label" for="image">รูปภาพ</label>
                             <div class="col-sm-10">
                                 @if(!empty($camp->image_path))
-                                <img src="{{$camp->image_path}}" class="img-thumbnail">
-                                <br>
+                                    <img src="{{$camp->image_path}}" class="img-thumbnail">
+                                    <br>
                                 @endif
                                 {{ Form::file('image',['id'=>'image']) }}
                             </div>
@@ -69,13 +65,12 @@
 
         <subject-list></subject-list>
     </div>
-    <div class="container">
+
         <div class="row">
             <div class="col-md-12">
                 <input type="submit" class="btn btn-info col-xs-12" value="Save">
             </div>
         </div>
-    </div>
 
 </form>
 @stop

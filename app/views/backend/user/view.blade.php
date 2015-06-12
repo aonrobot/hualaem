@@ -3,69 +3,62 @@
 @section('title') Profile: {{ $user->fullname_th }} @stop
 
 @section('content')
-<div class="container">
+
     <div class="row">
         <div class="col-md-12">
             <h1>Profile</h1>
         </div>
     </div>
-</div>
 
-<div class="container">
-    <div class="well">
-        <div class="row">
-            <div class="col-md-12">
-                <h2>
-                    {{ $user->fullname_th }} 
-                    @if($user->role == 'VERIFIED')
-                    <span class="glyphicon glyphicon-ok"></span>
-                    @elseif($user->role == 'UNVERIFIED')
-                    <span class="glyphicon glyphicon-remove"></span>
-                    @endif
-                </h2>
-            </div>
+    <div class="panel panel-default">
+        <div class="panel-heading">
+            {{ $user->fullname_th }}
+            @if($user->role == 'VERIFIED')
+                <span class="glyphicon glyphicon-ok"></span>
+            @elseif($user->role == 'UNVERIFIED')
+                <span class="glyphicon glyphicon-remove"></span>
+            @endif
         </div>
+        <!-- /.panel-heading -->
+        <div class="panel-body">
+            <div role="tabpanel">
 
-        <div class="row">
-            <div class="col-md-12">
-                <div role="tabpanel">
+                <!-- Nav tabs -->
+                <ul class="nav nav-tabs" role="tablist">
+                    <li role="presentation" class="active">
+                        <a href="#basic" aria-controls="basic" role="tab" data-toggle="tab">Basic</a>
+                    </li>
+                    <li role="presentation">
+                        <a href="#addresses" aria-controls="addresses" role="tab" data-toggle="tab">Addresses</a>
+                    </li>
+                    <li role="presentation">
+                        <a href="#parents" aria-controls="parents" role="tab" data-toggle="tab">Parents</a>
+                    </li>
+                </ul>
 
-                    <!-- Nav tabs -->
-                    <ul class="nav nav-tabs" role="tablist">
-                        <li role="presentation" class="active">
-                            <a href="#basic" aria-controls="basic" role="tab" data-toggle="tab">Basic</a>
-                        </li>
-                        <li role="presentation">
-                            <a href="#addresses" aria-controls="addresses" role="tab" data-toggle="tab">Addresses</a>
-                        </li>
-                        <li role="presentation">
-                            <a href="#parents" aria-controls="parents" role="tab" data-toggle="tab">Parents</a>
-                        </li>
-                    </ul>
+                <!-- Tab panes -->
+                <div class="tab-content">
+                    <div role="tabpanel" class="tab-pane active" id="basic">
+                        Student ID: {{ $user->student_id }}<br>
+                        Name: {{ $user->firstname_th }}<br>
+                        Lastname: {{ $user->lastname_th }}<br>
+                        Nickname: {{ $user->nickname }}<br>
+                        Birthdate: {{ $user->birthdate }}
+                        @if($user->birthdate != NULL)
+                            ( {{ $user->age }} Years)
+                        @endif
+                        <br>
+                        Citizen ID: {{ $user->citizen_id }}<br>
+                        Mobile: {{ $user->mobile_no }}<br>
+                        Email: {{ $user->email }}<br>
 
-                    <!-- Tab panes -->
-                    <div class="tab-content">
-                        <div role="tabpanel" class="tab-pane active" id="basic">
-                            Student ID: {{ $user->student_id }}<br>
-                            Name: {{ $user->firstname_th }}<br>
-                            Lastname: {{ $user->lastname_th }}<br>
-                            Nickname: {{ $user->nickname }}<br>
-                            Birthdate: {{ $user->birthdate }} 
-                            @if($user->birthdate != NULL)
-                                ( {{ $user->age }} Years)
-                            @endif
-                            <br>
-                            Citizen ID: {{ $user->citizen_id }}<br>
-                            Mobile: {{ $user->mobile_no }}<br>
-                            Email: {{ $user->email }}<br>
-
-                            <div class="pull-right">
-                                <a href="{{ URL::route('admin.user.edit',[$user->id]) }}" class="btn btn-info">Edit Profile</a>
-                            </div>
+                        <div class="pull-right">
+                            <a href="{{ URL::route('admin.user.edit',[$user->id]) }}" class="btn btn-info">Edit Profile</a>
                         </div>
-                        <div role="tabpanel" class="tab-pane" id="addresses">
-                            <div class="panel-group" id="accordion" role="tablist" aria-multiselectable="true">
-                                @foreach($user->addresses as $key => $address)
+                    </div>
+                    <div role="tabpanel" class="tab-pane" id="addresses">
+                        <div class="panel-group" id="accordion" role="tablist" aria-multiselectable="true">
+                            @foreach($user->addresses as $key => $address)
                                 <div class="panel panel-default">
                                     <div class="panel-heading" role="tab" id="control_address_{{$address->id}}">
                                         <h4 class="panel-title">
@@ -87,11 +80,11 @@
                                         </div>
                                     </div>
                                 </div>
-                                @endforeach
-                            </div>
+                            @endforeach
                         </div>
-                        <div role="tabpanel" class="tab-pane" id="parents">
-                            @foreach($user->parents as $key => $parent)
+                    </div>
+                    <div role="tabpanel" class="tab-pane" id="parents">
+                        @foreach($user->parents as $key => $parent)
                             <div class="panel panel-default">
                                 <div class="panel-heading">{{ $parent->relation }}</div>
                                 <div class="panel-body">
@@ -102,142 +95,134 @@
                                     ทำงานด้าน: {{ $parent->job_type }}<br>
                                 </div>
                             </div>
-                            @endforeach
-                        </div>
+                        @endforeach
                     </div>
-
                 </div>
             </div>
         </div>
+        <!-- /.panel-body -->
     </div>
-</div>
 
-<div class="container">
     <div class="row">
         <div class="col-md-6">
-            <div class="well">
-                <div class="row">
-                    <div class="col-md-12">
-                        <h2>Camp Register</h2>
-                    </div>
+            <div class="panel panel-default">
+                <div class="panel-heading">
+                    Camp Register
                 </div>
+                <!-- /.panel-heading -->
+                <div class="panel-body">
+                    @foreach($registerCamps as $k => $enroll)
+                        <?php $camp = $enroll->camp; ?>
+                        @if($k % 2 == 0)
+                            <div class="row">
+                                @endif
+                                <div class="col-md-10 col-md-offset-1 well">
+                                    <article>
+                                        <div class="media">
+                                            <div class="media-left">
+                                                <a href="{{ URL::route('guest.camp.view',[$camp->id]) }}">
+                                                    <img class="media-object" src="{{ $camp->image_path }}" alt="{{ $camp->name }}" width="128" height="128">
+                                                </a>
+                                            </div>
+                                            <div class="media-body">
+                                                <a href="{{ URL::route('guest.camp.view',[$camp->id]) }}">
+                                                    <h3 class="media-heading">{{ $camp->name }}</h3>
+                                                </a>
+                                                {{ $camp->place }}<br>
+                                                {{ $camp->camp_start }} - {{ $camp->camp_end }}
 
-                @foreach($registerCamps as $k => $enroll)
-                <?php $camp = $enroll->camp; ?>
-                @if($k % 2 == 0)
-                <div class="row">
-                @endif
-                    <div class="col-md-4 col-md-offset-1 well">
-                        <article>
-                            <div class="media">
-                                <div class="media-left">
-                                    <a href="{{ URL::route('guest.camp.view',[$camp->id]) }}">
-                                        <img class="media-object" src="{{ $camp->image_path }}" alt="{{ $camp->name }}" width="128" height="128">
-                                    </a>
-                                </div>
-                                <div class="media-body">
-                                    <a href="{{ URL::route('guest.camp.view',[$camp->id]) }}">
-                                        <h3 class="media-heading">{{ $camp->name }}</h3>
-                                    </a>
-                                    {{ $camp->place }}<br>
-                                    {{ $camp->camp_start }} - {{ $camp->camp_end }}
+                                            </div>
+                                        </div>
 
+                                    </article>
                                 </div>
+                                @if($k % 2 == 1)
                             </div>
-
-                        </article>
-                    </div>
-                @if($k % 2 == 1)
+                        @endif
+                    @endforeach
+                    @if(isset($k) && $k % 2 == 0)
+                        {{ "</div>" }}
+                    @endif
                 </div>
-                @endif
-                @endforeach
-                @if(isset($k) && $k % 2 == 0)
-                {{ "</div>" }}
-                @endif
+                <!-- /.panel-body -->
             </div>
         </div>
-    
         <div class="col-md-6">
-            <div class="well">
-                <div class="row">
-                    <div class="col-md-12">
-                        <h2>Camp History</h2>
-                    </div>
+            <div class="panel panel-default">
+                <div class="panel-heading">
+                    Camp History
                 </div>
+                <!-- /.panel-heading -->
+                <div class="panel-body">
+                    @foreach($historyCamps as $k => $enroll)
+                        <?php $camp = $enroll->camp; ?>
+                        @if($k % 2 == 0)
+                            <div class="row">
+                                @endif
+                                <div class="col-md-10 col-md-offset-1 well">
+                                    <article>
+                                        <div class="media">
+                                            <div class="media-left">
+                                                <a href="{{ URL::route('guest.camp.view',[$camp->id]) }}">
+                                                    <img class="media-object" src="{{ $camp->image_path }}" alt="{{ $camp->name }}" width="128" height="128">
+                                                </a>
+                                            </div>
+                                            <div class="media-body">
+                                                <a href="{{ URL::route('guest.camp.view',[$camp->id]) }}">
+                                                    <h3 class="media-heading">{{ $camp->name }}</h3>
+                                                </a>
+                                                {{ $camp->place }}<br>
+                                                {{ $camp->camp_start }} - {{ $camp->camp_end }}
 
+                                            </div>
+                                        </div>
 
-                @foreach($historyCamps as $k => $enroll)
-                <?php $camp = $enroll->camp; ?>
-                @if($k % 2 == 0)
-                <div class="row">
-                @endif
-                    <div class="col-md-4 col-md-offset-1 well">
-                        <article>
-                            <div class="media">
-                                <div class="media-left">
-                                    <a href="{{ URL::route('guest.camp.view',[$camp->id]) }}">
-                                        <img class="media-object" src="{{ $camp->image_path }}" alt="{{ $camp->name }}" width="128" height="128">
-                                    </a>
+                                    </article>
                                 </div>
-                                <div class="media-body">
-                                    <a href="{{ URL::route('guest.camp.view',[$camp->id]) }}">
-                                        <h3 class="media-heading">{{ $camp->name }}</h3>
-                                    </a>
-                                    {{ $camp->place }}<br>
-                                    {{ $camp->camp_start }} - {{ $camp->camp_end }}
-
-                                </div>
+                                @if($k % 2 == 1)
                             </div>
-
-                        </article>
-                    </div>
-                @if($k % 2 == 1)
+                        @endif
+                    @endforeach
+                    @if(isset($k) && $k % 2 == 0)
+                        {{ "</div>" }}
+                    @endif
                 </div>
-                @endif
-                @endforeach
-                @if(isset($k) && $k % 2 == 0)
-                {{ "</div>" }}
-                @endif
+                <!-- /.panel-body -->
             </div>
         </div>
     </div>
-</div>
 
-<div class="container">
-    <div class="well">
-        <div class="row">
-            <div class="col-md-12">
-                <h2>History</h2>
-            </div>
+    <div class="panel panel-default">
+        <div class="panel-heading">
+            History
         </div>
-        <div class="row">
-            <div class="col-md-12">
-                <table class="table table-condensed table-striped table-bordered">
-                    <thead>
-                        <tr>
-                            <th>เวลา</th>
-                            <th>ชนิด</th>
-                            <th>ฟิลด์</th>
-                            <th>ค่าเก่า</th>
-                            <th>ค่าใหม่</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        @foreach($userLogs as $log)
-                        <tr>
-                            <td>{{ $log->created_at }}</td>
-                            <td>{{ $log->target_type }}</td>
-                            <td>{{ $log->field }}</td>
-                            <td>{{ $log->old_value }}</td>
-                            <td>{{ $log->new_value }}</td>
-                        </tr>
-                        @endforeach
-                    </tbody>
-                </table>
-            </div>
+        <!-- /.panel-heading -->
+        <div class="panel-body">
+            <table class="table table-condensed table-striped table-bordered">
+                <thead>
+                <tr>
+                    <th>เวลา</th>
+                    <th>ชนิด</th>
+                    <th>ฟิลด์</th>
+                    <th>ค่าเก่า</th>
+                    <th>ค่าใหม่</th>
+                </tr>
+                </thead>
+                <tbody>
+                @foreach($userLogs as $log)
+                    <tr>
+                        <td>{{ $log->created_at }}</td>
+                        <td>{{ $log->target_type }}</td>
+                        <td>{{ $log->field }}</td>
+                        <td>{{ $log->old_value }}</td>
+                        <td>{{ $log->new_value }}</td>
+                    </tr>
+                @endforeach
+                </tbody>
+            </table>
         </div>
+        <!-- /.panel-body -->
     </div>
-</div>
 
 @stop
 

@@ -28,16 +28,14 @@ label.register{
 }
 
 .search-height-full ul{
-    background-color: #EEE;
     list-style: none;
-    padding-left:10px
+    padding-left:10px;
 }
 
 .notifications{
     width:250px;
     max-height:300px;
     overflow: auto;
-
 }
 
 .notifications ul{

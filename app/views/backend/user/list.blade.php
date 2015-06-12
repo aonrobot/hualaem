@@ -8,7 +8,7 @@
 @stop
 
 @section('content')
-<div class="container">
+
     <div class="row">
         <div class="col-md-12">
             <h1>User List</h1>
@@ -27,10 +27,10 @@
     </div>
 
     <br>
-</div>
+
 
 <form method="POST" action="{{ URL::route('admin.user.mass_update_user') }}">
-    <div class="container">
+
         <div class="row">
             <div class="col-md-12">
                 <table class="table table-striped table-bordered table-hover table-condensed">
@@ -72,14 +72,14 @@
                 <button type="submit" name="action" value="UNVERIFIED" class="btn btn-info">UNVERIFIED SELECT USER</button>
             </div>
         </div>
-    </div>
+
 </form>
 
-<div class="container">
+
     <div class="row">
         {{ $users->appends(Input::except('page'))->links() }}
     </div>
-</div>
+
 @stop
 
 @section('js_foot')

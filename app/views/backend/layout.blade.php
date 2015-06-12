@@ -1,15 +1,18 @@
 <!DOCTYPE html>
-<html data-wf-site="545f56f8c3684d9f25f51d7e" data-wf-page="546203cc80bbb1ac3735af5c">
+<html>
     <head>
         <meta charset="utf-8">
         <title>@yield('title')</title>
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
         <meta name="viewport" content="width=device-width, initial-scale=1">
-        <link rel="shortcut icon" type="image/x-icon" href="https://y7v4p6k4.ssl.hwcdn.net/placeholder/favicon.ico">
-        <meta name="generator" content="Webflow">
         <base href="{{ URL::to('/') }}/">
         
         @section('css')
-        {{ HTML::style('css/bootstrap.min.css') }}
+            {{ HTML::style('backend/bower_components/bootstrap/dist/css/bootstrap.min.css') }}
+            {{ HTML::style('backend/bower_components/metisMenu/dist/metisMenu.min.css') }}
+            {{ HTML::style('backend/dist/css/timeline.css') }}
+            {{ HTML::style('backend/dist/css/sb-admin-2.css') }}
+            {{ HTML::style('backend/bower_components/font-awesome/css/font-awesome.min.css') }}
         @show
         {{ HTML::style('css/custom.css') }}
 
@@ -18,110 +21,111 @@
         @show
     </head>
     <body>
-        <div class="navbar">
-            <div class="container">
-                <div class="row">
-                    <div class="col-md-6 text-left">
-                        <a  href="{{ URL::to('/') }}">
-                            <img src="{{ URL::asset('images/1415577731_handdrawn-lightbulb-48.png') }}" alt="545faced7848976b2dd62a5e_1415577731_handdrawn-lightbulb-48.png">
-                            <em>TGT |<br></em>
-                        </a>
+        <div id="wrapper">
+
+            <!-- Navigation -->
+            <nav class="navbar navbar-default navbar-static-top" role="navigation" style="margin-bottom: 0">
+                <div class="navbar-header">
+                    <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
+                        <span class="sr-only">Toggle navigation</span>
+                        <span class="icon-bar"></span>
+                        <span class="icon-bar"></span>
+                        <span class="icon-bar"></span>
+                    </button>
+                    <a class="navbar-brand" href="{{ URL::to('/admin') }}">Hualaem</a>
+                </div>
+                <!-- /.navbar-header -->
+
+                <div class="navbar-default sidebar" role="navigation">
+                    <div class="sidebar-nav navbar-collapse">
+                        <ul class="nav" id="side-menu">
+                            <li>
+                                <a href="{{ URL::to('/admin') }}"><i class="fa fa-dashboard fa-fw"></i> Dashboard</a>
+                            </li>
+                            <li>
+                                <a href="{{ route('admin.user.list') }}"><i class="fa fa-users fa-fw"></i> User</a>
+                            </li>
+                            <li>
+                                <a href="#"><i class="fa fa-university fa-fw"></i> Camp<span class="fa arrow"></span></a>
+                                <ul class="nav nav-second-level">
+                                    <li>
+                                        <a href="{{ route('admin.camp.add') }}">Add</a>
+                                    </li>
+                                    <li>
+                                        <a href="{{ route('admin.camp.list') }}">List</a>
+                                    </li>
+                                </ul>
+                                <!-- /.nav-second-level -->
+                            </li>
+                            <li>
+                                <a href="#"><i class="fa fa-newspaper-o fa-fw"></i> News<span class="fa arrow"></span></a>
+                                <ul class="nav nav-second-level">
+                                    <li>
+                                        <a href="{{ route('admin.news.add') }}">Add</a>
+                                    </li>
+                                    <li>
+                                        <a href="{{ route('admin.news.list') }}">List</a>
+                                    </li>
+                                </ul>
+                                <!-- /.nav-second-level -->
+                            </li>
+                            <li>
+                                <a href="{{ route('admin.search.user') }}"><i class="fa fa-search fa-fw"></i> Search</a>
+                            </li>
+                            <li>
+                                <a href="{{ URL::action('mix5003\Hualaem\Backend\ImportUserController@getStep1') }}">
+                                    <i class="fa fa-upload fa-fw"></i>
+                                    Import
+                                </a>
+                            </li>
+                        </ul>
                     </div>
-                    <div class="col-md-6 text-right">
-                        @if(!Auth::check())
-                        <br>
-                        <div class="form">
+                    <!-- /.sidebar-collapse -->
+                </div>
+                <!-- /.navbar-static-side -->
+            </nav>
 
-                            <!-- Form for login-->
-                            
-                            <form method="POST" action="{{ URL::route('guest.login') }}" class="form-horizontal" >
-                                <div class="row">
-                                    <div class="col-md-4">
-                                        <img class="icon _48" src="{{ URL::asset('images/1415840683_user-32.png') }}" alt="5463af9714d72b9b0fb5a9c1_1415840683_user-32.png">
-                                    </div>
-                                    <div class="col-md-4">
-                                        <input class="form-control input-sm" id="username" type="text" placeholder="Username" name="username" required="required">
-                                    </div>
-                                    <div class="col-md-4">
-                                        <a href="{{ URL::route('guest.register') }}" class="btn btn-default btn-sm col-md-12">Sign Up</a>
-                                    </div>
-                                </div>
-                                
-                                <div class="row">
-                                    <div class="col-md-4">
-                                        <img class="icon _48" src="{{ URL::asset('images/1415840688_lock-open-32.png') }}" alt="5463afee895960d5616d9d09_1415840688_lock-open-32.png">
-                                    </div>
-                                    <div class="col-md-4">
-                                        <input class="form-control input-sm" id="password" type="password" placeholder="Password" name="password" required="required">
-                                    </div>
-                                    <div class="col-md-4">
-                                        <input class="btn btn-default btn-sm col-md-12" type="submit" value="Sign In">
-                                    </div>
-                                </div>
-                               
-                            </form>
-
-                            <!-- Form for login-->
-
+            <div id="page-wrapper">
+                @if(!empty($infos))
+                    <div class="container">
+                        <div class="alert alert-success alert-dismissible" role="alert">
+                            <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                            <ul>
+                                @foreach ($infos as $message)
+                                    <li>{{ $message }}</li>
+                                @endforeach
+                            </ul>
                         </div>
-                        @else
-                            <strong>{{ Auth::user()->fullname_th }}</strong><br>
-                            <a href="{{ route('user.profile.view') }}">My Profile</a><br>
-                            @if(Auth::user()->role == 'ADMIN')
-                            <a href="{{ URL::to('/admin') }}">Admin</a><br>
-                            @endif
-                            <a href="{{ route('user.logout') }}">Logout</a><br>
-                        @endif
                     </div>
-                </div>
-            </div>
-        </div>
-        <div class="navbar navbar-default" data-collapse="medium" data-animation="default" data-duration="400" data-contain="1">
-            <div class="container">
-                <ul class="nav navbar-nav">
-                    <li><a class="w-nav-link navlink" href="{{ route('admin.user.list') }}">User</a></li>
-                    <li><a class="w-nav-link navlink" href="{{ route('admin.camp.list') }}">Camp</a></li>
-                    <li><a class="w-nav-link navlink" href="{{ route('admin.news.list') }}">News</a></li>
-                    <li><a class="w-nav-link navlink" href="{{ route('admin.search.user') }}">Search</a></li>
-                    <li><a class="w-nav-link navlink" href="{{ URL::action('mix5003\Hualaem\Backend\ImportUserController@getStep1') }}">Import</a></li>
-                </ul>
-            </div>
-        </div>
-        @if(!empty($infos))
-            <div class="container">
-                <div class="alert alert-success alert-dismissible" role="alert">
-                    <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-                    <ul>
-                        @foreach ($infos as $message)
-                            <li>{{ $message }}</li>
-                        @endforeach
-                    </ul>
-                </div>
-            </div>
-        @endif
+                @endif
 
-        @if($errors->any())
-        <div class="container">
-            <div class="alert alert-warning alert-dismissible" role="alert">
-                <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-                <ul>
-                    @foreach ($errors->all('<li>:message</li>') as $message)
-                    {{ $message }}
-                    @endforeach
-                </ul>
-            </div>
-        </div>
-        @endif
+                @if($errors->any())
+                    <div class="container">
+                        <div class="alert alert-warning alert-dismissible" role="alert">
+                            <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                            <ul>
+                                @foreach ($errors->all('<li>:message</li>') as $message)
+                                    {{ $message }}
+                                @endforeach
+                            </ul>
+                        </div>
+                    </div>
+                @endif
 
-        <div class="section">
-            @yield('content')
+                @yield('content')
+            </div>
+
+
+
         </div>
-        <div class="navbar navbar-default" style="margin:0;margin-top:15px;">
-            <div class=" text-center" style="color:#FFF;padding:40px 0;" >© 2014&nbsp;The Gifted and Talented Foundation. All Rights Reserved.</div>
-        </div>
+
+
         @section('js_foot')
-        {{ HTML::script('js/jquery.min.js') }}
-        {{ HTML::script('js/bootstrap.min.js') }}
+        {{ HTML::script('backend/bower_components/jquery/dist/jquery.min.js') }}
+        {{ HTML::script('backend/bower_components/bootstrap/dist/js/bootstrap.min.js') }}
+        {{ HTML::script('backend/bower_components/metisMenu/dist/metisMenu.min.js') }}
+        {{ HTML::script('backend/dist/js/sb-admin-2.js') }}
+
         <!--[if lte IE 9]><script src="https://cdnjs.cloudflare.com/ajax/libs/placeholders/3.0.2/placeholders.min.js"></script><![endif]-->
         @show
     </body>

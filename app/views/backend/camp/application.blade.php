@@ -8,77 +8,81 @@
 @stop
 
 @section('content')
-<div class="container">
-    <div class="row">
-        <div class="col-md-12">
-            <h1>Application for {{$camp->name}}</h1>
-        </div>
+
+<div class="row">
+    <div class="col-md-12">
+        <h1>Application for {{$camp->name}}</h1>
     </div>
 </div>
 
-<form method="POST">
-    <div class="container">
-        <div class="well">
-            <div class="row">
-                <form method="GET" onsubmit="return false;">
-                    <div class="col-md-3">
-                        <input class="form-control input-sm" placeholder="Search By Username" id="txtSearchUser">
-                    </div>
-                    <div class="col-md-3">
-                        <input class="form-control input-sm" placeholder="YYYY-MM-DD"  id="txtSearchDate">
-                    </div>
-                </form>
-            </div>
-            <br>
-            <div class="row">
-                <div class="col-md-12">
-                    <a class="btn btn-success btn-sm" id="btnSelectAll">Select All</a>
-                    <a class="btn btn-warning btn-sm" id="btnSelectPending">Select Pending</a>
-                    <a class="btn btn-info btn-sm" id="btnSelectReceived">Select Document Received</a>
-                    <a class="btn btn-primary btn-sm" id="btnSelectApproved">Select Approved</a>
-                </div>
-            </div>
-            <br>
-            @foreach($camp->enrolls as $enroll)
-            <div class="row well row-data" data-name="{{ $enroll->user->fullname_th }}" 
-                 data-date="{{ $enroll->created_at->format('Y-m-d') }}">
-                <div class="col-md-12">
-                    <div class="checkbox">
-                        <label>
-                            <input type="checkbox" name="selected[]" value="{{ $enroll->id }}" class="chk-select" data-status="{{$enroll->status}}"> 
-                            {{ $enroll->user->fullname_th }}
-                        </label>
-                    </div>
+<div class="row">
+    <form method="GET" onsubmit="return false;">
+        <div class="col-md-3">
+            <input class="form-control input-sm" placeholder="Search By Username" id="txtSearchUser">
+        </div>
+        <div class="col-md-3">
+            <input class="form-control input-sm" placeholder="YYYY-MM-DD"  id="txtSearchDate">
+        </div>
+    </form>
+</div>
+<br>
+<div class="row">
+    <div class="col-md-12">
+        <a class="btn btn-success btn-sm" id="btnSelectAll">Select All</a>
+        <a class="btn btn-warning btn-sm" id="btnSelectPending">Select Pending</a>
+        <a class="btn btn-info btn-sm" id="btnSelectReceived">Select Document Received</a>
+        <a class="btn btn-primary btn-sm" id="btnSelectApproved">Select Approved</a>
+    </div>
+</div>
+<br>
 
-                    {{ $enroll->created_at }}<br>
-                    @if($enroll->status == \Enroll::STATUS_DOCUMENT_RECIEVED)
-                        <button class="btn btn-primary btn-sm" name="approve" value="{{ $enroll->id}}">Approved</button>
-                        <button class="btn btn-warning btn-sm" name="unapprove" value="{{ $enroll->id}}">Unapprove</button>
-                    @elseif($enroll->status == \Enroll::STATUS_PENDING)
-                        <button class="btn btn-info btn-sm" name="received" value="{{ $enroll->id}}">Received</button>
-                    @elseif($enroll->status == \Enroll::STATUS_APPROVED)
-                        <button class="btn btn-warning btn-sm" name="unapprove" value="{{ $enroll->id}}">Unapprove</button>
-                    @elseif($enroll->status == \Enroll::STATUS_NOT_APPROVED)
-                        <button class="btn btn-primary btn-sm" name="approve" value="{{ $enroll->id}}">Approved</button>
-                    @endif
-                    <button type="button" class="btn btn-success btn-sm btn-field-data"  data-id="{{$enroll->id}}"
-                            data-name="{{ $enroll->user->fullname_th }}">
-                        View Writing
-                    </button>
-                    <button class="btn btn-danger btn-sm" name="delete" value="{{ $enroll->id}}">Delete</button>
-                </div>
-            </div>
+<form method="POST">
+    <table class="table table-condensed table-bordered">
+        <thead>
+            <tr>
+                <th></th>
+                <th>Name</th>
+                <th>Registered Time</th>
+                <th>Action</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach($camp->enrolls as $enroll)
+                <tr>
+                    <td><input type="checkbox" name="selected[]" value="{{ $enroll->id }}" class="chk-select" data-status="{{$enroll->status}}"></td>
+                    <td>{{ $enroll->user->fullname_th }}</td>
+                    <td>{{ $enroll->created_at }}</td>
+                    <td>
+                        @if($enroll->status == \Enroll::STATUS_DOCUMENT_RECIEVED)
+                            <button class="btn btn-primary btn-sm" name="approve" value="{{ $enroll->id}}">Approved</button>
+                            <button class="btn btn-warning btn-sm" name="unapprove" value="{{ $enroll->id}}">Unapprove</button>
+                        @elseif($enroll->status == \Enroll::STATUS_PENDING)
+                            <button class="btn btn-info btn-sm" name="received" value="{{ $enroll->id}}">Received</button>
+                        @elseif($enroll->status == \Enroll::STATUS_APPROVED)
+                            <button class="btn btn-warning btn-sm" name="unapprove" value="{{ $enroll->id}}">Unapprove</button>
+                        @elseif($enroll->status == \Enroll::STATUS_NOT_APPROVED)
+                            <button class="btn btn-primary btn-sm" name="approve" value="{{ $enroll->id}}">Approved</button>
+                        @endif
+                        <button type="button" class="btn btn-success btn-sm btn-field-data"  data-id="{{$enroll->id}}"
+                                data-name="{{ $enroll->user->fullname_th }}">
+                            View Writing
+                        </button>
+                        <button class="btn btn-danger btn-sm" name="delete" value="{{ $enroll->id}}">Delete</button>
+                    </td>
+                </tr>
             @endforeach
-            <div class="row">
-                <div class="col-md-12">
-                    <button class="btn btn-primary btn-sm" type="submit" name="action" value="Approved">Approve All Selected</button>
-                    <button class="btn btn-primary btn-sm" type="submit" name="action" value="Received">Received All Selected</button>
-                    <button class="btn btn-warning btn-sm" type="submit" name="action" value="Unapproved">Unapprove All Selected</button>
-                    <button class="btn btn-info btn-sm" type="submit" name="action" value="Print">Print All Selected</button>
-                </div>
-            </div>
+        </tbody>
+    </table>
+
+    <div class="row">
+        <div class="col-md-12">
+            <button class="btn btn-primary btn-sm" type="submit" name="action" value="Approved">Approve All Selected</button>
+            <button class="btn btn-primary btn-sm" type="submit" name="action" value="Received">Received All Selected</button>
+            <button class="btn btn-warning btn-sm" type="submit" name="action" value="Unapproved">Unapprove All Selected</button>
+            <button class="btn btn-info btn-sm" type="submit" name="action" value="Print">Print All Selected</button>
         </div>
     </div>
+
 </form>
 
 <!-- Modal -->

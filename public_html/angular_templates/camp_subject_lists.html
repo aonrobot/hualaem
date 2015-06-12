@@ -1,10 +1,9 @@
-<div class="container">
-    <div class="well">
-        <div class="row">
-            <div class="col-md-12">
-                <h2>Secton 3 | Score</h2>
-            </div>
-        </div>
+<div class="panel panel-default">
+    <div class="panel-heading">
+        Secton 3 | Score
+    </div>
+    <!-- /.panel-heading -->
+    <div class="panel-body">
         <div class="row">
             <div class="col-md-12">
                 <div id="subject_list" class="panel-group" role="tablist" aria-multiselectable="true">
@@ -14,7 +13,7 @@
                         <div class="panel-heading" role="tab" id="subject{{ $index }}">
                             <h4 class="panel-title">
                                 <a data-toggle="collapse" data-parent="#subject_list" href="#collapseSubject{{ $index }}" aria-expanded="true" aria-controls="collapseSubject{{ $index}}">
-                                    {{ $index + 1 }} Subject 
+                                    {{ $index + 1 }} Subject
                                 </a>
                                 <div class="input-group">
                                     <input name="subjects[{{ $index }}][name]" ng-model="subject.name" class="form-control input-sm" placeholder="Subject">

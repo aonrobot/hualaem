@@ -9,65 +9,66 @@
 
 @section('content')
 <form class="form-horizontal" action="{{ URL::route('admin.camp.camp_score',[$camp->id]) }}" method="POST" enctype="multipart/form-data">
-    <div class="container">
-        <div class="row">
-            <div class="col-md-9">
-                <h1>Score for {{ $camp->name}}</h1>
-            </div>
-            <div class="col-md-3">
-                <form onsubmit="return false">
-                    <input class="form-control input-sm" id="txtSearch">
-                </form>
-            </div>
-        </div>
 
-        <div class="row">
-            <div class="col-md-12">
-                <table class="table table-striped table-bordered table-hover table-condensed">
-                    <thead>
-                        <tr>
-                            <th>Name</th>
-                            <th>Subject</th>
-                            <th>Test</th>
-                            <th>Score</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        @foreach($camp->enrolls as $enroll)
-                        @foreach($camp->subjects as $subject)
-                        @foreach($subject->tests as $test)
-                        <tr class="row-score" data-enroll="{{ $enroll->id }}">
-                            <td class="col-name">{{$enroll->user->fullname_th }}</td>
-                            <td>{{$subject->name}}</td>
-                            <td>{{$test->name}}</td>
-                            <td>
-                                <input class="form-control input-sm txt-score" type="number" data-to="sc_{{ $enroll->id }}_{{ $subject->id }}"
-                                       name="scored[{{ $enroll->id }}][{{ $test->id }}]" 
-                                       value="{{ isset($scored[$enroll->id][$test->id]) ? $scored[$enroll->id][$test->id] : '' }}">
-                            </td>
-                        </tr>
-                        @endforeach
-                        <tr class="row-score row-sum">
-                            <td class="col-name">{{$enroll->user->fullname_th }}</td>
-                            <td>{{$subject->name}}</td>
-                            <td><strong>Total</strong></td>
-                            <td class="td-total-subject" data-find="sc_{{ $enroll->id }}_{{ $subject->id }}">
-                                
-                            </td>
-                        </tr>
-                        @endforeach
-                        @endforeach
-                    </tbody>
-                </table>
-            </div>
+    <div class="row">
+        <div class="col-md-9">
+            <h1>Score for {{ $camp->name}}</h1>
         </div>
-        
-        <div class="row">
-            <div class="col-md-12">
-                <input type="submit" class="btn btn-info" value="Save">
-            </div>
+        <div class="col-md-3">
+            <form onsubmit="return false">
+                <br>
+                <input class="form-control input-sm" id="txtSearch">
+            </form>
         </div>
     </div>
+
+    <div class="row">
+        <div class="col-md-12">
+            <table class="table table-striped table-bordered table-hover table-condensed">
+                <thead>
+                    <tr>
+                        <th>Name</th>
+                        <th>Subject</th>
+                        <th>Test</th>
+                        <th>Score</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @foreach($camp->enrolls as $enroll)
+                    @foreach($camp->subjects as $subject)
+                    @foreach($subject->tests as $test)
+                    <tr class="row-score" data-enroll="{{ $enroll->id }}">
+                        <td class="col-name">{{$enroll->user->fullname_th }}</td>
+                        <td>{{$subject->name}}</td>
+                        <td>{{$test->name}}</td>
+                        <td>
+                            <input class="form-control input-sm txt-score" type="number" data-to="sc_{{ $enroll->id }}_{{ $subject->id }}"
+                                   name="scored[{{ $enroll->id }}][{{ $test->id }}]"
+                                   value="{{ isset($scored[$enroll->id][$test->id]) ? $scored[$enroll->id][$test->id] : '' }}">
+                        </td>
+                    </tr>
+                    @endforeach
+                    <tr class="row-score row-sum">
+                        <td class="col-name">{{$enroll->user->fullname_th }}</td>
+                        <td>{{$subject->name}}</td>
+                        <td><strong>Total</strong></td>
+                        <td class="td-total-subject" data-find="sc_{{ $enroll->id }}_{{ $subject->id }}">
+
+                        </td>
+                    </tr>
+                    @endforeach
+                    @endforeach
+                </tbody>
+            </table>
+        </div>
+    </div>
+
+    <div class="row">
+        <div class="col-md-12">
+            <input type="submit" class="btn btn-info" value="Save">
+        </div>
+    </div>
+
 </form>
 @stop
 
