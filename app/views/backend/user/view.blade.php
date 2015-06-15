@@ -120,12 +120,12 @@
                                     <article>
                                         <div class="media">
                                             <div class="media-left">
-                                                <a href="{{ URL::route('guest.camp.view',[$camp->id]) }}">
+                                                <a href="{{ URL::route('admin.camp.view',[$camp->id]) }}">
                                                     <img class="media-object" src="{{ $camp->image_path }}" alt="{{ $camp->name }}" width="128" height="128">
                                                 </a>
                                             </div>
                                             <div class="media-body">
-                                                <a href="{{ URL::route('guest.camp.view',[$camp->id]) }}">
+                                                <a href="{{ URL::route('admin.camp.view',[$camp->id]) }}">
                                                     <h3 class="media-heading">{{ $camp->name }}</h3>
                                                 </a>
                                                 {{ $camp->place }}<br>
@@ -163,12 +163,12 @@
                                     <article>
                                         <div class="media">
                                             <div class="media-left">
-                                                <a href="{{ URL::route('guest.camp.view',[$camp->id]) }}">
+                                                <a href="{{ URL::route('admin.camp.view',[$camp->id]) }}">
                                                     <img class="media-object" src="{{ $camp->image_path }}" alt="{{ $camp->name }}" width="128" height="128">
                                                 </a>
                                             </div>
                                             <div class="media-body">
-                                                <a href="{{ URL::route('guest.camp.view',[$camp->id]) }}">
+                                                <a href="{{ URL::route('admin.camp.view',[$camp->id]) }}">
                                                     <h3 class="media-heading">{{ $camp->name }}</h3>
                                                 </a>
                                                 {{ $camp->place }}<br>
