@@ -209,6 +209,10 @@ class CampController extends BackendController {
                     $setTo = \Enroll::STATUS_NOT_APPROVED;
                     \DB::table((new \Enroll())->getTable())->whereIn('id', Input::get('selected', [0]))->update(['status' => $setTo]);
                     break;
+                case 'Pending':
+                    $setTo = \Enroll::STATUS_PENDING;
+                    \DB::table((new \Enroll())->getTable())->whereIn('id', Input::get('selected', [0]))->update(['status' => $setTo]);
+                    break;
                 case 'Print':
                     return $this->downloadPDF();
                 default:

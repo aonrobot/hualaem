@@ -69,12 +69,13 @@
                                 </option>
                             </select>
                             <button type="submit" class="btn btn-sm btn-primary" name="per_enroll_id" value="{{ $enroll->id }}">SAVE</button>
+
+                            <button type="button" class="btn btn-success btn-sm btn-field-data"  data-id="{{$enroll->id}}"
+                                    data-name="{{ $enroll->user->fullname_th }}">
+                                View Writing
+                            </button>
+                            <button class="btn btn-danger btn-sm" name="delete" value="{{ $enroll->id}}">Delete</button>
                         </form>
-                        <button type="button" class="btn btn-success btn-sm btn-field-data"  data-id="{{$enroll->id}}"
-                                data-name="{{ $enroll->user->fullname_th }}">
-                            View Writing
-                        </button>
-                        <button class="btn btn-danger btn-sm" name="delete" value="{{ $enroll->id}}">Delete</button>
                     </td>
                 </tr>
             @endforeach
@@ -84,8 +85,8 @@
     <div class="row">
         <div class="col-md-12">
             <button class="btn btn-primary btn-sm" type="submit" name="action" value="Approved">Approve All Selected</button>
-            <button class="btn btn-primary btn-sm" type="submit" name="action" value="Received">Received All Selected</button>
-            <button class="btn btn-warning btn-sm" type="submit" name="action" value="Unapproved">Unapprove All Selected</button>
+            <button class="btn btn-info btn-sm" type="submit" name="action" value="Received">Doc Received</button>
+            <button class="btn btn-warning btn-sm" type="submit" name="action" value="Pending">Pending All Selected</button>
             <button class="btn btn-info btn-sm" type="submit" name="action" value="Print">Print All Selected</button>
         </div>
     </div>
