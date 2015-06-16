@@ -172,7 +172,11 @@ class CampController extends BackendController {
 
     public function postApplication() {
         //TODO:: Add Notification
-        if (Input::has('action')) {
+        if(Input::has('per_enroll_id')){
+            $enroll = \Enroll::find(Input::get('per_enroll_id'));
+            $enroll->status = Input::get('per_enroll_action');
+            $enroll->save();
+        }elseif (Input::has('action')) {
             switch(Input::get('action')){
                 case 'Approved':
                     $setTo = \Enroll::STATUS_APPROVED;

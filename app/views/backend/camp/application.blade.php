@@ -53,16 +53,23 @@
                     <td>{{ $enroll->user->fullname_th }}</td>
                     <td>{{ $enroll->created_at }}</td>
                     <td>
-                        @if($enroll->status == \Enroll::STATUS_DOCUMENT_RECIEVED)
-                            <button class="btn btn-primary btn-sm" name="approve" value="{{ $enroll->id}}">Approved</button>
-                            <button class="btn btn-warning btn-sm" name="unapprove" value="{{ $enroll->id}}">Unapprove</button>
-                        @elseif($enroll->status == \Enroll::STATUS_PENDING)
-                            <button class="btn btn-info btn-sm" name="received" value="{{ $enroll->id}}">Received</button>
-                        @elseif($enroll->status == \Enroll::STATUS_APPROVED)
-                            <button class="btn btn-warning btn-sm" name="unapprove" value="{{ $enroll->id}}">Unapprove</button>
-                        @elseif($enroll->status == \Enroll::STATUS_NOT_APPROVED)
-                            <button class="btn btn-primary btn-sm" name="approve" value="{{ $enroll->id}}">Approved</button>
-                        @endif
+                        <form method="POST">
+                            <select name="per_enroll_action">
+                                <option value="{{ Enroll::STATUS_PENDING }}" {{ $enroll->status == Enroll::STATUS_PENDING ? 'selected="selected"' : '' }}>
+                                    PENDING
+                                </option>
+                                <option value="{{ Enroll::STATUS_DOCUMENT_RECIEVED }}" {{ $enroll->status == Enroll::STATUS_DOCUMENT_RECIEVED ? 'selected="selected"' : '' }}>
+                                    DOCUMENT RECEIVED
+                                </option>
+                                <option value="{{ Enroll::STATUS_APPROVED }}" {{ $enroll->status == Enroll::STATUS_APPROVED ? 'selected="selected"' : '' }}>
+                                    APPROVED
+                                </option>
+                                <option value="{{ Enroll::STATUS_NOT_APPROVED }}" {{ $enroll->status == Enroll::STATUS_NOT_APPROVED ? 'selected="selected"' : '' }}>
+                                    NOT APPROVED
+                                </option>
+                            </select>
+                            <button type="submit" class="btn btn-sm btn-primary" name="per_enroll_id" value="{{ $enroll->id }}">SAVE</button>
+                        </form>
                         <button type="button" class="btn btn-success btn-sm btn-field-data"  data-id="{{$enroll->id}}"
                                 data-name="{{ $enroll->user->fullname_th }}">
                             View Writing
