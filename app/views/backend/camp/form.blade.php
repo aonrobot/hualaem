@@ -41,10 +41,8 @@
                         <div class="form-group">
                             <label class="col-sm-2 control-label" for="image">รูปภาพ</label>
                             <div class="col-sm-10">
-                                @if(!empty($camp->image_path))
-                                    <img src="{{$camp->image_path}}" class="img-thumbnail">
-                                    <br>
-                                @endif
+                                <img src="{{$camp->image_path}}" class="img-thumbnail" id="img-preview">
+                                <br>
                                 {{ Form::file('image',['id'=>'image']) }}
                             </div>
                         </div>
@@ -114,6 +112,19 @@
         });
         $("#camp_end").on("dp.change", function (e) {
             $('#camp_start').data("DateTimePicker").maxDate(e.date);
+        });
+
+        $('#image').change(function(){
+            var input = this;
+            if (input.files && input.files[0]) {
+                var reader = new FileReader();
+
+                reader.onload = function (e) {
+                    $('#img-preview').attr('src', e.target.result);
+                };
+
+                reader.readAsDataURL(input.files[0]);
+            }
         });
 
         CKEDITOR.replace('description', {
