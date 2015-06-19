@@ -40,17 +40,19 @@
                 <div class="tab-content">
                     <div role="tabpanel" class="tab-pane active" id="basic">
                         Student ID: {{ $user->student_id }}<br>
-                        Name: {{ $user->firstname_th }}<br>
-                        Lastname: {{ $user->lastname_th }}<br>
-                        Nickname: {{ $user->nickname }}<br>
-                        Birthdate: {{ $user->birthdate }}
+                        ชื่อ: {{ $user->firstname_th }}<br>
+                        นามสกุล: {{ $user->lastname_th }}<br>
+                        Firstname: {{ $user->prefix_en }} {{ $user->firstname_en }}<br>
+                        Lastname: {{ $user->lastname_en }}<br>
+                        ชื่อเล่น: {{ $user->nickname }}<br>
+                        วันเกิด: {{ $user->birthdate }}
                         @if($user->birthdate != NULL)
                             ( {{ $user->age }} Years)
                         @endif
                         <br>
-                        Citizen ID: {{ $user->citizen_id }}<br>
-                        Mobile: {{ $user->mobile_no }}<br>
-                        Email: {{ $user->email }}<br>
+                        เลขประจำตัวประชาชน: {{ $user->citizen_id }}<br>
+                        มือถือ: {{ $user->mobile_no }}<br>
+                        อีเมล์: {{ $user->email }}<br>
 
                         <div class="pull-right">
                             <a href="{{ URL::route('admin.user.edit',[$user->id]) }}" class="btn btn-info">Edit Profile</a>

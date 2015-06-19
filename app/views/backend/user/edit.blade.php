@@ -57,13 +57,21 @@
                                     {{ Form::select('prefix_th',['เด็กชาย'=>'เด็กชาย','เด็กหญิง'=>'เด็กหญิง','นาย'=>'นาย','นางสาว'=>'นางสาว'],$user->prefix_th,['class'=>'form-control']) }}
                                 </div>
                             </div>
-                            {{ Form::bsInlineGroup('Name','user[firstname_th]',$user->firstname_th) }}
-                            {{ Form::bsInlineGroup('Lastname','user[lastname_th]',$user->lastname_th) }}
-                            {{ Form::bsInlineGroup('Nickname','user[nickname]',$user->nickname) }}
-                            {{ Form::bsInlineGroup('Birthdate','user[birthdate]',$user->birthdate) }}
-                            {{ Form::bsInlineGroup('Citizen ID','user[citizen_id]',$user->citizen_id) }}
-                            {{ Form::bsInlineGroup('Mobile','user[mobile_no]',$user->mobile_no) }}
-                            {{ Form::bsInlineGroup('Email','user[email]',$user->email) }}
+                            {{ Form::bsInlineGroup('ชื่อ','user[firstname_th]',$user->firstname_th) }}
+                            {{ Form::bsInlineGroup('นามสกุล','user[lastname_th]',$user->lastname_th) }}
+                            <div class="form-group">
+                                <label for="prefix_th" class="col-sm-2 control-label">คำนำหน้า EN</label>
+                                <div class="col-sm-10">
+                                    {{ Form::select('prefix_en',['Mr.'=>'Mr.','Miss'=>'Miss'],$user->prefix_en,['class'=>'form-control']) }}
+                                </div>
+                            </div>
+                            {{ Form::bsInlineGroup('ชื่อ','user[firstname_en]',$user->firstname_en) }}
+                            {{ Form::bsInlineGroup('นามสกุล','user[lastname_en]',$user->lastname_en) }}
+                            {{ Form::bsInlineGroup('ชื่อเล่น','user[nickname]',$user->nickname) }}
+                            {{ Form::bsInlineGroup('วันเกิด','user[birthdate]',$user->birthdate) }}
+                            {{ Form::bsInlineGroup('เลขประจำตัวประชาชน','user[citizen_id]',$user->citizen_id) }}
+                            {{ Form::bsInlineGroup('มือถือ','user[mobile_no]',$user->mobile_no) }}
+                            {{ Form::bsInlineGroup('อีเมล์','user[email]',$user->email) }}
                         </div>
                         <div role="tabpanel" class="tab-pane" id="addresses">
                             <div class="panel-group" id="accordion" role="tablist" aria-multiselectable="true">

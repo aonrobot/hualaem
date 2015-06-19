@@ -116,7 +116,7 @@ class UserController extends FrontendController {
 
     private function saveUser($user) {
         $userForm = Input::get('user');
-        $insUserForm = array_only($userForm, ['prefix_th','firstname_th', 'lastname_th', 'nickname', 'birthdate', 'mobile_no', 'email', 'citizen_id']);
+        $insUserForm = array_only($userForm, ['prefix_th','firstname_th', 'lastname_th','prefix_en','firstname_en', 'lastname_en', 'nickname', 'birthdate', 'mobile_no', 'email', 'citizen_id']);
         foreach ($insUserForm as $key => $val) {
             if (empty($val)) {
                 continue;
