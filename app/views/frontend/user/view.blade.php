@@ -35,6 +35,7 @@
                 <div role="tabpanel">
 
                     <!-- Nav tabs -->
+                    @if(Auth::user()->id == $user->id)
                     <ul class="nav nav-tabs" role="tablist">
                         <li role="presentation" class="active">
                             <a href="#basic" aria-controls="basic" role="tab" data-toggle="tab">Basic</a>
@@ -46,6 +47,7 @@
                             <a href="#parents" aria-controls="parents" role="tab" data-toggle="tab">Parents</a>
                         </li>
                     </ul>
+                    @endif
 
                     <!-- Tab panes -->
                     <div class="tab-content">
@@ -68,6 +70,7 @@
                             </div>
                             @endif
                         </div>
+                        @if(Auth::user()->id == $user->id)
                         <div role="tabpanel" class="tab-pane" id="addresses">
                             <div class="panel-group" id="accordion" role="tablist" aria-multiselectable="true">
                                 @foreach($user->addresses as $key => $address)
@@ -109,6 +112,7 @@
                             </div>
                             @endforeach
                         </div>
+                        @endif
                     </div>
 
                 </div>
@@ -123,35 +127,15 @@
             <div class="well">
                 <div class="row">
                     <div class="col-md-12">
-                        <h2>Camp Register</h2>
+                        <h2>Camp Registered</h2>
                     </div>
                 </div>
 
                 @foreach($registerCamps as $k => $enroll)
-                <?php $camp = $enroll->camp; ?>
                 @if($k % 2 == 0)
                 <div class="row">
                 @endif
-                    <div class="col-md-6">
-                        <article class="well">
-                            <div class="media">
-                                <div class="media-left">
-                                    <a href="{{ URL::route('guest.camp.view',[$camp->id]) }}">
-                                        <img class="media-object" src="{{ $camp->image_path }}" alt="{{ $camp->name }}" width="128" height="128">
-                                    </a>
-                                </div>
-                                <div class="media-body">
-                                    <a href="{{ URL::route('guest.camp.view',[$camp->id]) }}">
-                                        <h4 class="media-heading">{{ $camp->name }}</h4>
-                                    </a>
-                                    {{ $camp->place }}<br>
-                                    {{ $camp->camp_start }} - {{ $camp->camp_end }}
-
-                                </div>
-                            </div>
-
-                        </article>
-                    </div>
+                    @include('frontend.partials.camp_circle',['class'=>'col-md-6','camp'=>$enroll->camp])
                 @if($k % 2 == 1)
                 </div>
                 @endif
@@ -170,32 +154,11 @@
                     </div>
                 </div>
 
-
                 @foreach($historyCamps as $k => $enroll)
-                <?php $camp = $enroll->camp; ?>
                 @if($k % 2 == 0)
                 <div class="row">
                 @endif
-                    <div class="col-md-6">
-                        <article class="well">
-                            <div class="media">
-                                <div class="media-left">
-                                    <a href="{{ URL::route('guest.camp.view',[$camp->id]) }}">
-                                        <img class="media-object" src="{{ $camp->image_path }}" alt="{{ $camp->name }}" width="128" height="128">
-                                    </a>
-                                </div>
-                                <div class="media-body">
-                                    <a href="{{ URL::route('guest.camp.view',[$camp->id]) }}">
-                                        <h4 class="media-heading">{{ $camp->name }}</h4>
-                                    </a>
-                                    {{ $camp->place }}<br>
-                                    {{ $camp->camp_start }} - {{ $camp->camp_end }}
-
-                                </div>
-                            </div>
-
-                        </article>
-                    </div>
+                    @include('frontend.partials.camp_circle',['class'=>'col-md-6','camp'=>$enroll->camp])
                 @if($k % 2 == 1)
                 </div>
                 @endif
@@ -208,6 +171,7 @@
     </div>
 </div>
 
+@if(Auth::user()->id == $user->id)
 <div class="container">
     <div class="well">
         <div class="row">
@@ -243,10 +207,5 @@
         </div>
     </div>
 </div>
-
-@stop
-
-@section('js_foot')
-@parent
-
+@endif
 @stop

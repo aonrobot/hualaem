@@ -7,27 +7,27 @@
 <div class="container">
     <div class="row">
         <div class="col-md-9">
-            <article class="well">
-                <div class="row">
-                    <div class="col-md-12">
-                        <header>
-                            <h1 style="margin:0;">{{ $news->name }}</h1>
-                            <small>Publish By {{ $news->user->fullname_th }} at {{ $news->publish_at }}</small>
-                        </header>
-                    </div>
-                </div>
-                <div class="row">
-                    <div class="col-md-12">
-                        <hr style="margin:0">
-                        {{ $news->detail }}
-                    </div>
-                </div>
+            <article>
+                <header>
+                    <h2>
+                        <a href="{{ route('guest.news.view',[$news->id]) }}">{{ $news->name }}</a>
+                    </h2>
+
+                    <p class="lead">
+                        by
+                        <a href="{{ route('user.profile.view',$news->user->id) }}">{{ $news->user->fullname_th }}</a>
+                    </p>
+                    <hr>
+                    <p><span class="glyphicon glyphicon-time"></span> Posted on {{ $news->publish_at }}</p>
+                </header>
+                <hr>
+                {{ $news->detail }}
             </article>
         </div>
         <div class="col-md-3">
             <aside class="well">
-                <h2>Latest News</h2>
-                <ol>
+                <h4>Latest News</h4>
+                <ol class="no-bullet">
                     @foreach($lastestNews as $otherNews)
                     <li>
                         <a href="{{ route('guest.news.view',[$otherNews->id]) }}">
@@ -42,8 +42,4 @@
     </div>
 </div>
 
-@stop
-
-@section('js_foot')
-@parent
 @stop

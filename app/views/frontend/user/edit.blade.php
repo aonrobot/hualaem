@@ -4,7 +4,7 @@
 
 @section('css')
 @parent
-{{ HTML::style('css/bootstrap-datetimepicker.min.css') }}
+{{ HTML::style('frontend/css/bootstrap-datetimepicker.min.css') }}
 @stop
 
 @section('content')
@@ -95,16 +95,13 @@
     </div>
 </div>
 
-
-
-
 @stop
 
 @section('js_foot')
 @parent
 
-{{ HTML::script('js/moment.min.js') }}
-{{ HTML::script('js/bootstrap-datetimepicker.min.js') }}
+{{ HTML::script('frontend/js/moment.min.js') }}
+{{ HTML::script('frontend/js/bootstrap-datetimepicker.min.js') }}
 
 <script>
     var parents = {{ json_encode($user->parents) }};
@@ -120,7 +117,7 @@
 
 </script>
 
-{{ HTML::script('js/angular.min.js') }}
-{{ HTML::script('js/angular_modules/user_form.js') }}
+{{ HTML::script('frontend/js/angular.min.js') }}
+{{ HTML::script('angular_modules/user_form.js') }}
 
 @stop

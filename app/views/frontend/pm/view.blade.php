@@ -1,16 +1,12 @@
-@extends('backend.layout')
+@extends('frontend.layout')
 
-@section('title') {{ $pmGroup->topic }} @stop
-
-@section('css')
-    @parent
-@stop
+@section('title') Message: {{ $pmGroup->topic }} @stop
 
 @section('content')
     <div class="container">
         <div class="row">
             <div class="col-md-12">
-                <h1>{{ $pmGroup->topic }}</h1>
+                <h1>Message: {{ $pmGroup->topic }}</h1>
             </div>
         </div>
     </div>
@@ -55,9 +51,4 @@
             </div>
         </div>
     </div>
-@stop
-
-@section('js_foot')
-    @parent
-
 @stop

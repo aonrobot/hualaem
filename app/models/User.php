@@ -49,6 +49,13 @@ class User extends Eloquent implements UserInterface, RemindableInterface {
         return $this->notifications()->where('is_read',false)->count();
     }
 
+    public function getUnReadPMAttribute(){
+        return $this->privateMessages()->where(function($query){
+            $query->whereNull('last_open');
+            $query->orWhere(DB::raw('last_open < updated_at'));
+        })->count();
+    }
+
     public function currentSchool(){
         return $this->hasOne('Semester')->with('School')->orderBy('year','desc')->take(1);
     }

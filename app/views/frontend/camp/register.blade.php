@@ -1,6 +1,6 @@
 @extends('frontend.layout')
 
-@section('title') Register @stop
+@section('title') Register: {{ $camp->name }} @stop
 
 @section('content')
 <div class="container">
@@ -43,9 +43,4 @@
         </div>
     </div>
 </form>
-@stop
-
-@section('js_foot')
-@parent
-
 @stop

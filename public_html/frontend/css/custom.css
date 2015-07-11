@@ -1,0 +1,20 @@
+.main-container{
+    padding-top:120px;
+}
+.thumb-64{ width: 64px; height:auto;}
+.no-bullet{ list-style: none; padding:0; }
+.regis_col_name{
+    font-size: 22px;
+    font-weight: bold;
+}
+.label.register{
+    color:#000;
+    font-size: 14px;
+}
+.pm_unread{
+    font-weight: bold;
+}
+.camp-img{
+    width: 200px;
+    height: 200px;
+}

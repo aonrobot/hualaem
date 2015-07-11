@@ -58,13 +58,13 @@ class UserController extends FrontendController {
         $user = \User::findOrFail($userID);
         $user->load('addresses', 'parents', 'addresses.subDistrict', 'addresses.district', 'addresses.province');
 
-        $registerCamps = $user->enrolls()->with('camp')->whereHas('camp', function($q) {
+        $registerCamps = $user->enrolls()->with('camp','camp.province','camp.level')->whereHas('camp', function($q) {
                     $q->where('camp_end', '>=', date('Y-m-d'));
-                })->get();
+                })->orderBy('created_at','desc')->take(10)->get();
 
-        $historyCamps = $user->enrolls()->with('camp')->whereHas('camp', function($q) {
+        $historyCamps = $user->enrolls()->with('camp','camp.province','camp.level')->whereHas('camp', function($q) {
                     $q->where('camp_end', '<', date('Y-m-d'));
-                })->take(10)->orderBy('id')->get();
+                })->orderBy('created_at','desc')->take(10)->orderBy('id')->get();
 
         $userLogs = $user->logs()->orderBy('id', 'desc')->limit(20)->get();
 

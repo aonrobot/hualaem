@@ -43,7 +43,7 @@ Route::filter('auth', function()
         }
         else
         {
-            return Redirect::guest('login');
+            return Redirect::route('guest.login')->withErrors(['Unauthorized'=>'Unauthorized. Please Login and try again']);
         }
     }
 });

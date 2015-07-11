@@ -1,171 +1,177 @@
 <!DOCTYPE html>
-<html lang="th" data-wf-site="545f56f8c3684d9f25f51d7e" >
-    <head>
-        <meta charset="utf-8">
-        <title>@yield('title')</title>
-        <meta name="viewport" content="width=device-width, initial-scale=1">
-        <link rel="shortcut icon" type="image/x-icon" href="https://y7v4p6k4.ssl.hwcdn.net/placeholder/favicon.ico">
-        <meta name="generator" content="Webflow">
-        <base href="{{ URL::to('/') }}/">
+<html lang="en">
 
-        @section('css')
-        {{ HTML::style('css/bootstrap.min.css') }}
-        @show
-        {{ HTML::style('css/custom.css') }}
+<head>
 
-        @section('js_head')
-        {{ HTML::script('js/modernizr.js') }}
-        @show
-    </head>
-    <body>
-        <div class="navbar">
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <base href="{{ URL::to('/') }}/">
+
+    <title>@yield('title')</title>
+
+    <!-- Bootstrap Core CSS - Uses Bootswatch Flatly Theme: http://bootswatch.com/flatly/ -->
+    {{ HTML::style('frontend/css/bootstrap.min.css') }}
+
+    <!-- Custom CSS -->
+    {{ HTML::style('frontend/css/freelancer.css') }}
+
+    <!-- Custom Fonts -->
+    {{ HTML::style('frontend/font-awesome/css/font-awesome.min.css') }}
+    <link href="http://fonts.googleapis.com/css?family=Montserrat:400,700" rel="stylesheet" type="text/css">
+    <link href="http://fonts.googleapis.com/css?family=Lato:400,700,400italic,700italic" rel="stylesheet" type="text/css">
+
+    @yield('css')
+
+    {{ HTML::style('frontend/css/custom.css') }}
+
+    @yield('js_head')
+
+    <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
+    <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
+    <!--[if lt IE 9]>
+    <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
+    <script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
+    <![endif]-->
+
+</head>
+
+<body id="page-top" class="index">
+<div class="freelancer">
+    <!-- Navigation -->
+    <nav class="navbar navbar-default navbar-fixed-top">
+        <div class="container">
+            <!-- Brand and toggle get grouped for better mobile display -->
+            <div class="navbar-header page-scroll">
+                <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1">
+                    <span class="sr-only">Toggle navigation</span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                </button>
+                <a class="navbar-brand" href="{{ route('guest.index') }}">Hualaem</a>
+            </div>
+
+            <!-- Collect the nav links, forms, and other content for toggling -->
+            <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+                <ul class="nav navbar-nav navbar-right">
+                    <li class="hidden">
+                        <a href="#page-top"></a>
+                    </li>
+                    <li>
+                        <a href="{{ route('guest.camp.list') }}">Camp</a>
+                    </li>
+                    @if(Auth::guest())
+                    <li>
+                        <a href="{{ URL::route('guest.login') }}">Login</a>
+                    </li>
+                    <li>
+                        <a href="{{ URL::route('guest.register') }}">Register</a>
+                    </li>
+                    @endif
+                    @if(Auth::check())
+                        <li>
+                            <a href="{{ URL::route('user.profile.view') }}">My Profile</a>
+                        </li>
+                        <li>
+                            <a href="{{ URL::route('user.pm.list') }}">
+                                PM
+                                @if(Auth::user()->un_read_pm > 0)
+                                    ( {{Auth::user()->un_read_pm }} )
+                                @endif
+                            </a>
+                        </li>
+                        <li>
+                            <a href="{{ URL::route('user.student.calendar') }}">Calendar</a>
+                        </li>
+                        @if(Auth::user()->role == 'ADMIN')
+                        <li>
+                            <a href="{{ URL::to('admin') }}">Admin</a>
+                        </li>
+                        @endif
+                        <li>
+                            <a href="{{ URL::route('user.logout') }}">Logout</a>
+                        </li>
+                    @endif
+                </ul>
+            </div>
+            <!-- /.navbar-collapse -->
+        </div>
+        <!-- /.container-fluid -->
+    </nav>
+</div>
+
+<div class="main-container">
+    @if(!empty($infos))
+    <div class="container">
+        <div class="alert alert-success alert-dismissible" role="alert">
+            <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+            <ul>
+                @foreach ($infos as $message)
+                    <li>{{ $message }}</li>
+                @endforeach
+            </ul>
+        </div>
+    </div>
+    @endif
+
+    @if($errors->any())
+    <div class="container">
+        <div class="alert alert-warning alert-dismissible" role="alert">
+            <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+            <ul>
+                @foreach ($errors->all('<li>:message</li>') as $message)
+                    {{ $message }}
+                @endforeach
+            </ul>
+        </div>
+    </div>
+    @endif
+
+    @yield('content')
+</div>
+
+<div class="freelancer">
+    <!-- Footer -->
+    <footer class="text-center">
+        <div class="footer-below">
             <div class="container">
                 <div class="row">
-                    <div class="col-md-6 text-left">
-                        <a  href="{{ URL::to('/') }}">
-                            <img src="{{ URL::asset('images/1415577731_handdrawn-lightbulb-48.png') }}" alt="545faced7848976b2dd62a5e_1415577731_handdrawn-lightbulb-48.png">
-                            <em>TGT |<br></em>
-                        </a>
-                    </div>
-                    <div class="col-md-6 text-right">
-                        @if(!Auth::check())
-                        <br>
-                        <div class="form">
-
-                            <!-- Form for login-->
-
-                            <form method="POST" action="{{ URL::route('guest.login') }}" class="form-horizontal">
-                                <div class="row">
-                                    <div class="col-md-4">
-                                        <img class="icon _48" src="{{ URL::asset('images/1415840683_user-32.png') }}" alt="5463af9714d72b9b0fb5a9c1_1415840683_user-32.png">
-                                    </div>
-                                    <div class="col-md-4">
-                                        <input class="form-control input-sm" id="email" type="email" placeholder="Email" name="email" required="required" tabindex="1">
-                                    </div>
-                                    <div class="col-md-4">
-                                        <a href="{{ URL::route('guest.register') }}" class="btn btn-default btn-sm col-md-12" tabindex="4">Sign Up</a>
-                                    </div>
-                                </div>
-
-                                <div class="row">
-                                    <div class="col-md-4">
-                                        <img class="icon _48" src="{{ URL::asset('images/1415840688_lock-open-32.png') }}" alt="5463afee895960d5616d9d09_1415840688_lock-open-32.png">
-                                    </div>
-                                    <div class="col-md-4">
-                                        <input class="form-control input-sm" id="password" type="password" placeholder="Password" name="password" required="required" tabindex="2">
-                                    </div>
-                                    <div class="col-md-4">
-                                        <input class="btn btn-default btn-sm col-md-12" type="submit" value="Sign In" tabindex="3">
-                                    </div>
-                                </div>
-
-                                <div class="row">
-                                    <div class="col-md-12">
-                                        <a href="">Forgot Password?</a>
-                                    </div>
-                                </div>
-
-                            </form>
-                            
-                            <!-- Form for login-->
-
-                        </div>
-                        @else
-                            <div class="pull-right">
-                                <strong>{{ Auth::user()->fullname_th }}</strong><br>
-                                <a href="{{ route('user.profile.view') }}">My Profile</a><br>
-                                @if(Auth::user()->role == 'ADMIN')
-                                    <a href="{{ URL::to('/admin') }}">Admin</a><br>
-                                @endif
-                                <a href="{{ route('user.logout') }}">Logout</a><br>
-                            </div>
-                            <div class="pull-right">
-                                <div style="vertical-align: middle; height: 80px; position: relative; width: 50px;">
-                                    <a href="#" data-poload="{{ route('user.notification') }}" style="display: block; position: absolute; top: 50%; margin-top: -15px;">
-                                        <i class="fa fa-bell-o" style="font-size: 30px;"></i>
-                                        @if(Auth::user()->un_read)
-                                            <div class="notification-number">
-                                                {{ Auth::user()->un_read }}
-                                            </div>
-                                        @endif
-                                    </a>
-                                </div>
-                            </div>
-                        @endif
+                    <div class="col-lg-12">
+                        Copyright &copy; Your Website 2014
                     </div>
                 </div>
             </div>
         </div>
-        <div class="navbar navbar-default" data-collapse="medium" data-animation="default" data-duration="400" data-contain="1">
-            <div class="container">
-                @if(Auth::check())
-                <ul class="nav navbar-nav">
-                    <li><a class="w-nav-link navlink" href="{{ URL::route('user.student.calendar') }}">Calendar</a></li>
-                    <li><a class="w-nav-link navlink" href="{{ route('user.profile.view') }}">Profile</a></li>
-                </ul>
-                @endif
+    </footer>
 
-                <ul class="nav navbar-nav navbar-right">
-                    <li><a class="w-nav-link navlink" href="{{ URL::route('guest.camp.list') }}">Register Camp</a></li>
-                </ul>
-            </div>
-        </div>
-        @if(!empty($infos))
-            <div class="container">
-                <div class="alert alert-success alert-dismissible" role="alert">
-                    <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-                    <ul>
-                        @foreach ($infos as $message)
-                            <li>{{ $message }}</li>
-                        @endforeach
-                    </ul>
-                </div>
-            </div>
-        @endif
+    <!-- Scroll to Top Button (Only visible on small and extra-small screen sizes) -->
+    <div class="scroll-top page-scroll visible-xs visible-sm">
+        <a class="btn btn-primary" href="#page-top">
+            <i class="fa fa-chevron-up"></i>
+        </a>
+    </div>
+</div>
 
-        @if($errors->any())
-        <div class="container">
-            <div class="alert alert-warning alert-dismissible" role="alert">
-                <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-                <ul>
-                    @foreach ($errors->all('<li>:message</li>') as $message)
-                    {{ $message }}
-                    @endforeach
-                </ul>
-            </div>
-        </div>
-        @endif
+<!-- jQuery -->
+{{ HTML::script("frontend/js/jquery.js") }}
 
-        <div class="section">
-            @yield('content')
-        </div>
-        <div class="navbar navbar-default" style="margin:0">
-            <div class=" text-center" style="color:#FFF;padding:40px 0;" >© 2014&nbsp;The Gifted and Talented Foundation. All Rights Reserved.</div>
-        </div>
-        @section('js_foot')
-        {{ HTML::script('js/jquery.min.js') }}
-        {{ HTML::script('js/bootstrap.min.js') }}
-        <!--[if lte IE 9]><script src="https://cdnjs.cloudflare.com/ajax/libs/placeholders/3.0.2/placeholders.min.js"></script><![endif]-->
-        <script>
-            $(document).ready(function(){
-                var poLoadFn = function() {
-                    var e=$(this);
-                    e.off('click');
-                    $.get(e.data('poload'),function(d) {
-                        e.popover({content: d,html:true,placement:'bottom'}).popover('show');
-                        $('.notification-number').css('visibility','hidden');
-                        e.click(function(){
-                            e.popover('destroy');
-                            e.click(poLoadFn);
-                        });
-                    });
-                };
+<!-- Bootstrap Core JavaScript -->
+{{ HTML::script("frontend/js/bootstrap.min.js") }}
 
-                $('*[data-poload]').click(poLoadFn);
-            });
+<!-- Plugin JavaScript -->
+{{ HTML::script("http://cdnjs.cloudflare.com/ajax/libs/jquery-easing/1.3/jquery.easing.min.js") }}
+{{ HTML::script("frontend/js/classie.js") }}
+{{ HTML::script("frontend/js/cbpAnimatedHeader.js") }}
 
-        </script>
+<!-- Contact Form JavaScript -->
+{{ HTML::script("frontend/js/jqBootstrapValidation.js") }}
 
-        @show
-    </body>
+<!-- Custom Theme JavaScript -->
+{{ HTML::script("frontend/js/freelancer.js") }}
+
+@yield('js_foot')
+
+</body>
+
 </html>

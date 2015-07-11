@@ -4,7 +4,7 @@
 
 @section('css')
 @parent
-{{ HTML::style('css/bootstrap-datetimepicker.min.css') }}
+{{ HTML::style('backend/css/bootstrap-datetimepicker.min.css') }}
 @stop
 
 @section('content')
@@ -50,8 +50,8 @@
 
 @section('js_foot')
 @parent
-{{ HTML::script('js/moment.min.js') }}
-{{ HTML::script('js/bootstrap-datetimepicker.min.js') }}
+{{ HTML::script('backend/js/moment.min.js') }}
+{{ HTML::script('backend/js/bootstrap-datetimepicker.min.js') }}
 {{ HTML::script('ckeditor/ckeditor.js') }}
 
 <script>

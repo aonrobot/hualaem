@@ -4,7 +4,7 @@
 
 @section('css')
 @parent
-{{ HTML::style('css/fullcalendar.min.css') }}
+{{ HTML::style('frontend/css/fullcalendar.min.css') }}
 @stop
 
 @section('content')
@@ -28,8 +28,8 @@
 
 @section('js_foot')
 @parent
-{{ HTML::script('js/moment.min.js') }}
-{{ HTML::script('js/fullcalendar.min.js') }}
+{{ HTML::script('frontend/js/moment.min.js') }}
+{{ HTML::script('frontend/js/fullcalendar.min.js') }}
 <script>
     (function () {
         $('#calendar').fullCalendar({

@@ -4,7 +4,7 @@
 
 @section('css')
     @parent
-    {{ HTML::style('css/bootstrap-datetimepicker.min.css') }}
+    {{ HTML::style('backend/css/bootstrap-datetimepicker.min.css') }}
 @stop
 
 @section('content')

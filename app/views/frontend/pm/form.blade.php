@@ -2,10 +2,6 @@
 
 @section('title') Create Private Message @stop
 
-@section('css')
-    @parent
-@stop
-
 @section('content')
     <div class="container">
         <div class="row">
@@ -48,12 +44,4 @@
             </form>
         </div>
     </div>
-
-
-
-
-@stop
-
-@section('js_foot')
-    @parent
 @stop
