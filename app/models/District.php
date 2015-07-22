@@ -12,4 +12,7 @@ class District extends Eloquent {
         return $this->belongsTo('Province');
     }
 
+    public function addresses(){
+        return $this->hasMany('Address');
+    }
 }

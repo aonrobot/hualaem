@@ -11,5 +11,8 @@ class Province extends Eloquent {
     public function camps() {
         return $this->hasMany('Camp');
     }
+    public function addresses(){
+        return $this->hasMany('Address');
+    }
 
 }

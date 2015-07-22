@@ -7,10 +7,9 @@ class Address extends Eloquent {
         if(!empty($this->village_no)){
             $ret .= ' หมู่ '.$this->village_no;
         }
-        if(!empty($this->village)){
-            $ret .= ' หมู่บ้าน'.$this->village_no;
+        if(!empty($this->village)) {
+            $ret .= ' หมู่บ้าน' . $this->village_no;
         }
-        $this->load('subDistrict','district');
         if(!empty($this->subDistrict)){
             if($this->province->id == 1){
                 $ret .= ' แขวง'.$this->subDistrict->name;

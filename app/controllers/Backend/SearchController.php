@@ -3,9 +3,39 @@
 namespace mix5003\Hualaem\Backend;
 
 use BackendController;
+use Illuminate\Database\Eloquent\Collection;
 use Input;
 
 class SearchController extends BackendController {
+
+    private function _getFilterField(){
+        $provinces = \Province::has('addresses')->orderBy('name')->get();
+        if(Input::has('province_id')){
+            $districts = \District::has('addresses')->whereIn('province_id',Input::get('province_id'))->orderBy('name')->get();
+        }else{
+            $districts = \District::has('addresses')->orderBy('name')->get();
+        }
+        $schoolQuery = \School::has('semesters')->orderBy('name');
+        if(Input::has('district_id')){
+            $users_id = \Address::whereIn('district_id',Input::get('district_id'))->get(['user_id']);
+            $users_id = $users_id->fetch('user_id')->toArray();
+
+            $schoolQuery->whereHas('semesters',function($query) use ($users_id){
+                $query->whereIn('user_id',$users_id);
+            });
+        }elseif(Input::has('province_id')){
+            $users_id = \Address::whereIn('province_id',Input::get('province_id'))->get(['user_id']);
+            $users_id = $users_id->fetch('user_id')->toArray();
+            $schoolQuery->whereHas('semesters',function($query) use ($users_id){
+                $query->whereIn('user_id',$users_id);
+            });
+        }
+
+        $schools = $schoolQuery->get();
+        $levels = \Level::where('parent_id',null)->with('childs','childs.childs')->orderBy('order')->get();
+
+        return compact('provinces','districts','schools','levels');
+    }
 
     private function _getFilteredData(){
         $data = [];
@@ -67,13 +97,9 @@ class SearchController extends BackendController {
 			
         }
 
-        $users = $query->paginate();
+        $users = $query->with('addresses','addresses.province','addresses.district','addresses.subDistrict')->paginate();
 
-        $provinces = \Province::orderBy('name')->get();
-        $districts = \District::orderBy('name')->get();
-        $schools = \School::orderBy('name')->get();
-        $levels = \Level::where('parent_id',null)->with('childs','childs.childs')->orderBy('order')->get();
-        $filters = compact('provinces','districts','schools','levels');
+        $filters = $this->_getFilterField();
 
         $data['users'] = $users;
         $data['filters'] = $filters;
