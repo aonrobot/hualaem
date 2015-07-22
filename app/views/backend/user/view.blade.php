@@ -113,36 +113,16 @@
                 </div>
                 <!-- /.panel-heading -->
                 <div class="panel-body">
-                    @foreach($registerCamps as $k => $enroll)
-                        <?php $camp = $enroll->camp; ?>
-                        @if($k % 2 == 0)
+                    @foreach($registerCamps as $k1 => $enroll)
+                            @if($k1 % 2 == 0)
                             <div class="row">
-                                @endif
-                                <div class="col-md-10 col-md-offset-1 well">
-                                    <article>
-                                        <div class="media">
-                                            <div class="media-left">
-                                                <a href="{{ URL::route('admin.camp.view',[$camp->id]) }}">
-                                                    <img class="media-object" src="{{ $camp->image_path }}" alt="{{ $camp->name }}" width="128" height="128">
-                                                </a>
-                                            </div>
-                                            <div class="media-body">
-                                                <a href="{{ URL::route('admin.camp.view',[$camp->id]) }}">
-                                                    <h3 class="media-heading">{{ $camp->name }}</h3>
-                                                </a>
-                                                {{ $camp->place }}<br>
-                                                {{ $camp->camp_start }} - {{ $camp->camp_end }}
-
-                                            </div>
-                                        </div>
-
-                                    </article>
-                                </div>
-                                @if($k % 2 == 1)
+                            @endif
+                                @include('frontend.partials.camp_circle',['class'=>'col-md-6','camp'=>$enroll->camp])
+                            @if($k1 % 2 == 1)
                             </div>
-                        @endif
+                            @endif
                     @endforeach
-                    @if(isset($k) && $k % 2 == 0)
+                    @if(isset($k1) && $k1 % 2 == 0)
                         {{ "</div>" }}
                     @endif
                 </div>
@@ -156,36 +136,16 @@
                 </div>
                 <!-- /.panel-heading -->
                 <div class="panel-body">
-                    @foreach($historyCamps as $k => $enroll)
-                        <?php $camp = $enroll->camp; ?>
-                        @if($k % 2 == 0)
+                    @foreach($historyCamps as $k2 => $enroll)
+                            @if($k2 % 2 == 0)
                             <div class="row">
-                                @endif
-                                <div class="col-md-10 col-md-offset-1 well">
-                                    <article>
-                                        <div class="media">
-                                            <div class="media-left">
-                                                <a href="{{ URL::route('admin.camp.view',[$camp->id]) }}">
-                                                    <img class="media-object" src="{{ $camp->image_path }}" alt="{{ $camp->name }}" width="128" height="128">
-                                                </a>
-                                            </div>
-                                            <div class="media-body">
-                                                <a href="{{ URL::route('admin.camp.view',[$camp->id]) }}">
-                                                    <h3 class="media-heading">{{ $camp->name }}</h3>
-                                                </a>
-                                                {{ $camp->place }}<br>
-                                                {{ $camp->camp_start }} - {{ $camp->camp_end }}
-
-                                            </div>
-                                        </div>
-
-                                    </article>
-                                </div>
-                                @if($k % 2 == 1)
+                            @endif
+                                @include('frontend.partials.camp_circle',['class'=>'col-md-6','camp'=>$enroll->camp])
+                            @if($k2 % 2 == 1)
                             </div>
-                        @endif
+                            @endif
                     @endforeach
-                    @if(isset($k) && $k % 2 == 0)
+                    @if(isset($k2) && $k2 % 2 == 0)
                         {{ "</div>" }}
                     @endif
                 </div>

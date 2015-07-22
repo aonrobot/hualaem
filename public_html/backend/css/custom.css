@@ -1,7 +1,16 @@
+#page-wrapper{
+    padding-bottom:30px;
+}
 .table-fill {
     max-width: initial;
     height:auto;
 }
+.thumb-64{ width: 64px; height:auto;}
+.camp-img{
+    width: 200px;
+    height: 200px;
+}
+
 .icon._48 {
 margin-right: 8px;
 margin-bottom: 18px;

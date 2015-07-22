@@ -1,5 +1,6 @@
 .main-container{
     padding-top:120px;
+    min-height:550px;
 }
 .thumb-64{ width: 64px; height:auto;}
 .no-bullet{ list-style: none; padding:0; }
