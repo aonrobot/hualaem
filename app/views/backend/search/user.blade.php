@@ -135,7 +135,9 @@
                             @if(!empty($user->current_school))
                             School: {{ $user->current_school->name }}<br>
                             @endif
+                            @if(!empty($user->addresses[0]))
                             Address: {{ $user->addresses[0]->address }}<br>
+                            @endif
                         </div>
                     </div>
                 </div>
