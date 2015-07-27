@@ -147,7 +147,7 @@
     </div>
 
     <div class="row">
-        {{ $users->links() }}
+        {{ $users->appends(Input::except('page'))->links() }}
     </div>
 
 

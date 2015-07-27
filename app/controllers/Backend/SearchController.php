@@ -3,6 +3,7 @@
 namespace mix5003\Hualaem\Backend;
 
 use BackendController;
+use DB;
 use Illuminate\Database\Eloquent\Collection;
 use Input;
 
@@ -75,16 +76,20 @@ class SearchController extends BackendController {
         if(Input::has('search')){
 			$query->where(function($searchQuery){
 				$searchQuery->where(function($subQuery){
-					$searchField = ['prefix_th', 'firstname_th', 'lastname_th', 'prefix_en', 'firstname_en', 'lastname_en', 'mobile_no', 'email', 'nickname', 'birthdate'];
+					$searchField = ['prefix_th', 'firstname_th', 'lastname_th', 'prefix_en', 'firstname_en', 'lastname_en', 'mobile_no', 'email', 'nickname'];
 					foreach($searchField as $field){
 						$subQuery->orWhere($field,'like','%'.Input::get('search').'%');
 					}
+
+                    $subQuery->orWhere(DB::raw("LPAD(`student_id`,7,'0')"),'like','%'.Input::get('search').'%');
 				});
 
-				
+
+
+
 				$searchQuery->orWhereHas('addresses',function($subQuery){
 					$subQuery->where(function($subSearchQuery){
-						$searchField = ['name', 'house_no', 'road', 'village_no', 'village', 'sub_district_id', 'district_id', 'province_id', 'postcode', 'phone_no'];
+						$searchField = ['name', 'house_no', 'road', 'village_no', 'village', 'phone_no'];
 					
 						foreach($searchField as $field){
 							$subSearchQuery->orWhere($field,'like','%'.Input::get('search').'%');
@@ -92,6 +97,16 @@ class SearchController extends BackendController {
 					});
 					
 				});
+
+                $searchQuery->orWhereHas('addresses.subDistrict',function($subQuery) {
+                    $subQuery->where('name','like','%'.Input::get('search').'%');
+                });
+                $searchQuery->orWhereHas('addresses.district',function($subQuery) {
+                    $subQuery->where('name','like','%'.Input::get('search').'%');
+                });
+                $searchQuery->orWhereHas('addresses.province',function($subQuery) {
+                    $subQuery->where('name','like','%'.Input::get('search').'%');
+                });
 			});
             
 			
