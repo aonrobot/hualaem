@@ -3,7 +3,7 @@
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
 
-class AddEnrollStatus extends Migration {
+class AddEnrollStatus2 extends Migration {
 
 	/**
 	 * Run the migrations.
@@ -53,7 +53,7 @@ class AddEnrollStatus extends Migration {
                 $table->enum('status_new', ['PENDING', 'DOCUMENT_RECIEVED','APPROVED'])->default('PENDING')->after('camp_id');
             });
 
-            Enroll::where('status_old','NOT_APPROVED')->delete();
+            Enroll::where('status','NOT_APPROVED')->delete();
 
             DB::table('enrolls')->update([
                 'status_new'=>DB::raw('`status`')
