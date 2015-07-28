@@ -240,7 +240,7 @@ class ImportUserController extends BackendController {
                                 $obj->level_id = $this->getLevelID($csvRow[$data[$type]['level']]);
                             }
 
-                            if (empty($obj->user_id)) {
+                            if (empty($obj->user_id) || empty($obj->level_id)) {
                                 //TODO: i guess data not same source
                                 continue;
                             }
@@ -339,6 +339,7 @@ class ImportUserController extends BackendController {
     private function getLevelID($strLevel){
         if(isset($this->cacheLevel[$strLevel])) return $this->cacheLevel[$strLevel];
 
+        $key = null;
         switch($strLevel){
             case 'ประถม-มัธยม':
                 $key = 'ประถม';
@@ -364,23 +365,26 @@ class ImportUserController extends BackendController {
                 break;
             default: break;
         }
-        $level = Level::where('name',$key)->first();
-        if(!empty($level)) {
-            $this->cacheLevel[$strLevel] = $level->id;
-            return  $level->id;
-        }
 
-        $key = str_replace('ปี', 'ปี ', $strLevel);
-        if ($key == 'G.10') {
-            $key = 'ม.4';
-        }
-        if ($key == 'G.11') {
-            $key = 'ม.5';
-        }
-        $level = Level::where('name', $key)->first();
-        if(!empty($level)) {
-            $this->cacheLevel[$strLevel] = $level->id;
-            return  $level->id;
+        if($key != null) {
+            $level = \Level::where('name', $key)->first();
+            if (!empty($level)) {
+                $this->cacheLevel[$strLevel] = $level->id;
+                return $level->id;
+            }
+
+            $key = str_replace('ปี', 'ปี ', $strLevel);
+            if ($key == 'G.10') {
+                $key = 'ม.4';
+            }
+            if ($key == 'G.11') {
+                $key = 'ม.5';
+            }
+            $level = \Level::where('name', $key)->first();
+            if (!empty($level)) {
+                $this->cacheLevel[$strLevel] = $level->id;
+                return $level->id;
+            }
         }
 
         return null;

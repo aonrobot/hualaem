@@ -7,7 +7,7 @@ return [
             //Table
             'users' => [
                 //FieldName => Label
-                'username' => 'Username',
+                //'username' => 'Username',
                 //'student_id' => 'Student ID',
                 'citizen_id' => 'เลขประจำตัวประชาชน',
                 'prefix_th' => 'คำนำหน้า',
